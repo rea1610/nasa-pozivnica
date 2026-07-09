@@ -9,7 +9,7 @@
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Parisienne&family=Cormorant+Garamond:wght@300;400;500&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Parisienne&display=swap" rel="stylesheet">
 
 <style>
 
@@ -17,22 +17,24 @@
     box-sizing: border-box;
 }
 
-html {
-    scroll-behavior: smooth;
+html,
+body {
+    margin: 0;
+    padding: 0;
+    background: #d8d4cc;
+    color: #5d5a60;
+    font-family: "Italiana", serif;
 }
 
 body {
-    margin: 0;
-    background: #ddd8cf;
-    color: #625c53;
-    font-family: "Cormorant Garamond", serif;
+    overflow-x: hidden;
 }
 
-/* =========================
+/* ==============================
    KU V E R T A
-========================= */
+================================ */
 
-#envelopeScreen {
+#envelope-screen {
     position: fixed;
     inset: 0;
     z-index: 1000;
@@ -41,66 +43,44 @@ body {
     align-items: center;
     justify-content: center;
 
-    background:
-        radial-gradient(circle at center, #f8f4ec, #d8d1c6);
-
-    perspective: 1600px;
+    background: #d8d4cc;
 
     transition:
-        opacity 2s ease,
-        visibility 2s ease;
+        opacity 1.4s ease,
+        transform 1.4s ease;
+}
+
+#envelope-screen.opened {
+    opacity: 0;
+    transform: scale(1.06);
+    pointer-events: none;
 }
 
 .envelope {
     position: relative;
 
-    width: min(94vw, 520px);
-    aspect-ratio: 2 / 3;
+    width: min(100vw, 600px);
+    height: 100svh;
 
     background-image: url("kuverta.PNG");
     background-size: cover;
     background-position: center;
-
-    border-radius: 8px;
-
-    box-shadow:
-        0 35px 70px rgba(70, 55, 35, 0.25),
-        0 10px 25px rgba(70, 55, 35, 0.16);
-
-    transform-style: preserve-3d;
-
-    transition:
-        transform 10s cubic-bezier(.22,.61,.36,1),
-        opacity 2s ease,
-        filter 10s ease;
-}
-
-.envelope::after {
-    content: "";
-
-    position: absolute;
-    inset: 0;
-
-    border-radius: 8px;
+    background-repeat: no-repeat;
 
     box-shadow:
-        inset 0 0 30px rgba(255,255,255,.35);
-
-    pointer-events: none;
+        0 20px 60px rgba(70, 60, 50, 0.18);
 }
 
-/* BISER */
-
-.pearlButton {
+.pearl-button {
     position: absolute;
 
     left: 50%;
-    top: 52%;
+    top: 50%;
 
     transform: translate(-50%, -50%);
 
-    width: 72px;
-    height: 72px;
+    width: 78px;
+    height: 78px;
 
     border: none;
     border-radius: 50%;
@@ -109,140 +89,111 @@ body {
 
     background:
         radial-gradient(
-            circle at 32% 27%,
+            circle at 35% 30%,
             #ffffff 0%,
-            #fffdf8 15%,
-            #eee7d9 40%,
-            #c9bda9 70%,
-            #8f816e 100%
+            #fffdf8 20%,
+            #eee9df 48%,
+            #d4cdc0 72%,
+            #bcb4a8 100%
         );
 
     box-shadow:
-        inset -8px -10px 14px rgba(117,99,75,.25),
-        inset 7px 7px 12px rgba(255,255,255,.95),
-        0 8px 18px rgba(66,53,37,.35);
+        inset -8px -9px 14px rgba(115, 105, 90, 0.20),
+        inset 7px 7px 12px rgba(255, 255, 255, 0.95),
+        0 8px 16px rgba(80, 70, 60, 0.24);
 
-    z-index: 10;
-
-    transition:
-        transform .8s ease,
-        opacity .8s ease,
-        box-shadow .8s ease;
+    animation: pearlPulse 2.5s ease-in-out infinite;
 }
 
-.pearlButton::before {
+.pearl-button::after {
     content: "";
 
     position: absolute;
 
     width: 18px;
-    height: 11px;
+    height: 12px;
 
-    left: 16px;
-    top: 13px;
+    top: 16px;
+    left: 18px;
 
     border-radius: 50%;
 
-    background: rgba(255,255,255,.85);
+    background: rgba(255, 255, 255, 0.85);
 
     filter: blur(2px);
 
     transform: rotate(-25deg);
 }
 
-.pearlButton:hover {
-    transform:
-        translate(-50%, -50%)
-        scale(1.08);
+@keyframes pearlPulse {
 
-    box-shadow:
-        inset -8px -10px 14px rgba(117,99,75,.25),
-        inset 7px 7px 12px rgba(255,255,255,.95),
-        0 12px 28px rgba(66,53,37,.42);
+    0%,
+    100% {
+        transform: translate(-50%, -50%) scale(1);
+    }
+
+    50% {
+        transform: translate(-50%, -50%) scale(1.07);
+    }
 }
 
-.touchText {
+.open-text {
     position: absolute;
 
-    bottom: 5%;
+    bottom: 7%;
 
-    left: 0;
-    right: 0;
+    width: 100%;
 
     text-align: center;
 
-    font-size: 14px;
+    font-size: 13px;
 
     letter-spacing: 4px;
 
+    color: #817a70;
+
     text-transform: uppercase;
-
-    color: #8b8174;
-
-    z-index: 8;
-
-    transition: opacity 1s ease;
 }
 
-/* OTVARANJE */
-
-#envelopeScreen.opening .pearlButton {
-    transform:
-        translate(-50%, -50%)
-        scale(.45);
-
-    opacity: 0;
-}
-
-#envelopeScreen.opening .touchText {
-    opacity: 0;
-}
-
-#envelopeScreen.opening .envelope {
-    transform:
-        translateY(-18px)
-        rotateX(-14deg)
-        scale(1.035);
-
-    filter:
-        brightness(1.08)
-        drop-shadow(0 45px 35px rgba(65,50,30,.3));
-}
-
-#envelopeScreen.finished {
-    opacity: 0;
-    visibility: hidden;
-}
-
-
-/* =========================
+/* ==============================
    POZIVNICA
-========================= */
+================================ */
 
 #invitation {
+    width: min(100%, 600px);
+    margin: 0 auto;
+
     opacity: 0;
 
-    transition: opacity 2.5s ease;
+    transition: opacity 1.5s ease;
+
+    background:
+        linear-gradient(
+            rgba(249, 246, 238, 0.04),
+            rgba(249, 246, 238, 0.04)
+        ),
+        url("tema.PNG");
+
+    background-size: 100% auto;
+    background-repeat: repeat-y;
+    background-position: top center;
+
+    box-shadow:
+        0 0 50px rgba(60, 50, 40, 0.12);
 }
 
 #invitation.visible {
     opacity: 1;
 }
 
-.page {
+/* ==============================
+   SEKCIJE
+================================ */
+
+.section {
     position: relative;
 
-    width: min(100%, 520px);
     min-height: 100svh;
-
-    margin: 0 auto;
-
-    overflow: hidden;
-
-    background-image: url("tema.PNG");
-    background-size: 100% 100%;
-    background-position: center;
-    background-repeat: no-repeat;
 
     display: flex;
     flex-direction: column;
@@ -250,309 +201,270 @@ body {
     align-items: center;
     justify-content: center;
 
-    padding:
-        110px
-        42px
-        120px;
-
     text-align: center;
+
+    padding: 100px 42px;
+
+    overflow: hidden;
 }
 
-.page::after {
+/* NEMA POSEBNIH BIJELIH POZADINA */
+
+.section::after {
     content: "";
 
     position: absolute;
-    inset: 0;
 
-    background:
-        radial-gradient(
-            ellipse at center,
-            rgba(255,252,244,.08) 20%,
-            rgba(250,245,233,.16) 100%
-        );
+    left: 0;
+    right: 0;
+    bottom: 0;
+
+    height: 120px;
+
+    background: linear-gradient(
+        to bottom,
+        rgba(248, 244, 235, 0),
+        rgba(248, 244, 235, 0.25),
+        rgba(248, 244, 235, 0)
+    );
 
     pointer-events: none;
 }
 
-.content {
-    position: relative;
-    z-index: 3;
+/* ==============================
+   TIPOGRAFIJA
+================================ */
 
-    width: 100%;
-}
+.script {
+    font-family: "Parisienne", cursive;
 
+    font-weight: 400;
 
-/* =========================
-   NASLOVI
-========================= */
-
-.smallText {
-    font-size: 16px;
-
-    letter-spacing: 3px;
-
-    text-transform: uppercase;
-
-    margin-bottom: 30px;
+    color: #555968;
 }
 
 .names {
     font-family: "Parisienne", cursive;
 
-    font-size: clamp(58px, 15vw, 86px);
+    font-size: clamp(58px, 13vw, 94px);
 
     font-weight: 400;
 
-    line-height: .9;
+    line-height: 0.92;
 
-    color: #625c53;
+    color: #555968;
 
-    margin: 20px 0 35px;
+    margin: 20px 0 30px;
 }
 
-.names span {
-    display: block;
+.section-title {
+    font-family: "Parisienne", cursive;
+
+    font-size: clamp(52px, 10vw, 78px);
+
+    font-weight: 400;
+
+    line-height: 1;
+
+    color: #555968;
+
+    margin: 0 0 30px;
 }
 
-.ampersand {
-    font-size: .65em;
-    margin: 8px 0;
-}
-
-.date {
-    font-family: "Italiana", serif;
-
-    font-size: 24px;
-
-    letter-spacing: 1px;
-
-    margin-top: 25px;
-}
-
-.scrollText {
-    margin-top: 70px;
-
-    font-size: 13px;
+.small-title {
+    font-size: 14px;
 
     letter-spacing: 4px;
 
     text-transform: uppercase;
+
+    margin-bottom: 12px;
 }
 
-.arrow {
-    font-size: 27px;
+.text {
+    font-size: clamp(19px, 4.5vw, 27px);
 
-    margin-top: 12px;
+    line-height: 1.65;
 
-    animation: arrowMove 2s infinite;
+    max-width: 460px;
+
+    margin: 0 auto;
+
+    color: #66636a;
 }
-
-@keyframes arrowMove {
-
-    0%,100% {
-        transform: translateY(0);
-    }
-
-    50% {
-        transform: translateY(10px);
-    }
-
-}
-
-
-/* =========================
-   PROGRAM
-========================= */
-
-.sectionTitle {
-    font-family: "Parisienne", cursive;
-
-    font-size: clamp(48px, 12vw, 68px);
-
-    font-weight: 400;
-
-    margin: 0 0 20px;
-
-    color: #625c53;
-}
-
-.description {
-    font-size: 23px;
-
-    line-height: 1.45;
-
-    max-width: 380px;
-
-    margin: 0 auto 25px;
-}
-
-
-/* =========================
-   INTEGRIRANE SLIKE
-========================= */
-
-.artImage {
-    position: relative;
-
-    width: calc(100% + 84px);
-
-    margin-left: -42px;
-
-    margin-top: 5px;
-    margin-bottom: 10px;
-
-    height: 48vh;
-
-    min-height: 390px;
-
-    overflow: hidden;
-}
-
-.artImage img {
-    width: 100%;
-    height: 100%;
-
-    object-fit: cover;
-
-    display: block;
-
-    filter:
-        saturate(.82)
-        contrast(.92)
-        brightness(1.05);
-}
-
-/* STAPANJE S TEMOM */
-
-.artImage::before {
-    content: "";
-
-    position: absolute;
-    inset: 0;
-
-    z-index: 2;
-
-    background:
-        linear-gradient(
-            to bottom,
-            #f6efe2 0%,
-            rgba(246,239,226,.70) 5%,
-            transparent 22%,
-            transparent 72%,
-            rgba(246,239,226,.65) 91%,
-            #f6efe2 100%
-        );
-}
-
-.artImage::after {
-    content: "";
-
-    position: absolute;
-    inset: 0;
-
-    z-index: 2;
-
-    box-shadow:
-        inset 45px 0 35px -28px #f6efe2,
-        inset -45px 0 35px -28px #f6efe2;
-
-    pointer-events: none;
-}
-
-
-/* =========================
-   VRIJEME
-========================= */
 
 .time {
-    font-family: "Italiana", serif;
+    font-size: clamp(46px, 10vw, 68px);
 
-    font-size: 42px;
+    margin-top: 38px;
 
-    margin-top: 10px;
-
-    color: #71695e;
+    color: #626573;
 }
 
 .line {
     width: 75px;
     height: 1px;
 
-    background: #b8aa94;
+    background: rgba(90, 88, 95, 0.35);
 
-    margin: 15px auto 20px;
+    margin: 15px auto 22px;
 }
 
 .location {
-    font-size: 21px;
+    font-size: clamp(20px, 4.8vw, 28px);
 
-    line-height: 1.45;
+    line-height: 1.55;
 }
 
+/* ==============================
+   NASLOVNA
+================================ */
 
-/* =========================
-   ZADNJA STRANICA
-========================= */
-
-.lastPage {
-    background-image: url("zadnja.PNG");
-    background-size: cover;
-    background-position: center;
+.hero {
+    min-height: 100svh;
 }
 
-.lastPage .content {
-    background:
-        rgba(250,247,239,.40);
+.hero-date {
+    font-size: 23px;
 
-    backdrop-filter: blur(1px);
-
-    padding:
-        45px
-        25px;
-
-    border-radius: 35px;
+    margin-top: 10px;
 }
 
-.thankYou {
-    font-family: "Parisienne", cursive;
+.scroll-text {
+    position: absolute;
 
-    font-size: 55px;
+    bottom: 55px;
+
+    font-size: 12px;
+
+    letter-spacing: 4px;
+
+    text-transform: uppercase;
+
+    animation: floatText 2s ease-in-out infinite;
+}
+
+@keyframes floatText {
+
+    0%,
+    100% {
+        transform: translateY(0);
+    }
+
+    50% {
+        transform: translateY(8px);
+    }
+}
+
+/* ==============================
+   INTEGRIRANE SLIKE
+================================ */
+
+.watercolor-image {
+    position: relative;
+
+    width: calc(100% + 84px);
+
+    margin-left: -42px;
+    margin-right: -42px;
 
     margin-top: 35px;
+    margin-bottom: 15px;
+
+    height: clamp(380px, 72vw, 600px);
+
+    overflow: hidden;
+
+    -webkit-mask-image:
+        linear-gradient(
+            to bottom,
+            transparent 0%,
+            black 12%,
+            black 82%,
+            transparent 100%
+        );
+
+    mask-image:
+        linear-gradient(
+            to bottom,
+            transparent 0%,
+            black 12%,
+            black 82%,
+            transparent 100%
+        );
 }
 
+.watercolor-image img {
+    width: 100%;
+    height: 100%;
 
-/* =========================
+    object-fit: contain;
+
+    object-position: center;
+
+    display: block;
+
+    mix-blend-mode: multiply;
+
+    filter:
+        saturate(0.82)
+        contrast(0.92)
+        brightness(1.05);
+
+    opacity: 0.92;
+}
+
+/* ==============================
+   RSVP
+================================ */
+
+.rsvp {
+    min-height: 100svh;
+}
+
+.rsvp-date {
+    font-size: clamp(29px, 7vw, 44px);
+
+    margin: 30px 0;
+}
+
+.contact {
+    font-size: clamp(21px, 5vw, 29px);
+
+    line-height: 1.9;
+}
+
+.thank-you {
+    font-family: "Parisienne", cursive;
+
+    font-size: 58px;
+
+    margin-top: 45px;
+}
+
+/* ==============================
    MOBITEL
-========================= */
+================================ */
 
 @media (max-width: 600px) {
 
-    .envelope {
-        width: 100vw;
-        height: 100svh;
-
-        aspect-ratio: auto;
-
-        border-radius: 0;
-
-        background-size: cover;
+    .section {
+        padding-left: 28px;
+        padding-right: 28px;
     }
 
-    .page {
-        width: 100%;
-        padding:
-            100px
-            30px
-            110px;
+    .watercolor-image {
+        width: calc(100% + 56px);
+
+        margin-left: -28px;
+        margin-right: -28px;
+
+        height: 62vh;
+        min-height: 390px;
     }
 
-    .artImage {
-        width: calc(100% + 60px);
-
-        margin-left: -30px;
-
-        height: 46vh;
+    .watercolor-image img {
+        object-fit: contain;
     }
 
 }
@@ -560,24 +472,24 @@ body {
 </style>
 </head>
 
-
 <body>
 
+<!-- ==============================
+     KU V E R T A
+================================ -->
 
-<!-- KU V E R T A -->
-
-<div id="envelopeScreen">
+<div id="envelope-screen">
 
     <div class="envelope">
 
         <button
-            class="pearlButton"
+            class="pearl-button"
             id="pearl"
             aria-label="Otvori pozivnicu">
         </button>
 
-        <div class="touchText">
-            Dodirnite biser da otvorite
+        <div class="open-text">
+            dodirnite biser da otvorite
         </div>
 
     </div>
@@ -585,228 +497,179 @@ body {
 </div>
 
 
-
-<!-- POZIVNICA -->
+<!-- ==============================
+     POZIVNICA
+================================ -->
 
 <main id="invitation">
 
 
-<!-- PRVA STRANICA -->
+<!-- NASLOVNA -->
 
-<section class="page">
+<section class="section hero">
 
-    <div class="content">
+    <div class="small-title">
+        Pozivamo vas na naše vjenčanje
+    </div>
 
-        <div class="smallText">
-            Pozivamo vas na naše vjenčanje
-        </div>
+    <h1 class="names">
+        Rea<br>
+        &amp;<br>
+        Antonio
+    </h1>
 
-        <h1 class="names">
+    <div class="line"></div>
 
-            <span>Rea</span>
+    <div class="hero-date">
+        16. listopada 2026.
+    </div>
 
-            <span class="ampersand">&amp;</span>
-
-            <span>Antonio</span>
-
-        </h1>
-
-        <div class="date">
-            16. listopada 2026.
-        </div>
-
-        <div class="scrollText">
-            Zavirite u našu priču
-        </div>
-
-        <div class="arrow">
-            ↓
-        </div>
-
+    <div class="scroll-text">
+        zakoračite u našu priču ↓
     </div>
 
 </section>
 
 
+<!-- OKUPLJANJE -->
 
-<!-- KUĆA -->
+<section class="section">
 
-<section class="page">
+    <h2 class="section-title">
+        Okupljanje
+    </h2>
 
-    <div class="content">
+    <p class="text">
+        Naš dan započinje među obitelji<br>
+        i dragim ljudima.
+    </p>
 
-        <h2 class="sectionTitle">
-            Okupljanje
-        </h2>
+    <div class="watercolor-image">
 
-        <p class="description">
-            Naš dan započinje među obitelji<br>
-            i dragim ljudima.
-        </p>
-
-        <div class="artImage">
-
-            <img
-                src="kuca.PNG"
-                alt="Okupljanje">
-
-        </div>
-
-        <div class="time">
-            14:00
-        </div>
-
-        <div class="line"></div>
-
-        <div class="location">
-            Gradac 19,<br>
-            Bribir
-        </div>
+        <img
+            src="kuca.PNG"
+            alt="Mjesto okupljanja">
 
     </div>
 
-</section>
+    <div class="time">
+        14:00
+    </div>
 
+    <div class="line"></div>
+
+    <div class="location">
+        Gradac 19,<br>
+        Bribir
+    </div>
+
+</section>
 
 
 <!-- CRKVA -->
 
-<section class="page">
+<section class="section">
 
-    <div class="content">
+    <h2 class="section-title">
+        Crkveni obred
+    </h2>
 
-        <h2 class="sectionTitle">
-            Crkveni obred
-        </h2>
+    <p class="text">
+        Pred Bogom i najdražima<br>
+        izgovorit ćemo svoje „da”.
+    </p>
 
-        <p class="description">
-            Pred Bogom i najdražima<br>
-            izgovorit ćemo svoje „da”.
-        </p>
+    <div class="watercolor-image">
 
-        <div class="artImage">
-
-            <img
-                src="crkva.PNG"
-                alt="Crkveni obred">
-
-        </div>
-
-        <div class="time">
-            17:00
-        </div>
-
-        <div class="line"></div>
-
-        <div class="location">
-            Župna crkva<br>
-            sv. Petra i Pavla<br>
-            u Bribiru
-        </div>
+        <img
+            src="crkva.PNG"
+            alt="Župna crkva">
 
     </div>
 
-</section>
+    <div class="time">
+        17:00
+    </div>
 
+    <div class="line"></div>
+
+    <div class="location">
+        Župna crkva<br>
+        sv. Petra i Pavla<br>
+        u Bribiru
+    </div>
+
+</section>
 
 
 <!-- SALA -->
 
-<section class="page">
+<section class="section">
 
-    <div class="content">
+    <h2 class="section-title">
+        Svadbena proslava
+    </h2>
 
-        <h2 class="sectionTitle">
-            Svadbena proslava
-        </h2>
+    <p class="text">
+        Nakon obreda<br>
+        nastavljamo slavlje.
+    </p>
 
-        <p class="description">
-            Nakon obreda<br>
-            nastavljamo slavlje.
-        </p>
+    <div class="watercolor-image">
 
-        <div class="artImage">
+        <img
+            src="sala.PNG"
+            alt="Svadbena proslava">
 
-            <img
-                src="sala.PNG"
-                alt="Svadbena proslava">
+    </div>
 
-        </div>
+    <div class="time">
+        19:00
+    </div>
 
-        <div class="time">
-            19:00
-        </div>
+    <div class="line"></div>
 
-        <div class="line"></div>
-
-        <div class="location">
-            Hotel Omorika,<br>
-            Crikvenica
-        </div>
-
+    <div class="location">
+        Hotel Omorika,<br>
+        Crikvenica
     </div>
 
 </section>
 
 
+<!-- RSVP -->
 
-<!-- POTVRDA -->
+<section class="section rsvp">
 
-<section class="page">
+    <h2 class="section-title">
+        Potvrda dolaska
+    </h2>
 
-    <div class="content">
+    <p class="text">
+        Molimo vas da svoj dolazak<br>
+        potvrdite najkasnije do
+    </p>
 
-        <h2 class="sectionTitle">
-            Potvrda dolaska
-        </h2>
+    <div class="rsvp-date">
+        1. listopada 2026.
+    </div>
 
-        <p class="description">
-            Molimo vas da svoj dolazak<br>
-            potvrdite najkasnije do
-        </p>
+    <div class="line"></div>
 
-        <div class="date">
-            1. listopada 2026.
-        </div>
+    <div class="contact">
 
-        <div class="line"></div>
+        Rea<br>
+        091 951 3980
 
-        <div class="location">
+        <br><br>
 
-            Rea<br>
-            091 951 3980
-
-            <br><br>
-
-            Antonio<br>
-            092 120 2512
-
-        </div>
+        Antonio<br>
+        092 120 2512
 
     </div>
 
-</section>
-
-
-
-<!-- ZADNJA -->
-
-<section class="page lastPage">
-
-    <div class="content">
-
-        <div class="smallText">
-            Veselimo se proslaviti
-        </div>
-
-        <div class="thankYou">
-            s našim najdražima
-        </div>
-
-        <div class="date">
-            Rea &amp; Antonio
-        </div>
-
+    <div class="thank-you">
+        Hvala!
     </div>
 
 </section>
@@ -815,51 +678,32 @@ body {
 </main>
 
 
-
 <script>
 
 const pearl = document.getElementById("pearl");
-
-const envelopeScreen =
-document.getElementById("envelopeScreen");
-
-const invitation =
-document.getElementById("invitation");
-
-let opened = false;
-
+const envelopeScreen = document.getElementById("envelope-screen");
+const invitation = document.getElementById("invitation");
 
 pearl.addEventListener("click", function () {
 
-    if (opened) return;
-
-    opened = true;
-
-
-    envelopeScreen.classList.add("opening");
-
-
-    setTimeout(function () {
-
-        invitation.classList.add("visible");
-
-        envelopeScreen.classList.add("finished");
-
-        window.scrollTo(0, 0);
-
-    }, 10000);
-
+    envelopeScreen.classList.add("opened");
 
     setTimeout(function () {
 
         envelopeScreen.style.display = "none";
 
-    }, 12000);
+        invitation.classList.add("visible");
+
+        window.scrollTo({
+            top: 0,
+            behavior: "instant"
+        });
+
+    }, 1400);
 
 });
 
 </script>
-
 
 </body>
 </html>
