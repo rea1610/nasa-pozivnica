@@ -1,873 +1,1626 @@
 <!DOCTYPE html>
 <html lang="hr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-  <title>Rea & Antonio</title>
+<title>Rea & Antonio</title>
 
-  <style>
-    * {
-      box-sizing: border-box;
-    }
+<style>
 
-    html {
-      scroll-behavior: smooth;
-    }
+* {
+  box-sizing: border-box;
+}
 
-    body {
-      margin: 0;
-      background: #f5f0e7;
-      color: #62594d;
-      font-family: Georgia, "Times New Roman", serif;
-    }
+html {
+  scroll-behavior: smooth;
+}
 
-    body.locked {
-      overflow: hidden;
-    }
+body {
+  margin: 0;
+  background: #f6f1e8;
+  color: #62594d;
+  font-family: Georgia, "Times New Roman", serif;
+}
 
-    /* =========================
-       KUVERTA
-    ========================= */
+body.locked {
+  overflow: hidden;
+}
 
-    .intro {
-      position: fixed;
-      inset: 0;
-      z-index: 100;
-      background:
-        radial-gradient(circle at center, #fffdf8 0%, #eee5d7 100%);
-      display: flex;
-      justify-content: center;
-      align-items: center;
-      transition: opacity 1.2s ease, visibility 1.2s ease;
-    }
 
-    .intro.finished {
-      opacity: 0;
-      visibility: hidden;
-      pointer-events: none;
-    }
+/* =========================
+   POČETNI EKRAN
+========================= */
 
-    .envelope {
-      position: relative;
-      width: min(88vw, 410px);
-      height: 590px;
-      overflow: hidden;
-      background: #f8f2e8;
-      box-shadow: 0 25px 70px rgba(73, 61, 45, 0.18);
-      border-radius: 4px;
-    }
+.intro {
+  position: fixed;
+  inset: 0;
+  z-index: 100;
+  display: flex;
+  justify-content: center;
+  align-items: center;
 
-    .inside {
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(rgba(245, 241, 229, 0.22), rgba(245, 241, 229, 0.22)),
-        radial-gradient(circle at 20% 20%, #dce3d2 0 2px, transparent 3px),
-        radial-gradient(circle at 80% 35%, #d5dfca 0 2px, transparent 3px),
-        linear-gradient(145deg, #edf0e5, #dfe7d8);
-      z-index: 1;
-    }
+  background:
+    radial-gradient(
+      circle at center,
+      #fffdf9 0%,
+      #f4eee4 55%,
+      #e8dfd1 100%
+    );
 
-    .inside::before,
-    .inside::after {
-      content: "❀  ❦  ❀";
-      position: absolute;
-      color: rgba(102, 121, 91, 0.4);
-      font-size: 38px;
-      letter-spacing: 8px;
-    }
+  transition:
+    opacity 1.4s ease,
+    visibility 1.4s ease;
+}
 
-    .inside::before {
-      top: 95px;
-      left: 28px;
-      transform: rotate(-35deg);
-    }
+.intro.finished {
+  opacity: 0;
+  visibility: hidden;
+  pointer-events: none;
+}
 
-    .inside::after {
-      right: 20px;
-      bottom: 90px;
-      transform: rotate(145deg);
-    }
+
+/* =========================
+   KUVERTA
+========================= */
+
+.envelope {
+  position: relative;
+
+  width: min(88vw, 410px);
+  height: min(78svh, 590px);
+
+  overflow: hidden;
+
+  background: #f4ede2;
+
+  box-shadow:
+    0 25px 70px rgba(73, 61, 45, .18);
+
+  perspective: 1500px;
+}
+
+
+/* POZADINA IZA KOVERTE */
+
+.inside {
+  position: absolute;
+  inset: 0;
+
+  z-index: 1;
+
+  background:
+    radial-gradient(
+      circle at 20% 20%,
+      rgba(138, 157, 119, .25) 0 3px,
+      transparent 4px
+    ),
+
+    radial-gradient(
+      circle at 80% 70%,
+      rgba(138, 157, 119, .22) 0 3px,
+      transparent 4px
+    ),
+
+    linear-gradient(
+      145deg,
+      #eef1e7,
+      #dfe7d8
+    );
+}
+
+
+/* =========================
+   DIJELOVI KOVERTE
+========================= */
 
 .envelope-piece {
   position: absolute;
-  background: #f7f0e5;
+
+  background: #f8f1e6;
+
   z-index: 5;
-  transition:
-    transform 4.2s cubic-bezier(.05, .65, .12, 1),
-    opacity 2.2s ease,
-    filter 2.2s ease;
-  will-change: transform;
 }
+
+
+/* =========================
+   GORNJI POKLOPAC
+========================= */
 
 .top-flap {
   top: 0;
   left: 0;
+
   width: 100%;
   height: 52%;
-  clip-path: polygon(0 0, 100% 0, 50% 100%);
+
+  clip-path:
+    polygon(
+      0 0,
+      100% 0,
+      50% 100%
+    );
+
   transform-origin: top center;
+
+  transform:
+    rotateX(0deg);
+
   z-index: 8;
-  box-shadow: 0 18px 28px rgba(88, 72, 50, .10);
+
+  transition:
+    transform 2s
+    cubic-bezier(.42, 0, .18, 1);
+
+  backface-visibility: visible;
+
+  box-shadow:
+    0 15px 30px
+    rgba(80, 65, 45, .08);
 }
 
-.envelope.phase-one .top-flap {
-  transform: rotateX(180deg);
-  filter: brightness(0.96);
+
+/* OTVARANJE GORNJEG DIJELA */
+
+.envelope.open-top .top-flap {
+
+  transform:
+    rotateX(180deg);
+
 }
+
+
+/* =========================
+   LIJEVI DIO
+========================= */
 
 .left-flap {
+
   left: 0;
   top: 0;
+
   width: 58%;
   height: 100%;
-  clip-path: polygon(0 0, 100% 50%, 0 100%);
-  transform-origin: left center;
+
+  clip-path:
+    polygon(
+      0 0,
+      100% 50%,
+      0 100%
+    );
+
 }
+
+
+/* =========================
+   DESNI DIO
+========================= */
 
 .right-flap {
+
   right: 0;
   top: 0;
+
   width: 58%;
   height: 100%;
-  clip-path: polygon(100% 0, 0 50%, 100% 100%);
-  transform-origin: right center;
+
+  clip-path:
+    polygon(
+      100% 0,
+      0 50%,
+      100% 100%
+    );
+
 }
+
+
+/* =========================
+   DONJI DIO
+========================= */
 
 .bottom-flap {
+
   bottom: 0;
   left: 0;
+
   width: 100%;
   height: 56%;
-  clip-path: polygon(0 100%, 50% 0, 100% 100%);
-  transform-origin: bottom center;
+
+  clip-path:
+    polygon(
+      0 100%,
+      50% 0,
+      100% 100%
+    );
+
   z-index: 6;
+
 }
 
-.envelope.phase-two .left-flap,
-.envelope.phase-two .right-flap,
-.envelope.phase-two .bottom-flap {
+
+/* =========================
+   NESTAJANJE TRI DIJELA
+========================= */
+
+.left-flap,
+.right-flap,
+.bottom-flap {
+
+  transition:
+    opacity .65s ease,
+    filter .65s ease;
+
+}
+
+
+.envelope.fade-envelope .left-flap,
+.envelope.fade-envelope .right-flap,
+.envelope.fade-envelope .bottom-flap {
+
   opacity: 0;
-  filter: blur(8px);
+
+  filter:
+    blur(5px);
+
 }
 
 
-    .lace {
-      position: absolute;
-      z-index: 9;
-      width: 100%;
-      height: 22px;
-      top: 48%;
-      left: 0;
-      color: #d6c9b5;
-      text-align: center;
-      font-size: 21px;
-      letter-spacing: 2px;
-      transition: opacity .6s ease;
-    }
+/* =========================
+   ČIPKA
+========================= */
 
-    .envelope.phase-one .lace {
-      opacity: 0;
-    }
+.lace {
 
-    .pearl {
-      position: absolute;
-      z-index: 12;
-      left: 50%;
-      top: 49%;
-      transform: translate(-50%, -50%);
-      width: 66px;
-      height: 66px;
-      border-radius: 50%;
-      border: 0;
-      cursor: pointer;
-      color: #81715f;
-      font-family: Georgia, serif;
-      font-style: italic;
-      font-size: 19px;
-      background:
-        radial-gradient(circle at 32% 27%, #ffffff, #eee6d6 48%, #cbbba1 100%);
-      box-shadow:
-        0 8px 20px rgba(71, 57, 40, .28),
-        inset 0 0 0 3px rgba(255,255,255,.45);
-      transition: transform .5s ease, opacity .5s ease;
-    }
+  position: absolute;
 
-    .pearl:hover {
-      transform: translate(-50%, -50%) scale(1.08);
-    }
+  z-index: 9;
 
-    .envelope.phase-one .pearl {
-      opacity: 0;
-      pointer-events: none;
-      transform: translate(-50%, -50%) scale(.4);
-    }
+  width: 100%;
 
-    .open-text {
-      position: absolute;
-      bottom: 35px;
-      left: 0;
-      width: 100%;
-      text-align: center;
-      z-index: 10;
-      font-size: 11px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: #857867;
-      transition: opacity .5s ease;
-    }
+  top: 48%;
 
-    .envelope.phase-one .open-text {
-      opacity: 0;
-    }
+  text-align: center;
 
-    /* =========================
-       POZIVNICA
-    ========================= */
+  color: #d3c5b0;
 
-    main {
-      opacity: 0;
-      transition: opacity 1.4s ease;
-    }
+  font-size: 21px;
 
-    main.visible {
-      opacity: 1;
-    }
+  letter-spacing: 3px;
 
-    .page {
-      min-height: 100svh;
-      position: relative;
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      padding: 55px 24px;
-      overflow: hidden;
-      background:
-        linear-gradient(rgba(255, 253, 248, .9), rgba(255, 253, 248, .9)),
-        repeating-linear-gradient(
-          0deg,
-          rgba(121, 102, 74, .025) 0,
-          rgba(121, 102, 74, .025) 1px,
-          transparent 1px,
-          transparent 4px
-        );
-    }
+  transition:
+    opacity .5s ease;
 
-    .content {
-      width: min(100%, 650px);
-      text-align: center;
-      position: relative;
-      z-index: 2;
-    }
+}
 
-    .ornament {
-      color: #9ba68e;
-      font-size: 26px;
-      margin-bottom: 25px;
-    }
 
-    .eyebrow {
-      font-size: 13px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      margin-bottom: 28px;
-      color: #81796e;
-    }
+.envelope.open-top .lace {
 
-    h1,
-    h2 {
-      font-weight: normal;
-      font-style: italic;
-      color: #756856;
-      margin: 0;
-    }
+  opacity: 0;
 
-    h1 {
-      font-size: clamp(52px, 13vw, 92px);
-      line-height: .92;
-    }
+}
 
-    h2 {
-      font-size: clamp(40px, 9vw, 65px);
-      margin-bottom: 20px;
-    }
 
-    .date {
-      margin-top: 36px;
-      font-size: 21px;
-      letter-spacing: 2px;
-    }
+/* =========================
+   BISER
+========================= */
 
-    .scroll-note {
-      margin-top: 70px;
-      font-size: 10px;
-      letter-spacing: 4px;
-      text-transform: uppercase;
-      color: #958a79;
-      animation: pulse 1.8s infinite;
-    }
+.pearl {
 
-    .arrow {
-      font-size: 25px;
-      margin-top: 12px;
-    }
+  position: absolute;
 
-    @keyframes pulse {
-      50% {
-        opacity: .35;
-      }
-    }
+  z-index: 12;
 
-    /* =========================
-       ILUSTRACIJE
-    ========================= */
+  left: 50%;
+  top: 49%;
 
-    .illustration {
-      width: min(100%, 520px);
-      height: 390px;
-      margin: 30px auto;
-      border-radius: 220px 220px 10px 10px;
-      overflow: hidden;
-      position: relative;
-      box-shadow: 0 20px 45px rgba(73, 64, 48, .12);
-      background: #e9eadf;
-    }
+  transform:
+    translate(-50%, -50%);
 
-    .illustration img {
-      width: 100%;
-      height: 100%;
-      object-fit: cover;
-      display: block;
-      filter: saturate(.72) contrast(.9) brightness(1.06);
-    }
+  width: 68px;
+  height: 68px;
 
-    .illustration::after {
-      content: "";
-      position: absolute;
-      inset: 0;
-      background:
-        linear-gradient(
-          to bottom,
-          rgba(255, 250, 239, .12),
-          rgba(243, 233, 214, .28)
-        );
-      pointer-events: none;
-    }
+  border-radius: 50%;
 
-    /* Privremene ilustracije dok ne ubacimo slike */
+  border: none;
 
-    .house-placeholder {
-      background:
-        linear-gradient(rgba(235, 234, 216, .25), rgba(235, 224, 202, .3)),
-        linear-gradient(155deg, #cbd6c1 0 35%, #ddd5ba 35% 58%, #b9c8a8 58%);
-    }
+  cursor: pointer;
 
-    .house-placeholder::before {
-      content: "⌂";
-      position: absolute;
-      font-size: 190px;
-      color: rgba(255, 252, 240, .7);
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-    }
+  font-family:
+    Georgia,
+    serif;
 
-    .church-placeholder {
-      background:
-        linear-gradient(rgba(235, 234, 216, .15), rgba(235, 224, 202, .35)),
-        linear-gradient(160deg, #cad8dc, #dfe5d7 45%, #b6c5a5);
-    }
+  font-style: italic;
 
-    .church-placeholder::before {
-      content: "♰";
-      position: absolute;
-      font-size: 220px;
-      color: rgba(255, 252, 240, .75);
-      left: 50%;
-      top: 49%;
-      transform: translate(-50%, -50%);
-    }
+  font-size: 19px;
 
-    .hotel-placeholder {
-      background:
-        linear-gradient(rgba(239, 235, 217, .1), rgba(239, 228, 205, .32)),
-        linear-gradient(
-          to bottom,
-          #cbdce1 0 48%,
-          #9fbfc2 48% 70%,
-          #dfd3b8 70%
-        );
-    }
+  color: #81715f;
 
-    .hotel-placeholder::before {
-      content: "❦";
-      position: absolute;
-      font-size: 180px;
-      color: rgba(255, 252, 240, .65);
-      left: 50%;
-      top: 50%;
-      transform: translate(-50%, -50%);
-    }
+  background:
 
-    /* =========================
-       PODACI
-    ========================= */
+    radial-gradient(
+      circle at 30% 25%,
+      #ffffff,
+      #eee6d6 48%,
+      #cbbba1 100%
+    );
 
-    .section-text {
-      font-size: 18px;
-      line-height: 1.8;
-      max-width: 480px;
-      margin: auto;
-    }
+  box-shadow:
 
-    .time {
-      font-size: 40px;
-      color: #756856;
-      margin: 20px 0 8px;
-    }
+    0 8px 20px
+    rgba(71, 57, 40, .28),
 
-    .location {
-      font-size: 18px;
-      line-height: 1.6;
-    }
+    inset 0 0 0 3px
+    rgba(255,255,255,.45);
 
-    .divider {
-      width: 85px;
-      height: 1px;
-      background: #b9aa94;
-      margin: 25px auto;
-    }
+  transition:
 
-    /* =========================
-       RSVP
-    ========================= */
+    opacity .5s ease,
 
-    .rsvp-date {
-      font-size: 32px;
-      color: #756856;
-      margin: 30px 0;
-    }
+    transform .5s ease;
 
-    .contacts {
-      display: flex;
-      justify-content: center;
-      gap: 55px;
-      flex-wrap: wrap;
-      margin-top: 35px;
-    }
+}
 
-    .contact {
-      min-width: 150px;
-    }
 
-    .contact-name {
-      font-size: 27px;
-      font-style: italic;
-      color: #756856;
-      margin-bottom: 10px;
-    }
+.envelope.open-top .pearl {
 
-    .phone {
-      color: #776d60;
-      text-decoration: none;
-      font-size: 18px;
-      letter-spacing: 1px;
-    }
+  opacity: 0;
 
-    /* =========================
-       ZAVRŠNI EKRAN
-    ========================= */
+  pointer-events: none;
 
-    .final-page {
-      background:
-        radial-gradient(circle at center, rgba(255,255,255,.85), transparent 55%),
-        #f2ebdf;
-    }
+  transform:
 
-    .curtain {
-      position: absolute;
-      top: 0;
-      width: 35%;
-      height: 100%;
-      opacity: .65;
-      background:
-        repeating-linear-gradient(
-          90deg,
-          #eee5d8 0,
-          #fffaf1 20px,
-          #e4dacb 40px
-        );
-    }
+    translate(-50%, -50%)
 
-    .curtain.left {
-      left: 0;
-      clip-path: polygon(0 0, 100% 0, 70% 100%, 0 100%);
-    }
+    scale(.6);
 
-    .curtain.right {
-      right: 0;
-      clip-path: polygon(0 0, 100% 0, 100% 100%, 30% 100%);
-    }
+}
 
-    .monogram {
-      font-size: clamp(80px, 25vw, 150px);
-      font-style: italic;
-      color: #80715e;
-      line-height: 1;
-    }
 
-    .heart {
-      margin-top: 35px;
-      font-size: 28px;
-      color: #9b8b76;
-    }
+/* =========================
+   TEKST OTVARANJA
+========================= */
 
-    /* =========================
-       SCROLL ANIMACIJE
-    ========================= */
+.open-text {
 
-    .reveal {
-      opacity: 0;
-      transform: translateY(45px);
-      transition:
-        opacity 1.2s ease,
-        transform 1.2s ease;
-    }
+  position: absolute;
 
-    .reveal.show {
-      opacity: 1;
-      transform: translateY(0);
-    }
+  bottom: 35px;
 
-    @media (max-width: 520px) {
-      .page {
-        padding: 45px 20px;
-      }
+  width: 100%;
 
-      .illustration {
-        height: 350px;
-      }
+  z-index: 10;
 
-      .contacts {
-        gap: 30px;
-      }
+  text-align: center;
 
-      .envelope {
-        height: 78svh;
-        max-height: 620px;
-      }
-    }
-  </style>
+  font-size: 10px;
+
+  letter-spacing: 4px;
+
+  text-transform: uppercase;
+
+  color: #857867;
+
+  transition:
+
+    opacity .5s ease;
+
+}
+
+
+.envelope.open-top .open-text {
+
+  opacity: 0;
+
+}
+
+
+/* =========================
+   POZIVNICA
+========================= */
+
+main {
+
+  opacity: 0;
+
+  transition:
+
+    opacity 1.5s ease;
+
+}
+
+
+main.visible {
+
+  opacity: 1;
+
+}
+
+
+/* =========================
+   STRANICE
+========================= */
+
+.page {
+
+  min-height: 100svh;
+
+  position: relative;
+
+  display: flex;
+
+  align-items: center;
+
+  justify-content: center;
+
+  padding:
+
+    55px 24px;
+
+  overflow: hidden;
+
+  background:
+
+    linear-gradient(
+
+      rgba(255,253,248,.93),
+
+      rgba(255,253,248,.93)
+
+    ),
+
+    repeating-linear-gradient(
+
+      0deg,
+
+      rgba(121,102,74,.025) 0,
+
+      rgba(121,102,74,.025) 1px,
+
+      transparent 1px,
+
+      transparent 4px
+
+    );
+
+}
+
+
+.content {
+
+  width: min(100%,650px);
+
+  text-align: center;
+
+  position: relative;
+
+  z-index: 2;
+
+}
+
+
+.ornament {
+
+  color: #9ba68e;
+
+  font-size: 26px;
+
+  margin-bottom: 25px;
+
+}
+
+
+.eyebrow {
+
+  font-size: 13px;
+
+  letter-spacing: 4px;
+
+  text-transform: uppercase;
+
+  margin-bottom: 28px;
+
+  color: #81796e;
+
+}
+
+
+h1,
+h2 {
+
+  font-weight: normal;
+
+  font-style: italic;
+
+  color: #756856;
+
+  margin: 0;
+
+}
+
+
+h1 {
+
+  font-size:
+
+    clamp(52px,13vw,92px);
+
+  line-height: .92;
+
+}
+
+
+h2 {
+
+  font-size:
+
+    clamp(40px,9vw,65px);
+
+  margin-bottom: 20px;
+
+}
+
+
+.date {
+
+  margin-top: 36px;
+
+  font-size: 21px;
+
+  letter-spacing: 2px;
+
+}
+
+
+.scroll-note {
+
+  margin-top: 70px;
+
+  font-size: 10px;
+
+  letter-spacing: 4px;
+
+  text-transform: uppercase;
+
+  color: #958a79;
+
+  animation:
+
+    pulse 1.8s infinite;
+
+}
+
+
+.arrow {
+
+  font-size: 25px;
+
+  margin-top: 12px;
+
+}
+
+
+@keyframes pulse {
+
+  50% {
+
+    opacity: .35;
+
+  }
+
+}
+
+
+/* =========================
+   ILUSTRACIJE
+========================= */
+
+.illustration {
+
+  width:
+
+    min(100%,520px);
+
+  height: 390px;
+
+  margin:
+
+    30px auto;
+
+  border-radius:
+
+    220px 220px 10px 10px;
+
+  overflow: hidden;
+
+  position: relative;
+
+  box-shadow:
+
+    0 20px 45px
+
+    rgba(73,64,48,.12);
+
+}
+
+
+.house-placeholder {
+
+  background:
+
+    linear-gradient(
+
+      155deg,
+
+      #cad6c0 0 35%,
+
+      #ded6bc 35% 58%,
+
+      #b9c8a8 58%
+
+    );
+
+}
+
+
+.house-placeholder::before {
+
+  content: "⌂";
+
+  position: absolute;
+
+  font-size: 190px;
+
+  color:
+
+    rgba(255,252,240,.7);
+
+  left: 50%;
+
+  top: 50%;
+
+  transform:
+
+    translate(-50%,-50%);
+
+}
+
+
+.church-placeholder {
+
+  background:
+
+    linear-gradient(
+
+      160deg,
+
+      #cad8dc,
+
+      #dfe5d7 45%,
+
+      #b6c5a5
+
+    );
+
+}
+
+
+.church-placeholder::before {
+
+  content: "♰";
+
+  position: absolute;
+
+  font-size: 220px;
+
+  color:
+
+    rgba(255,252,240,.75);
+
+  left: 50%;
+
+  top: 49%;
+
+  transform:
+
+    translate(-50%,-50%);
+
+}
+
+
+.hotel-placeholder {
+
+  background:
+
+    linear-gradient(
+
+      to bottom,
+
+      #cbdce1 0 48%,
+
+      #9fbfc2 48% 70%,
+
+      #dfd3b8 70%
+
+    );
+
+}
+
+
+.hotel-placeholder::before {
+
+  content: "❦";
+
+  position: absolute;
+
+  font-size: 180px;
+
+  color:
+
+    rgba(255,252,240,.65);
+
+  left: 50%;
+
+  top: 50%;
+
+  transform:
+
+    translate(-50%,-50%);
+
+}
+
+
+/* =========================
+   TEKST
+========================= */
+
+.section-text {
+
+  font-size: 18px;
+
+  line-height: 1.8;
+
+  max-width: 480px;
+
+  margin: auto;
+
+}
+
+
+.time {
+
+  font-size: 40px;
+
+  color: #756856;
+
+  margin: 20px 0 8px;
+
+}
+
+
+.location {
+
+  font-size: 18px;
+
+  line-height: 1.6;
+
+}
+
+
+.divider {
+
+  width: 85px;
+
+  height: 1px;
+
+  background: #b9aa94;
+
+  margin: 25px auto;
+
+}
+
+
+/* =========================
+   RSVP
+========================= */
+
+.rsvp-date {
+
+  font-size: 32px;
+
+  color: #756856;
+
+  margin: 30px 0;
+
+}
+
+
+.contacts {
+
+  display: flex;
+
+  justify-content: center;
+
+  gap: 55px;
+
+  flex-wrap: wrap;
+
+  margin-top: 35px;
+
+}
+
+
+.contact-name {
+
+  font-size: 27px;
+
+  font-style: italic;
+
+  color: #756856;
+
+  margin-bottom: 10px;
+
+}
+
+
+.phone {
+
+  color: #776d60;
+
+  text-decoration: none;
+
+  font-size: 18px;
+
+}
+
+
+/* =========================
+   ZAVRŠETAK
+========================= */
+
+.final-page {
+
+  background:
+
+    radial-gradient(
+
+      circle at center,
+
+      rgba(255,255,255,.85),
+
+      transparent 55%
+
+    ),
+
+    #f2ebdf;
+
+}
+
+
+.monogram {
+
+  font-size:
+
+    clamp(80px,25vw,150px);
+
+  font-style: italic;
+
+  color: #80715e;
+
+}
+
+
+.heart {
+
+  margin-top: 35px;
+
+  font-size: 28px;
+
+  color: #9b8b76;
+
+}
+
+
+/* =========================
+   SCROLL ANIMACIJE
+========================= */
+
+.reveal {
+
+  opacity: 0;
+
+  transform:
+
+    translateY(40px);
+
+  transition:
+
+    opacity 1.2s ease,
+
+    transform 1.2s ease;
+
+}
+
+
+.reveal.show {
+
+  opacity: 1;
+
+  transform:
+
+    translateY(0);
+
+}
+
+
+@media(max-width:520px) {
+
+  .illustration {
+
+    height: 350px;
+
+  }
+
+}
+
+</style>
 </head>
+
 
 <body class="locked">
 
-  <!-- KUVERTA -->
 
-  <div class="intro" id="intro">
+<!-- KUVERTA -->
 
-    <div class="envelope" id="envelope">
+<div class="intro" id="intro">
 
-      <div class="inside"></div>
+<div class="envelope" id="envelope">
 
-      <div class="envelope-piece left-flap"></div>
-      <div class="envelope-piece right-flap"></div>
-      <div class="envelope-piece bottom-flap"></div>
-      <div class="envelope-piece top-flap"></div>
 
-      <div class="lace">
-        ︵ ♡ ︵ ♡ ︵ ♡ ︵
-      </div>
+<div class="inside"></div>
 
-      <button class="pearl" id="pearl" aria-label="Otvori pozivnicu">
-        R&A
-      </button>
 
-      <div class="open-text">
-        Dodirnite biser da otvorite
-      </div>
+<div class="envelope-piece left-flap"></div>
 
-    </div>
+<div class="envelope-piece right-flap"></div>
 
-  </div>
+<div class="envelope-piece bottom-flap"></div>
 
+<div class="envelope-piece top-flap"></div>
 
-  <!-- SADRŽAJ POZIVNICE -->
 
-  <main id="invitation">
+<div class="lace">
 
-    <!-- UVOD -->
+︵ ♡ ︵ ♡ ︵ ♡ ︵
 
-    <section class="page">
+</div>
 
-      <div class="content reveal">
 
-        <div class="ornament">❦</div>
+<button
 
-        <div class="eyebrow">
-          Pozivamo vas na naše vjenčanje
-        </div>
+class="pearl"
 
-        <h1>
-          Rea <span style="font-size:.65em">&</span><br>
-          Antonio
-        </h1>
+id="pearl">
 
-        <div class="date">
-          16. listopada 2026.
-        </div>
+R&A
 
-        <div class="scroll-note">
-          Otkrijte naš dan
-          <div class="arrow">↓</div>
-        </div>
+</button>
 
-      </div>
 
-    </section>
+<div class="open-text">
 
+Dodirnite biser da otvorite
 
-    <!-- OKUPLJANJE -->
+</div>
 
-    <section class="page">
 
-      <div class="content reveal">
+</div>
 
-        <div class="ornament">❦</div>
+</div>
 
-        <h2>Okupljanje</h2>
 
-        <p class="section-text">
-          Naš dan započinje među obitelji<br>
-          i dragim ljudima.
-        </p>
 
-        <div class="illustration house-placeholder">
-        </div>
+<!-- POZIVNICA -->
 
-        <div class="time">
-          14:00
-        </div>
 
-        <div class="divider"></div>
+<main id="invitation">
 
-        <div class="location">
-          Gradac 19<br>
-          Bribir
-        </div>
 
-      </div>
+<section class="page">
 
-    </section>
+<div class="content reveal">
 
 
-    <!-- CRKVA -->
+<div class="ornament">
 
-    <section class="page">
+❦
 
-      <div class="content reveal">
+</div>
 
-        <div class="ornament">❦</div>
 
-        <h2>Crkveni obred</h2>
+<div class="eyebrow">
 
-        <p class="section-text">
-          Pred Bogom i najdražima<br>
-          izgovorit ćemo svoje „da”.
-        </p>
+Pozivamo vas na naše vjenčanje
 
-        <div class="illustration church-placeholder">
-        </div>
+</div>
 
-        <div class="time">
-          17:00
-        </div>
 
-        <div class="divider"></div>
+<h1>
 
-        <div class="location">
-          Župna crkva sv. Petra i Pavla<br>
-          u Bribiru
-        </div>
+Rea
 
-      </div>
+<span style="font-size:.65em">
 
-    </section>
+&
 
+</span>
 
-    <!-- HOTEL -->
+<br>
 
-    <section class="page">
+Antonio
 
-      <div class="content reveal">
+</h1>
 
-        <div class="ornament">❦</div>
 
-        <h2>Svadbena proslava</h2>
+<div class="date">
 
-        <p class="section-text">
-          Nakon obreda nastavljamo slavlje.
-        </p>
+16. listopada 2026.
 
-        <div class="illustration hotel-placeholder">
-        </div>
+</div>
 
-        <div class="time">
-          19:00
-        </div>
 
-        <div class="divider"></div>
+<div class="scroll-note">
 
-        <div class="location">
-          Hotel Omorika<br>
-          Crikvenica
-        </div>
+Otkrijte naš dan
 
-      </div>
+<div class="arrow">
 
-    </section>
+↓
 
+</div>
 
-    <!-- POTVRDA -->
+</div>
 
-    <section class="page">
 
-      <div class="content reveal">
+</div>
 
-        <div class="ornament">❦</div>
+</section>
 
-        <h2>Potvrda dolaska</h2>
 
-        <p class="section-text">
-          Molimo vas da svoj dolazak<br>
-          potvrdite najkasnije do
-        </p>
 
-        <div class="rsvp-date">
-          1. listopada 2026.
-        </div>
+<!-- OKUPLJANJE -->
 
-        <div class="divider"></div>
 
-        <div class="contacts">
+<section class="page">
 
-          <div class="contact">
-            <div class="contact-name">
-              Rea
-            </div>
+<div class="content reveal">
 
-            <a class="phone" href="tel:0919513980">
-              091 951 3980
-            </a>
-          </div>
 
-          <div class="contact">
-            <div class="contact-name">
-              Antonio
-            </div>
+<div class="ornament">
 
-            <a class="phone" href="tel:09212002512">
-              092 120 02512
-            </a>
-          </div>
+❦
 
-        </div>
+</div>
 
-      </div>
 
-    </section>
+<h2>
 
+Okupljanje
 
-    <!-- ZAVRŠETAK -->
+</h2>
 
-    <section class="page final-page">
 
-      <div class="curtain left"></div>
-      <div class="curtain right"></div>
+<p class="section-text">
 
-      <div class="content reveal">
+Naš dan započinje među obitelji
 
-        <div class="monogram">
-          R<span style="font-size:.55em">&</span>A
-        </div>
+<br>
 
-        <div class="heart">
-          ♡
-        </div>
+i dragim ljudima.
 
-      </div>
+</p>
 
-    </section>
 
-  </main>
+<div class="illustration house-placeholder">
 
+</div>
 
-  <script>
 
-    const pearl = document.getElementById("pearl");
-    const envelope = document.getElementById("envelope");
-    const intro = document.getElementById("intro");
-    const invitation = document.getElementById("invitation");
+<div class="time">
 
-    let opened = false;
+14:00
 
-    pearl.addEventListener("click", function () {
+</div>
 
-      if (opened) return;
 
-      opened = true;
+<div class="divider">
 
-      // 1. prvo se otvara gornji dio
+</div>
 
-      envelope.classList.add("phase-one");
 
-      // 2. zatim se ostala tri dijela otvaraju zajedno
+<div class="location">
 
-      setTimeout(function () {
+Gradac 19
 
-        envelope.classList.add("phase-two");
+<br>
 
-      }, 4300);
+Bribir
 
-      // 3. nestaje kuverta i pojavljuje se pozivnica
+</div>
 
-      setTimeout(function () {
 
-        intro.classList.add("finished");
+</div>
 
-        invitation.classList.add("visible");
+</section>
 
-        document.body.classList.remove("locked");
 
-        revealElements();
 
-      }, 6500);
+<!-- CRKVA -->
 
-    });
 
+<section class="page">
 
-    const revealItems = document.querySelectorAll(".reveal");
+<div class="content reveal">
 
-    function revealElements() {
 
-      revealItems.forEach(function (item) {
+<div class="ornament">
 
-        const itemTop = item.getBoundingClientRect().top;
+❦
 
-        if (itemTop < window.innerHeight * 0.82) {
+</div>
 
-          item.classList.add("show");
 
-        }
+<h2>
 
-      });
+Crkveni obred
 
-    }
+</h2>
 
-    window.addEventListener("scroll", revealElements);
 
-  </script>
+<p class="section-text">
+
+Pred Bogom i najdražima
+
+<br>
+
+izgovorit ćemo svoje „da”.
+
+</p>
+
+
+<div class="illustration church-placeholder">
+
+</div>
+
+
+<div class="time">
+
+17:00
+
+</div>
+
+
+<div class="divider">
+
+</div>
+
+
+<div class="location">
+
+Župna crkva sv. Petra i Pavla
+
+<br>
+
+u Bribiru
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<!-- HOTEL -->
+
+
+<section class="page">
+
+<div class="content reveal">
+
+
+<div class="ornament">
+
+❦
+
+</div>
+
+
+<h2>
+
+Svadbena proslava
+
+</h2>
+
+
+<p class="section-text">
+
+Nakon obreda nastavljamo slavlje.
+
+</p>
+
+
+<div class="illustration hotel-placeholder">
+
+</div>
+
+
+<div class="time">
+
+19:00
+
+</div>
+
+
+<div class="divider">
+
+</div>
+
+
+<div class="location">
+
+Hotel Omorika
+
+<br>
+
+Crikvenica
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<!-- POTVRDA -->
+
+
+<section class="page">
+
+<div class="content reveal">
+
+
+<div class="ornament">
+
+❦
+
+</div>
+
+
+<h2>
+
+Potvrda dolaska
+
+</h2>
+
+
+<p class="section-text">
+
+Molimo vas da svoj dolazak
+
+<br>
+
+potvrdite najkasnije do
+
+</p>
+
+
+<div class="rsvp-date">
+
+1. listopada 2026.
+
+</div>
+
+
+<div class="divider">
+
+</div>
+
+
+<div class="contacts">
+
+
+<div>
+
+
+<div class="contact-name">
+
+Rea
+
+</div>
+
+
+<a
+
+class="phone"
+
+href="tel:0919513980">
+
+091 951 3980
+
+</a>
+
+
+</div>
+
+
+
+<div>
+
+
+<div class="contact-name">
+
+Antonio
+
+</div>
+
+
+<a
+
+class="phone"
+
+href="tel:09212002512">
+
+092 120 02512
+
+</a>
+
+
+</div>
+
+
+</div>
+
+
+</div>
+
+</section>
+
+
+
+<!-- KRAJ -->
+
+
+<section class="page final-page">
+
+
+<div class="content reveal">
+
+
+<div class="monogram">
+
+R
+
+<span style="font-size:.55em">
+
+&
+
+</span>
+
+A
+
+</div>
+
+
+<div class="heart">
+
+♡
+
+</div>
+
+
+</div>
+
+
+</section>
+
+
+</main>
+
+
+
+<script>
+
+
+const pearl =
+
+document.getElementById("pearl");
+
+
+const envelope =
+
+document.getElementById("envelope");
+
+
+const intro =
+
+document.getElementById("intro");
+
+
+const invitation =
+
+document.getElementById("invitation");
+
+
+let opened = false;
+
+
+
+pearl.addEventListener(
+
+"click",
+
+function() {
+
+
+if(opened) return;
+
+
+opened = true;
+
+
+/*
+
+1.
+
+GORNJI POKLOPAC
+
+OTVARA SE TOČNO 2 SEKUNDE
+
+*/
+
+
+envelope.classList.add(
+
+"open-top"
+
+);
+
+
+/*
+
+2.
+
+NAKON 2 SEKUNDE
+
+OSTALA TRI DIJELA
+
+IZBLIJEDE
+
+*/
+
+
+setTimeout(function() {
+
+
+envelope.classList.add(
+
+"fade-envelope"
+
+);
+
+
+}, 2000);
+
+
+/*
+
+3.
+
+NAKON KRATKOG IZBLJEĐIVANJA
+
+POJAVLJUJE SE POZIVNICA
+
+*/
+
+
+setTimeout(function() {
+
+
+intro.classList.add(
+
+"finished"
+
+);
+
+
+invitation.classList.add(
+
+"visible"
+
+);
+
+
+document.body.classList.remove(
+
+"locked"
+
+);
+
+
+revealElements();
+
+
+}, 2750);
+
+
+});
+
+
+
+const revealItems =
+
+document.querySelectorAll(
+
+".reveal"
+
+);
+
+
+
+function revealElements() {
+
+
+revealItems.forEach(
+
+function(item) {
+
+
+const itemTop =
+
+item.getBoundingClientRect().top;
+
+
+if(
+
+itemTop <
+
+window.innerHeight * .82
+
+) {
+
+
+item.classList.add(
+
+"show"
+
+);
+
+
+}
+
+
+});
+
+
+}
+
+
+
+window.addEventListener(
+
+"scroll",
+
+revealElements
+
+);
+
+
+</script>
+
 
 </body>
+
 </html>
