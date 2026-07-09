@@ -95,9 +95,9 @@
   background: #f7f0e5;
   z-index: 5;
   transition:
-    transform 1.9s cubic-bezier(.22, .9, .25, 1),
-    opacity 1.4s ease,
-    filter 1.4s ease;
+    transform 3.8s cubic-bezier(.16, .84, .18, 1),
+    opacity 1.8s ease,
+    filter 1.8s ease;
   will-change: transform;
 }
 
@@ -145,16 +145,11 @@
   z-index: 6;
 }
 
-.envelope.phase-two .left-flap {
-  transform: rotateY(-55deg) translateX(-42%);
-}
-
-.envelope.phase-two .right-flap {
-  transform: rotateY(55deg) translateX(42%);
-}
-
+.envelope.phase-two .left-flap,
+.envelope.phase-two .right-flap,
 .envelope.phase-two .bottom-flap {
-  transform: rotateX(-58deg) translateY(42%);
+  opacity: 0;
+  filter: blur(8px);
 }
 
 
@@ -833,7 +828,7 @@
 
         envelope.classList.add("phase-two");
 
-      }, 1200);
+      }, 4300);
 
       // 3. nestaje kuverta i pojavljuje se pozivnica
 
@@ -847,7 +842,7 @@
 
         revealElements();
 
-      }, 2800);
+      }, 6500);
 
     });
 
