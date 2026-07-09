@@ -5,260 +5,96 @@
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <title>Rea & Antonio</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Great+Vibes&family=Parisienne&display=swap" rel="stylesheet">
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600;700&family=Parisienne&display=swap" rel="stylesheet">
 
 <style>
 *{box-sizing:border-box}
-
 html{scroll-behavior:smooth}
-
-body{
-  margin:0;
-  background:#eee6da;
-  color:#51483f;
-  font-family:"Cormorant Garamond", Georgia, serif;
-}
-
+body{margin:0;background:#eee6da;color:#51483f;font-family:"Cormorant Garamond",Georgia,serif}
 body.locked{overflow:hidden}
 
 /* KUVERTA */
-
-.intro{
-  position:fixed;
-  inset:0;
-  z-index:100;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  background:radial-gradient(circle,#fffaf2,#e8ddcc);
-  transition:opacity 1s ease,visibility 1s ease;
-}
-
-.intro.done{
-  opacity:0;
-  visibility:hidden;
-  pointer-events:none;
-}
-
-.env{
-  width:min(86vw,390px);
-  height:min(82svh,650px);
-  position:relative;
-  perspective:1400px;
-  filter:drop-shadow(0 30px 40px rgba(70,55,35,.25));
-}
-
-.env-base,
-.env-left,
-.env-right,
-.env-bottom,
-.env-top{
-  position:absolute;
-  inset:0;
-  background:#f8f0e4;
-  border:1px solid rgba(150,130,100,.18);
-}
-
-.env-base{
-  border-radius:18px;
-  background:
-    linear-gradient(145deg,#fff8ef,#eadfce);
-  z-index:1;
-}
-
-.env-left{
-  clip-path:polygon(0 0,54% 50%,0 100%);
-  z-index:4;
-  background:linear-gradient(120deg,#f8f0e4,#eee0cf);
-}
-
-.env-right{
-  clip-path:polygon(100% 0,46% 50%,100% 100%);
-  z-index:4;
-  background:linear-gradient(240deg,#f8f0e4,#eee0cf);
-}
-
-.env-bottom{
-  clip-path:polygon(0 100%,50% 43%,100% 100%);
-  z-index:5;
-  background:linear-gradient(0deg,#eadccb,#fff8ee);
-}
-
-.env-top{
-  height:52%;
-  clip-path:polygon(0 0,100% 0,50% 100%);
-  z-index:8;
-  transform-origin:top center;
-  transition:transform 6s cubic-bezier(.42,0,.2,1);
-  box-shadow:0 20px 35px rgba(70,55,35,.13);
-}
-
-.env-top::after{
-  content:"";
-  position:absolute;
-  left:14%;
-  right:14%;
-  bottom:14px;
-  height:38px;
-  background:radial-gradient(circle at 12px 28px,transparent 10px,#eadccb 11px,#eadccb 13px,transparent 14px);
-  background-size:30px 30px;
-  opacity:.75;
-}
-
-.pearl{
-  position:absolute;
-  z-index:20;
-  left:50%;
-  top:51%;
-  transform:translate(-50%,-50%);
-  width:44px;
-  height:44px;
-  border:0;
-  border-radius:50%;
-  cursor:pointer;
-  background:radial-gradient(circle at 30% 25%,#fff 0 12%,#f7efe5 25%,#d6c6ad 62%,#ad9678 100%);
-  box-shadow:0 8px 18px rgba(70,55,35,.3), inset 5px 5px 12px rgba(255,255,255,.85), inset -8px -9px 14px rgba(120,95,70,.18);
-}
-
-.touch{
-  position:absolute;
-  z-index:15;
-  left:0;
-  right:0;
-  bottom:40px;
-  text-align:center;
-  font-size:11px;
-  letter-spacing:3px;
-  text-transform:uppercase;
-  color:#8b7b69;
-}
-
+.intro{position:fixed;inset:0;z-index:100;display:flex;align-items:center;justify-content:center;background:radial-gradient(circle,#fffaf2,#e8ddcc);transition:opacity 1s ease,visibility 1s ease}
+.intro.done{opacity:0;visibility:hidden;pointer-events:none}
+.env{width:min(86vw,390px);height:min(82svh,650px);position:relative;perspective:1400px;filter:drop-shadow(0 30px 40px rgba(70,55,35,.25))}
+.env-base,.env-left,.env-right,.env-bottom,.env-top{position:absolute;inset:0;background:#f8f0e4;border:1px solid rgba(150,130,100,.18)}
+.env-base{border-radius:18px;background:linear-gradient(145deg,#fff8ef,#eadfce);z-index:1}
+.env-left{clip-path:polygon(0 0,54% 50%,0 100%);z-index:4;background:linear-gradient(120deg,#f8f0e4,#eee0cf)}
+.env-right{clip-path:polygon(100% 0,46% 50%,100% 100%);z-index:4;background:linear-gradient(240deg,#f8f0e4,#eee0cf)}
+.env-bottom{clip-path:polygon(0 100%,50% 43%,100% 100%);z-index:5;background:linear-gradient(0deg,#eadccb,#fff8ee)}
+.env-top{height:52%;clip-path:polygon(0 0,100% 0,50% 100%);z-index:8;transform-origin:top center;transition:transform 6s cubic-bezier(.42,0,.2,1);box-shadow:0 20px 35px rgba(70,55,35,.13)}
+.pearl{position:absolute;z-index:20;left:50%;top:51%;transform:translate(-50%,-50%);width:44px;height:44px;border:0;border-radius:50%;cursor:pointer;background:radial-gradient(circle at 30% 25%,#fff 0 12%,#f7efe5 25%,#d6c6ad 62%,#ad9678 100%);box-shadow:0 8px 18px rgba(70,55,35,.3),inset 5px 5px 12px rgba(255,255,255,.85),inset -8px -9px 14px rgba(120,95,70,.18)}
+.touch{position:absolute;z-index:15;left:0;right:0;bottom:40px;text-align:center;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#8b7b69}
 .env.open .env-top{transform:rotateX(180deg)}
-.env.open .pearl,
-.env.open .touch{opacity:0;pointer-events:none}
-
-.env.fade .env-left,
-.env.fade .env-right,
-.env.fade .env-bottom,
-.env.fade .env-base{
-  opacity:0;
-  filter:blur(8px);
-  transition:opacity .8s ease,filter .8s ease;
-}
+.env.open .pearl,.env.open .touch{opacity:0;pointer-events:none}
+.env.fade .env-left,.env.fade .env-right,.env.fade .env-bottom,.env.fade .env-base{opacity:0;filter:blur(8px);transition:opacity .8s ease,filter .8s ease}
 
 /* STRANICE */
-
-main{
-  opacity:0;
-  transition:opacity 1.2s ease;
-}
-
+main{opacity:0;transition:opacity 1.2s ease}
 main.visible{opacity:1}
 
-.page{
-  min-height:100svh;
-  display:flex;
-  align-items:center;
-  justify-content:center;
-  padding:18px;
-  background:#eee6da;
-}
+.page{min-height:100svh;display:flex;align-items:center;justify-content:center;padding:18px;background:#eee6da}
 
 .invite{
-  width:min(92vw,380px);
+  width:min(92vw,390px);
   min-height:min(92svh,760px);
   position:relative;
   overflow:hidden;
   border-radius:22px;
-  background:#fbf5ec;
   box-shadow:0 18px 50px rgba(70,55,40,.16);
   border:1px solid rgba(145,125,95,.16);
-  padding:36px 28px 34px;
+  padding:48px 34px 44px;
   text-align:center;
-}
-
-.invite::before{
-  content:"";
-  position:absolute;
-  inset:0;
-  background:
-    radial-gradient(circle at top,#fffaf2 0,transparent 42%),
-    repeating-linear-gradient(0deg,rgba(120,100,75,.025) 0 1px,transparent 1px 4px);
-  pointer-events:none;
+  background:url("tema.PNG") center/cover no-repeat;
 }
 
 .invite::after{
   content:"";
   position:absolute;
-  left:8%;
-  right:8%;
-  bottom:0;
-  height:52px;
-  background:radial-gradient(circle at 14px 5px,transparent 12px,#eadcca 13px,#eadcca 16px,transparent 17px);
-  background-size:34px 34px;
-  opacity:.65;
+  inset:0;
+  background:rgba(255,250,241,.18);
+  pointer-events:none;
 }
 
-.inner{
-  position:relative;
-  z-index:2;
-  min-height:calc(min(92svh,760px) - 70px);
-  display:flex;
-  flex-direction:column;
-  justify-content:space-between;
-  align-items:center;
-}
-
-.center{
-  justify-content:center;
-}
+.inner{position:relative;z-index:2;min-height:calc(min(92svh,760px) - 92px);display:flex;flex-direction:column;justify-content:space-between;align-items:center}
+.center{justify-content:center}
 
 .art{
   width:100%;
-  height:390px;
+  height:350px;
   margin:18px 0;
   background-position:center;
   background-size:cover;
   background-repeat:no-repeat;
-  opacity:.92;
-
-  -webkit-mask-image:
-    linear-gradient(to bottom,transparent 0%,black 13%,black 82%,transparent 100%),
-    linear-gradient(to right,transparent 0%,black 10%,black 90%,transparent 100%);
-  -webkit-mask-composite:source-in;
-
-  mask-image:
-    linear-gradient(to bottom,transparent 0%,black 13%,black 82%,transparent 100%),
-    linear-gradient(to right,transparent 0%,black 10%,black 90%,transparent 100%);
-  mask-composite:intersect;
+  opacity:.9;
+  mix-blend-mode:multiply;
+  filter:saturate(.82) contrast(.95);
+  -webkit-mask-image:radial-gradient(ellipse at center,black 52%,rgba(0,0,0,.75) 68%,transparent 100%);
+  mask-image:radial-gradient(ellipse at center,black 52%,rgba(0,0,0,.75) 68%,transparent 100%);
 }
 
-.art.small{height:280px}
-.art.intro-art{height:350px}
-
+.art.small{height:240px}
 .prva{background-image:url("prva.PNG")}
 .kuca{background-image:url("kuća.PNG")}
 .crkva{background-image:url("crkva.PNG")}
 .sala{background-image:url("sala.PNG")}
 .zadnja{background-image:url("zadnja.PNG")}
 
-.small{
-  font-size:12px;
-  letter-spacing:3px;
-  text-transform:uppercase;
-  font-weight:600;
-  color:#746858;
-}
+.small{font-size:12px;letter-spacing:3px;text-transform:uppercase;font-weight:600;color:#746858}
 
 .names{
-  font-family:"Great Vibes",cursive;
-  font-size:66px;
-  line-height:.9;
-  font-weight:400;
-  margin:18px 0;
-  color:#52483f;
+  font-family:"Cormorant Garamond",Georgia,serif;
+  font-size:58px;
+  line-height:.95;
+  font-weight:500;
+  font-style:italic;
+  margin:22px 0;
+  color:#51483f;
+}
+
+.names span{
+  font-size:.58em;
+  font-style:normal;
 }
 
 h2{
@@ -269,68 +105,24 @@ h2{
   color:#554b42;
 }
 
-p{
-  font-size:18px;
-  line-height:1.42;
-  margin:0;
-}
-
-.time{
-  font-size:38px;
-  margin:8px 0 2px;
-}
-
-.place{
-  font-size:18px;
-  line-height:1.35;
-}
-
-.line{
-  width:78px;
-  height:1px;
-  background:#a4937c;
-  margin:13px auto;
-}
-
-.step{
-  margin-top:22px;
-  font-size:11px;
-  letter-spacing:3px;
-  text-transform:uppercase;
-  color:#807262;
-}
-
+p{font-size:18px;line-height:1.42;margin:0}
+.time{font-size:38px;margin:8px 0 2px}
+.place{font-size:18px;line-height:1.35}
+.line{width:78px;height:1px;background:#a4937c;margin:13px auto}
+.step{margin-top:22px;font-size:11px;letter-spacing:3px;text-transform:uppercase;color:#807262}
 .down{font-size:23px;margin-top:6px}
+.phone{font-size:19px;color:#51483f;text-decoration:none}
+.thanks{font-family:"Parisienne",cursive;font-size:32px;margin-top:16px}
 
-.phone{
-  font-size:19px;
-  color:#51483f;
-  text-decoration:none;
-}
-
-.thanks{
-  font-family:"Parisienne",cursive;
-  font-size:32px;
-  margin-top:16px;
-}
-
-.reveal{
-  opacity:0;
-  transform:translateY(32px);
-  transition:opacity 1s ease,transform 1s ease;
-}
-
-.reveal.show{
-  opacity:1;
-  transform:translateY(0);
-}
+.reveal{opacity:0;transform:translateY(32px);transition:opacity 1s ease,transform 1s ease}
+.reveal.show{opacity:1;transform:translateY(0)}
 
 @media(max-width:420px){
-  .invite{padding:32px 24px}
-  .names{font-size:58px}
+  .invite{padding:42px 28px 40px}
+  .names{font-size:52px}
   h2{font-size:39px}
-  .art{height:350px}
-  .art.small{height:250px}
+  .art{height:320px}
+  .art.small{height:220px}
 }
 </style>
 </head>
@@ -344,7 +136,7 @@ p{
     <div class="env-right"></div>
     <div class="env-bottom"></div>
     <div class="env-top"></div>
-    <button class="pearl" id="pearl" aria-label="Otvori pozivnicu"></button>
+    <button class="pearl" id="pearl"></button>
     <div class="touch">Dodirnite biser da otvorite</div>
   </div>
 </div>
@@ -356,10 +148,9 @@ p{
     <div class="inner center">
       <div>
         <div class="small">Pozivamo vas na naše vjenčanje</div>
-        <div class="names">Rea<br>&amp; Antonio</div>
+        <div class="names">Rea <span>&amp;</span><br>Antonio</div>
         <div class="line"></div>
         <p>16. listopada 2026.</p>
-        <div class="art intro-art prva"></div>
         <div class="step">Zakoračite u našu priču</div>
         <div class="down">↓</div>
       </div>
@@ -374,9 +165,7 @@ p{
         <h2>Okupljanje</h2>
         <p>Naš dan započinje među obitelji<br>i dragim ljudima.</p>
       </div>
-
       <div class="art kuca"></div>
-
       <div>
         <div class="time">14:00</div>
         <div class="line"></div>
@@ -393,9 +182,7 @@ p{
         <h2>Crkveni obred</h2>
         <p>Pred Bogom i najdražima<br>izgovorit ćemo svoje „da”.</p>
       </div>
-
       <div class="art crkva"></div>
-
       <div>
         <div class="time">17:00</div>
         <div class="line"></div>
@@ -412,9 +199,7 @@ p{
         <h2>Svadbena proslava</h2>
         <p>Nakon obreda<br>nastavljamo slavlje.</p>
       </div>
-
       <div class="art sala"></div>
-
       <div>
         <div class="time">19:00</div>
         <div class="line"></div>
@@ -428,24 +213,15 @@ p{
   <article class="invite reveal">
     <div class="inner center">
       <div>
-        <div class="art small zadnja"></div>
-
         <h2>Potvrda dolaska</h2>
-
         <p>Molimo vas da svoj dolazak<br>potvrdite najkasnije do</p>
-
         <div class="time" style="font-size:30px">1. listopada 2026.</div>
-
         <div class="line"></div>
-
         <p>Rea</p>
         <a class="phone" href="tel:0919513980">091 951 3980</a>
-
         <br><br>
-
         <p>Antonio</p>
         <a class="phone" href="tel:0921202512">092 120 2512</a>
-
         <div class="thanks">Hvala!</div>
       </div>
     </div>
@@ -465,7 +241,6 @@ let opened=false;
 pearl.addEventListener("click",function(){
   if(opened)return;
   opened=true;
-
   env.classList.add("open");
 
   setTimeout(function(){
