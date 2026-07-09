@@ -1,0 +1,198 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+
+<title>Rea & Antonio</title>
+
+<style>
+* {
+  box-sizing: border-box;
+}
+
+body {
+  margin: 0;
+  min-height: 100vh;
+  overflow: hidden;
+  background:
+    radial-gradient(circle at top, #f8f5ef, #ded7cb);
+  font-family: Georgia, serif;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+.scene {
+  width: 100%;
+  height: 100vh;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  perspective: 1200px;
+}
+
+.envelope {
+  position: relative;
+  width: min(88vw, 430px);
+  height: 290px;
+  background: #f4f1ea;
+  box-shadow: 0 25px 60px rgba(70, 60, 45, 0.22);
+}
+
+.envelope::before {
+  content: "";
+  position: absolute;
+  inset: 0;
+  background:
+    linear-gradient(35deg, transparent 49%, #e4ded3 50%, transparent 51%),
+    linear-gradient(-35deg, transparent 49%, #e4ded3 50%, transparent 51%);
+  z-index: 3;
+  pointer-events: none;
+}
+
+.flap {
+  position: absolute;
+  top: 0;
+  left: 0;
+  width: 100%;
+  height: 58%;
+  background: #faf8f3;
+  clip-path: polygon(0 0, 100% 0, 50% 100%);
+  transform-origin: top;
+  transition: transform 1.3s ease;
+  z-index: 6;
+}
+
+.card {
+  position: absolute;
+  left: 7%;
+  bottom: 8px;
+  width: 86%;
+  height: 250px;
+  background: #fffdf9;
+  padding: 42px 20px;
+  text-align: center;
+  box-shadow: 0 8px 30px rgba(0, 0, 0, .12);
+  transition: transform 1.5s ease 0.7s;
+  z-index: 2;
+}
+
+.card .small {
+  font-size: 13px;
+  letter-spacing: 4px;
+  color: #9b8d78;
+}
+
+.card h1 {
+  margin: 20px 0 10px;
+  font-size: 38px;
+  font-weight: normal;
+  font-style: italic;
+  color: #776954;
+}
+
+.card p {
+  color: #9b8d78;
+  letter-spacing: 2px;
+  font-size: 14px;
+}
+
+.seal {
+  position: absolute;
+  top: 125px;
+  left: 50%;
+  transform: translateX(-50%);
+  width: 72px;
+  height: 72px;
+  border-radius: 50%;
+  background:
+    radial-gradient(circle at 35% 30%, #c5aa78, #8c7045 72%);
+  box-shadow:
+    0 5px 15px rgba(70, 50, 25, .35),
+    inset 0 0 0 4px rgba(255, 255, 255, .15);
+  color: #f7edd9;
+  font-size: 23px;
+  font-style: italic;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  cursor: pointer;
+  z-index: 10;
+  transition: transform .5s ease, opacity .5s ease;
+}
+
+.hint {
+  position: absolute;
+  top: calc(50% + 195px);
+  color: #887b68;
+  font-size: 13px;
+  letter-spacing: 3px;
+  animation: pulse 1.8s infinite;
+}
+
+@keyframes pulse {
+  50% {
+    opacity: .4;
+  }
+}
+
+.envelope.open .flap {
+  transform: rotateX(180deg);
+  z-index: 1;
+}
+
+.envelope.open .seal {
+  transform: translateX(-50%) scale(.3);
+  opacity: 0;
+  pointer-events: none;
+}
+
+.envelope.open .card {
+  transform: translateY(-210px);
+  z-index: 5;
+}
+
+.scene.opened .hint {
+  opacity: 0;
+}
+</style>
+</head>
+
+<body>
+
+<div class="scene" id="scene">
+
+  <div class="envelope" id="envelope">
+
+    <div class="card">
+      <div class="small">SAVE THE DATE</div>
+
+      <h1>Rea & Antonio</h1>
+
+      <p>USKORO SE VJENČAVAMO</p>
+    </div>
+
+    <div class="flap"></div>
+
+    <div class="seal" id="seal">R&A</div>
+
+  </div>
+
+  <div class="hint">PRITISNI PEČAT</div>
+
+</div>
+
+<script>
+const seal = document.getElementById("seal");
+const envelope = document.getElementById("envelope");
+const scene = document.getElementById("scene");
+
+seal.addEventListener("click", function () {
+  envelope.classList.add("open");
+  scene.classList.add("opened");
+});
+</script>
+
+</body>
+</html>
