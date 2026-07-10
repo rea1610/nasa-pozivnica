@@ -2,14 +2,29 @@
 <html lang="hr">
 <head>
   <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  >
+
   <title>Rea & Antonio</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Italiana&display=swap" rel="stylesheet">
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Italiana&display=swap"
+    rel="stylesheet"
+  >
 
   <style>
+    :root {
+      /*
+        Prazni početni dio slike završava neposredno
+        prije naslova „Okupljanje”.
+      */
+      --hero-height: 29.5%;
+    }
+
     * {
       box-sizing: border-box;
     }
@@ -36,25 +51,31 @@
       overflow: hidden;
     }
 
-    /* KUVERTA */
+    /* =========================
+       KUVERTA
+    ========================= */
 
     #envelopeScreen {
       position: fixed;
       inset: 0;
       z-index: 9999;
+
       display: flex;
       align-items: center;
       justify-content: center;
-      background: radial-gradient(
-        circle at center,
-        #f8f4ed 0%,
-        #eae4da 62%,
-        #d5cec3 100%
-      );
+
+      background:
+        radial-gradient(
+          circle at center,
+          #f8f4ed 0%,
+          #eae4da 62%,
+          #d5cec3 100%
+        );
+
       transition:
-        opacity 1.25s ease,
-        visibility 1.25s ease,
-        transform 1.25s ease;
+        opacity 1.2s ease,
+        visibility 1.2s ease,
+        transform 1.2s ease;
     }
 
     #envelopeScreen.opened {
@@ -64,31 +85,50 @@
       transform: scale(1.025);
     }
 
-    .envelopeImage {
+    .envelopeWrap {
       position: relative;
-      width: min(100vw, calc(92svh * 2 / 3), 600px);
-      aspect-ratio: 2 / 3;
-      background-image: url("kuverta.PNG");
-      background-repeat: no-repeat;
-      background-position: center;
-      background-size: contain;
-      filter: drop-shadow(
-        0 20px 30px rgba(75, 60, 44, 0.20)
+
+      width: min(
+        96vw,
+        calc(94svh * 2 / 3),
+        620px
       );
+
+      aspect-ratio: 2 / 3;
+
+      filter:
+        drop-shadow(
+          0 20px 32px rgba(75, 60, 44, 0.20)
+        );
+    }
+
+    .envelopePicture {
+      display: block;
+      width: 100%;
+      height: 100%;
+      object-fit: contain;
+
+      user-select: none;
+      -webkit-user-drag: none;
     }
 
     .pearlButton {
       position: absolute;
       left: 50%;
       top: 53%;
+
       transform: translate(-50%, -50%);
+
       width: 18%;
       aspect-ratio: 1 / 1;
+
       padding: 0;
       border: 0;
       border-radius: 50%;
+
       background: transparent;
       cursor: pointer;
+
       animation: pearlPulse 2.2s ease-in-out infinite;
     }
 
@@ -105,27 +145,36 @@
 
     .openText {
       position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 6%;
+      left: 5%;
+      right: 5%;
+      bottom: 5%;
+
       text-align: center;
-      font-size: clamp(11px, 1.5vw, 15px);
-      font-weight: 500;
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
+
       color: #756b60;
+      font-size: clamp(10px, 1.6vw, 15px);
+      font-weight: 500;
+      letter-spacing: 0.23em;
+      line-height: 1.4;
+      text-transform: uppercase;
+
       pointer-events: none;
     }
 
-    /* POZIVNICA */
+    /* =========================
+       DUGA POZIVNICA
+    ========================= */
 
     #invitation {
       position: relative;
+
       width: min(100%, 710px);
       margin: 0 auto;
+
       background: #f5eee4;
+
       opacity: 0;
-      transition: opacity 1.3s ease;
+      transition: opacity 1.25s ease;
     }
 
     #invitation.visible {
@@ -142,112 +191,148 @@
       vertical-align: top;
     }
 
-    /* PRVA STRANICA */
+    /* =========================
+       POČETNI PRAZNI DIO
+    ========================= */
 
     .heroPage {
       position: absolute;
       top: 0;
       left: 0;
+
       width: 100%;
-      aspect-ratio: 2 / 3;
+      height: var(--hero-height);
+
       z-index: 10;
-      color: #504d56;
+
+      color: #514d56;
       text-align: center;
+
       pointer-events: none;
     }
 
+    /* =========================
+       GLAVNI NASLOV
+    ========================= */
+
     .heroContent {
       position: absolute;
-      top: 16%;
+
+      /*
+        Položaj unutar početnog praznog dijela,
+        a ne prema cijeloj dugoj slici.
+      */
+      top: 24%;
       left: 8%;
       right: 8%;
+
       display: flex;
       flex-direction: column;
       align-items: center;
     }
 
     .introText {
-      margin: 0 0 20px;
+      margin: 0 0 13px;
+
       font-family: "Italiana", serif;
-      font-size: clamp(10px, 1.7vw, 16px);
+      font-size: clamp(10px, 1.55vw, 16px);
       font-weight: 400;
-      letter-spacing: 0.23em;
+      letter-spacing: 0.19em;
       line-height: 1.45;
       text-transform: uppercase;
-      color: #605a60;
+
+      color: #625c61;
     }
 
     .namesBlock {
       margin: 0;
+
       font-family: "Cormorant Garamond", serif;
       font-style: italic;
       font-weight: 500;
+
       color: #504d56;
     }
 
     .firstName,
     .secondName {
       display: block;
-      font-size: clamp(68px, 11.5vw, 112px);
-      line-height: 0.82;
-      letter-spacing: -0.025em;
+
+      font-size: clamp(72px, 11.7vw, 116px);
+      line-height: 0.86;
+      letter-spacing: -0.035em;
     }
 
     .ampersand {
       display: block;
-      margin: 5px 0 4px;
-      font-size: clamp(29px, 4.6vw, 44px);
+
+      margin: 1px 0;
+
+      font-size: clamp(27px, 4.3vw, 41px);
       line-height: 1;
+
       font-style: normal;
       font-weight: 500;
     }
 
     .divider {
-      width: 82px;
+      width: 76px;
       height: 1px;
-      margin: 24px auto 17px;
-      background: rgba(91, 82, 84, 0.38);
+
+      margin: 19px auto 13px;
+
+      background: rgba(91, 82, 84, 0.40);
     }
 
     .weddingDate {
       margin: 0;
+
       font-size: clamp(23px, 3.7vw, 36px);
       font-weight: 500;
       line-height: 1.2;
-      letter-spacing: 0.025em;
+      letter-spacing: 0.02em;
+
       color: #57515a;
     }
 
-    /* DONJI TEKST I STRELICA */
+    /* =========================
+       ZAKORAČITE + STRELICA
+    ========================= */
 
     .storyButton {
       position: absolute;
+
       left: 5%;
       right: 5%;
-      bottom: 11%;
+      bottom: 10%;
+
       display: flex;
       flex-direction: column;
       align-items: center;
+
       color: #696169;
       text-decoration: none;
-      pointer-events: auto;
+
       cursor: pointer;
+      pointer-events: auto;
     }
 
     .storyText {
       font-family: "Italiana", serif;
-      font-size: clamp(9px, 1.55vw, 15px);
+      font-size: clamp(9px, 1.5vw, 15px);
       font-weight: 400;
-      letter-spacing: 0.25em;
+      letter-spacing: 0.22em;
       line-height: 1.5;
       text-transform: uppercase;
     }
 
     .storyArrow {
-      margin-top: 9px;
+      margin-top: 8px;
+
       font-family: "Cormorant Garamond", serif;
       font-size: clamp(28px, 4.4vw, 42px);
       line-height: 1;
+
       animation: arrowMove 1.7s ease-in-out infinite;
     }
 
@@ -264,7 +349,22 @@
       }
     }
 
-    /* MOBITEL */
+    /* Nevidljiva točka na početku Okupljanja */
+
+    #okupljanjeTarget {
+      position: absolute;
+      top: var(--hero-height);
+      left: 0;
+
+      width: 1px;
+      height: 1px;
+
+      pointer-events: none;
+    }
+
+    /* =========================
+       MOBITEL
+    ========================= */
 
     @media (max-width: 600px) {
       body {
@@ -276,50 +376,57 @@
         max-width: none;
       }
 
+      .envelopeWrap {
+        width: min(
+          96vw,
+          calc(94svh * 2 / 3)
+        );
+      }
+
       .heroContent {
-        top: 15.5%;
-        left: 6%;
-        right: 6%;
+        top: 24%;
+        left: 5%;
+        right: 5%;
       }
 
       .introText {
-        margin-bottom: 14px;
-        font-size: clamp(9px, 2.65vw, 13px);
-        letter-spacing: 0.18em;
+        margin-bottom: 9px;
+        font-size: clamp(9px, 2.4vw, 13px);
+        letter-spacing: 0.15em;
       }
 
       .firstName,
       .secondName {
-        font-size: clamp(59px, 15.5vw, 84px);
-        line-height: 0.84;
+        font-size: clamp(62px, 15.8vw, 87px);
+        line-height: 0.87;
       }
 
       .ampersand {
-        margin: 4px 0 3px;
-        font-size: clamp(25px, 6.5vw, 37px);
+        margin: 0;
+        font-size: clamp(23px, 6vw, 34px);
       }
 
       .divider {
-        width: 66px;
-        margin-top: 18px;
-        margin-bottom: 13px;
+        width: 64px;
+        margin-top: 15px;
+        margin-bottom: 10px;
       }
 
       .weddingDate {
-        font-size: clamp(19px, 5.4vw, 29px);
+        font-size: clamp(20px, 5.2vw, 29px);
       }
 
       .storyButton {
-        bottom: 10.5%;
+        bottom: 9%;
       }
 
       .storyText {
-        font-size: clamp(8px, 2.3vw, 12px);
-        letter-spacing: 0.19em;
+        font-size: clamp(8px, 2.2vw, 12px);
+        letter-spacing: 0.17em;
       }
 
       .storyArrow {
-        margin-top: 7px;
+        margin-top: 6px;
         font-size: clamp(25px, 7vw, 35px);
       }
     }
@@ -328,8 +435,17 @@
 
 <body class="locked">
 
+  <!-- KUVERTA -->
+
   <div id="envelopeScreen">
-    <div class="envelopeImage">
+    <div class="envelopeWrap">
+
+      <img
+        src="kuverta.PNG"
+        alt="Kuverta s biserom"
+        class="envelopePicture"
+      >
+
       <button
         class="pearlButton"
         id="openInvitation"
@@ -340,10 +456,14 @@
       <div class="openText">
         Dodirnite biser da otvorite
       </div>
+
     </div>
   </div>
 
+  <!-- POZIVNICA -->
+
   <main id="invitation">
+
     <img
       src="cijela.png"
       alt="Pozivnica za vjenčanje Ree i Antonija"
@@ -351,6 +471,7 @@
     >
 
     <section class="heroPage">
+
       <div class="heroContent">
 
         <p class="introText">
@@ -358,9 +479,19 @@
         </p>
 
         <h1 class="namesBlock">
-          <span class="firstName">Rea</span>
-          <span class="ampersand">&amp;</span>
-          <span class="secondName">Antonio</span>
+
+          <span class="firstName">
+            Rea
+          </span>
+
+          <span class="ampersand">
+            &amp;
+          </span>
+
+          <span class="secondName">
+            Antonio
+          </span>
+
         </h1>
 
         <div class="divider"></div>
@@ -368,10 +499,11 @@
         <p class="weddingDate">
           16. listopada 2026.
         </p>
+
       </div>
 
       <a
-        href="#"
+        href="#okupljanjeTarget"
         class="storyButton"
         id="storyButton"
         aria-label="Zakoračite u našu priču"
@@ -384,7 +516,11 @@
           ↓
         </span>
       </a>
+
     </section>
+
+    <div id="okupljanjeTarget"></div>
+
   </main>
 
   <script>
@@ -400,6 +536,9 @@
     const storyButton =
       document.getElementById("storyButton");
 
+    const okupljanjeTarget =
+      document.getElementById("okupljanjeTarget");
+
     let opened = false;
 
     function showInvitation() {
@@ -409,14 +548,19 @@
 
       opened = true;
 
-      envelopeScreen.classList.add("opened");
       invitation.classList.add("visible");
+      envelopeScreen.classList.add("opened");
 
       setTimeout(function () {
         envelopeScreen.style.display = "none";
         document.body.classList.remove("locked");
-        window.scrollTo(0, 0);
-      }, 1250);
+
+        window.scrollTo({
+          top: 0,
+          left: 0,
+          behavior: "instant"
+        });
+      }, 1200);
     }
 
     openInvitation.addEventListener(
@@ -429,16 +573,9 @@
       function (event) {
         event.preventDefault();
 
-        const invitationTop =
-          invitation.getBoundingClientRect().top +
-          window.scrollY;
-
-        const firstPageHeight =
-          invitation.clientWidth * 1.5;
-
-        window.scrollTo({
-          top: invitationTop + firstPageHeight,
-          behavior: "smooth"
+        okupljanjeTarget.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
         });
       }
     );
