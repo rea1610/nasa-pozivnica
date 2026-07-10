@@ -1,189 +1,536 @@
 <!DOCTYPE html>
 <html lang="hr">
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rea & Antonio</title>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
 
-<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,500&family=Italiana&display=swap" rel="stylesheet">
+  <title>Rea & Antonio</title>
 
-<style>
-*{box-sizing:border-box}
-html,body{margin:0;padding:0;width:100%;background:#d9d2c8;overflow-x:hidden}
-body{font-family:"Cormorant Garamond",serif;color:#565a66}
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
-/* KUVERTA */
-#envelopeScreen{
-  position:fixed;inset:0;z-index:1000;
-  display:flex;align-items:center;justify-content:center;
-  background:#d9d2c8;
-  transition:opacity 1.5s ease,transform 1.5s ease;
-}
-#envelopeScreen.opened{opacity:0;transform:scale(1.04);pointer-events:none}
-.envelope{
-  position:relative;width:min(100vw,600px);height:100svh;
-  background:url("kuverta.PNG") center/cover no-repeat;
-}
-.pearl{
-  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
-  width:76px;height:76px;border:0;border-radius:50%;cursor:pointer;
-  background:radial-gradient(circle at 32% 27%,#fff 0%,#fffdf8 18%,#ebe4d8 46%,#c9beb0 72%,#a79b8d 100%);
-  box-shadow:inset 7px 7px 13px rgba(255,255,255,.9),inset -9px -10px 15px rgba(120,105,90,.2),0 8px 18px rgba(80,70,60,.28);
-  animation:pulse 2.4s infinite ease-in-out;
-}
-@keyframes pulse{50%{transform:translate(-50%,-50%) scale(1.07)}}
-.openText{
-  position:absolute;left:0;right:0;bottom:7%;
-  text-align:center;font-size:12px;letter-spacing:4px;text-transform:uppercase;color:#81786e;
-}
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Italiana&display=swap"
+    rel="stylesheet"
+  >
 
-/* POZIVNICA */
-#invitation{opacity:0;transition:opacity 1.5s ease}
-#invitation.visible{opacity:1}
-.wrapper{width:100%;max-width:600px;margin:0 auto;background:#f3eadb;overflow:hidden}
+  <style>
+    * {
+      box-sizing: border-box;
+    }
 
-/* SLIKE I SPOJEVI */
-.page{
-  position:relative;
-  margin:0;
-  padding:0;
-  line-height:0;
-  font-size:0;
-}
-.page + .page{
-  margin-top:-8px; /* skriva prijelaz između slika */
-}
-.page img{
-  display:block;
-  width:100%;
-  height:auto;
-  margin:0;
-  padding:0;
-  border:0;
-}
+    html {
+      scroll-behavior: smooth;
+    }
 
-/* NASLOVNA TEKST */
-.coverText{
-  position:absolute;
-  inset:0;
-  display:flex;
-  flex-direction:column;
-  align-items:center;
-  text-align:center;
-  line-height:1.15;
-  padding-top:13%;
-  color:#555965;
-}
-.small{
-  font-family:"Italiana",serif;
-  font-size:clamp(11px,2.4vw,22px);
-  letter-spacing:.26em;
-  text-transform:uppercase;
-  margin-bottom:4%;
-}
-.names{
-  font-size:clamp(58px,13vw,122px);
-  font-style:italic;
-  font-weight:500;
-  line-height:.82;
-  margin:0;
-}
-.amp{font-size:.5em;font-style:normal}
-.line{width:80px;height:1px;background:rgba(85,89,101,.35);margin:5% 0 3%}
-.date{
-  font-family:"Italiana",serif;
-  font-size:clamp(18px,3.5vw,34px);
-}
-.scrollText{
-  position:absolute;
-  left:0;right:0;bottom:10%;
-  text-align:center;
-  font-family:"Italiana",serif;
-  font-size:clamp(9px,1.8vw,17px);
-  letter-spacing:.3em;
-  text-transform:uppercase;
-  line-height:1.5;
-  color:#65616a;
-}
-.arrow{
-  display:block;
-  font-family:Arial,sans-serif;
-  font-size:28px;
-  margin-top:8px;
-  animation:arrow 2s infinite ease-in-out;
-}
-@keyframes arrow{50%{transform:translateY(8px)}}
+    body {
+      margin: 0;
+      padding: 0;
+      background: #d8d2c8;
+      overflow-x: hidden;
+      font-family: "Cormorant Garamond", serif;
+    }
 
-/* TELEFONI */
-.phone{
-  position:absolute;
-  display:block;
-  z-index:10;
-  background:transparent;
-}
-.rea{left:30%;top:57%;width:40%;height:8%}
-.antonio{left:30%;top:68%;width:40%;height:8%}
-</style>
+    /* =========================
+       KUVERTA
+    ========================= */
+
+    #envelope-screen {
+      position: fixed;
+      inset: 0;
+      z-index: 9999;
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      background:
+        radial-gradient(
+          circle at center,
+          #eee7dc 0%,
+          #d8cfc2 55%,
+          #bdb2a3 100%
+        );
+
+      transition:
+        opacity 1.2s ease,
+        visibility 1.2s ease;
+    }
+
+    #envelope-screen.opened {
+      opacity: 0;
+      visibility: hidden;
+      pointer-events: none;
+    }
+
+    .envelope {
+      position: relative;
+
+      width: min(82vw, 430px);
+      aspect-ratio: 1.48 / 1;
+
+      background: #eee5d8;
+
+      border-radius: 3px;
+
+      box-shadow:
+        0 22px 55px rgba(69, 55, 39, 0.25),
+        0 4px 12px rgba(69, 55, 39, 0.16);
+
+      overflow: hidden;
+    }
+
+    .envelope::before {
+      content: "";
+
+      position: absolute;
+      inset: 0;
+
+      background:
+        linear-gradient(
+          32deg,
+          transparent 49.5%,
+          rgba(172, 151, 124, 0.42) 50%,
+          transparent 50.5%
+        ),
+        linear-gradient(
+          -32deg,
+          transparent 49.5%,
+          rgba(172, 151, 124, 0.42) 50%,
+          transparent 50.5%
+        );
+
+      z-index: 1;
+    }
+
+    .envelope-flap {
+      position: absolute;
+
+      top: 0;
+      left: 0;
+
+      width: 100%;
+      height: 61%;
+
+      background: #f4ecdf;
+
+      clip-path: polygon(
+        0 0,
+        100% 0,
+        50% 100%
+      );
+
+      filter:
+        drop-shadow(
+          0 5px 4px rgba(110, 89, 63, 0.15)
+        );
+
+      z-index: 2;
+    }
+
+    .seal {
+      position: absolute;
+
+      left: 50%;
+      top: 53%;
+
+      transform: translate(-50%, -50%);
+
+      width: 76px;
+      height: 76px;
+
+      border-radius: 50%;
+
+      border: none;
+
+      cursor: pointer;
+
+      z-index: 5;
+
+      background:
+        radial-gradient(
+          circle at 35% 30%,
+          #fffdf7 0%,
+          #f8f1df 22%,
+          #d9c49b 55%,
+          #aa8a59 78%,
+          #80623e 100%
+        );
+
+      box-shadow:
+        0 7px 16px rgba(78, 57, 32, 0.28),
+        inset 0 2px 5px rgba(255, 255, 255, 0.8);
+
+      transition:
+        transform 0.35s ease,
+        box-shadow 0.35s ease;
+    }
+
+    .seal::before {
+      content: "R & A";
+
+      position: absolute;
+      inset: 7px;
+
+      display: flex;
+      align-items: center;
+      justify-content: center;
+
+      border: 1px solid rgba(112, 84, 49, 0.55);
+      border-radius: 50%;
+
+      color: #765b39;
+
+      font-family: "Cormorant Garamond", serif;
+      font-size: 17px;
+      letter-spacing: 1px;
+    }
+
+    .seal:hover {
+      transform:
+        translate(-50%, -50%)
+        scale(1.07);
+
+      box-shadow:
+        0 10px 22px rgba(78, 57, 32, 0.34),
+        inset 0 2px 5px rgba(255, 255, 255, 0.8);
+    }
+
+    .open-text {
+      position: absolute;
+
+      top: calc(53% + 58px);
+      left: 50%;
+
+      transform: translateX(-50%);
+
+      z-index: 5;
+
+      color: #766b5d;
+
+      font-size: 16px;
+      letter-spacing: 2px;
+
+      white-space: nowrap;
+    }
+
+    /* =========================
+       CIJELA POZIVNICA
+    ========================= */
+
+    #invitation {
+      position: relative;
+
+      width: min(100%, 1024px);
+
+      margin: 0 auto;
+
+      opacity: 0;
+
+      transition: opacity 1.5s ease;
+
+      background: #f4ede2;
+    }
+
+    #invitation.visible {
+      opacity: 1;
+    }
+
+    .full-invitation {
+      display: block;
+
+      width: 100%;
+      height: auto;
+
+      margin: 0;
+      padding: 0;
+    }
+
+    /* =========================
+       NASLOV PREKO PRAZNOG
+       GORNJEG DIJELA SLIKE
+    ========================= */
+
+    .hero-overlay {
+      position: absolute;
+
+      top: 0;
+      left: 0;
+
+      width: 100%;
+
+      height: 16.5%;
+
+      z-index: 10;
+
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+
+      text-align: center;
+
+      padding: 4% 12% 0;
+
+      color: #4f4a45;
+
+      pointer-events: none;
+    }
+
+    .intro {
+      margin: 0 0 18px;
+
+      font-size: clamp(
+        10px,
+        1.5vw,
+        17px
+      );
+
+      letter-spacing: 0.34em;
+
+      text-transform: uppercase;
+    }
+
+    .names {
+      margin: 0;
+
+      font-family: "Italiana", serif;
+
+      font-size: clamp(
+        48px,
+        9vw,
+        102px
+      );
+
+      font-weight: 400;
+
+      line-height: 0.93;
+    }
+
+    .ampersand {
+      display: block;
+
+      margin: 8px 0;
+
+      font-family: "Cormorant Garamond", serif;
+
+      font-size: 0.48em;
+    }
+
+    .divider {
+      width: 76px;
+      height: 1px;
+
+      margin: 24px auto 20px;
+
+      background: rgba(93, 81, 67, 0.45);
+    }
+
+    .date {
+      margin: 0;
+
+      font-size: clamp(
+        20px,
+        3.2vw,
+        35px
+      );
+
+      letter-spacing: 0.04em;
+    }
+
+    .story {
+      position: absolute;
+
+      bottom: 7%;
+
+      margin: 0;
+
+      font-size: clamp(
+        10px,
+        1.5vw,
+        16px
+      );
+
+      letter-spacing: 0.31em;
+
+      text-transform: uppercase;
+    }
+
+    .arrow {
+      position: absolute;
+
+      bottom: 2.2%;
+
+      font-size: clamp(
+        25px,
+        4vw,
+        42px
+      );
+
+      font-family: serif;
+
+      animation: arrowMove 1.8s ease-in-out infinite;
+    }
+
+    @keyframes arrowMove {
+      0%,
+      100% {
+        transform: translateY(0);
+        opacity: 0.55;
+      }
+
+      50% {
+        transform: translateY(10px);
+        opacity: 1;
+      }
+    }
+
+    /* =========================
+       MOBITEL
+    ========================= */
+
+    @media (max-width: 600px) {
+      body {
+        background: #f4ede2;
+      }
+
+      .envelope {
+        width: 84vw;
+      }
+
+      .seal {
+        width: 68px;
+        height: 68px;
+      }
+
+      .seal::before {
+        font-size: 15px;
+      }
+
+      .hero-overlay {
+        height: 16.5%;
+        padding-left: 8%;
+        padding-right: 8%;
+      }
+
+      .intro {
+        margin-bottom: 11px;
+      }
+
+      .divider {
+        margin-top: 15px;
+        margin-bottom: 13px;
+      }
+    }
+  </style>
 </head>
 
 <body>
 
-<div id="envelopeScreen">
-  <div class="envelope">
-    <button class="pearl" id="pearl" aria-label="Otvori pozivnicu"></button>
-    <div class="openText">dodirnite biser da otvorite</div>
-  </div>
-</div>
+  <!-- =========================
+       KUVERTA
+  ========================== -->
 
-<main id="invitation">
-  <div class="wrapper">
+  <div id="envelope-screen">
 
-    <section class="page">
-      <img src="naslovna2.png" alt="Rea i Antonio">
-      <div class="coverText">
-        <div class="small">Pozivamo vas na naše vjenčanje</div>
-        <h1 class="names">Rea<br><span class="amp">&amp;</span><br>Antonio</h1>
-        <div class="line"></div>
-        <div class="date">16. listopada 2026.</div>
+    <div class="envelope">
+
+      <div class="envelope-flap"></div>
+
+      <button
+        class="seal"
+        id="openInvitation"
+        aria-label="Otvori pozivnicu"
+      ></button>
+
+      <div class="open-text">
+        OTVORI POZIVNICU
       </div>
-      <div class="scrollText">zakoračite u našu priču<span class="arrow">↓</span></div>
-    </section>
 
-    <section class="page">
-      <img src="okupljanje5.png" alt="Okupljanje">
-    </section>
-
-    <section class="page">
-      <img src="misa2.PNG" alt="Crkveni obred">
-    </section>
-
-    <section class="page">
-      <img src="omorika2.PNG" alt="Svadbena proslava">
-    </section>
-
-    <section class="page">
-      <img src="potvrda2.PNG" alt="Potvrda dolaska">
-      <a class="phone rea" href="tel:0919513980"></a>
-      <a class="phone antonio" href="tel:0921200512"></a>
-    </section>
+    </div>
 
   </div>
-</main>
 
-<script>
-const pearl=document.getElementById("pearl");
-const envelope=document.getElementById("envelopeScreen");
-const invitation=document.getElementById("invitation");
 
-pearl.addEventListener("click",()=>{
-  envelope.classList.add("opened");
-  setTimeout(()=>{
-    envelope.style.display="none";
-    invitation.classList.add("visible");
-    window.scrollTo(0,0);
-  },1500);
-});
-</script>
+  <!-- =========================
+       POZIVNICA
+  ========================== -->
+
+  <main id="invitation">
+
+    <img
+      src="cijela.png"
+      alt="Pozivnica za vjenčanje Ree i Antonija"
+      class="full-invitation"
+    >
+
+
+    <!-- NASLOV NA PRAZNOM DIJELU SLIKE -->
+
+    <section class="hero-overlay">
+
+      <p class="intro">
+        POZIVAMO VAS NA NAŠE VJENČANJE
+      </p>
+
+      <h1 class="names">
+
+        Rea
+
+        <span class="ampersand">
+          &
+        </span>
+
+        Antonio
+
+      </h1>
+
+      <div class="divider"></div>
+
+      <p class="date">
+        16. listopada 2026.
+      </p>
+
+      <p class="story">
+        ZAKORAČITE U NAŠU PRIČU
+      </p>
+
+      <div class="arrow">
+        ↓
+      </div>
+
+    </section>
+
+  </main>
+
+
+  <script>
+    const envelopeScreen =
+      document.getElementById("envelope-screen");
+
+    const invitation =
+      document.getElementById("invitation");
+
+    const openInvitation =
+      document.getElementById("openInvitation");
+
+
+    openInvitation.addEventListener(
+      "click",
+      function () {
+
+        envelopeScreen.classList.add("opened");
+
+        invitation.classList.add("visible");
+
+        window.scrollTo({
+          top: 0,
+          behavior: "instant"
+        });
+
+      }
+    );
+  </script>
 
 </body>
 </html>
