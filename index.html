@@ -442,6 +442,29 @@
     transform: translateY(-110px) !important;
   }
 }
+
+    /* Samo mobitel: kuverta preko cijelog početnog ekrana */
+@media (max-width: 600px) {
+  #envelopeScreen {
+    padding: 0 !important;
+    overflow: hidden !important;
+  }
+
+  .envelopeWrap {
+    width: 100vw !important;
+    height: 100dvh !important;
+    max-width: none !important;
+    aspect-ratio: auto !important;
+    filter: none !important;
+  }
+
+  .envelopePicture {
+    width: 100% !important;
+    height: 100% !important;
+    object-fit: cover !important;
+    object-position: center !important;
+  }
+}
   </style>
 </head>
 
