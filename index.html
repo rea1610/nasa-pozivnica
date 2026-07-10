@@ -1,157 +1,171 @@
 <!DOCTYPE html>
 <html lang="hr">
+
 <head>
-<meta charset="UTF-8">
-<meta name="viewport" content="width=device-width, initial-scale=1.0">
-<title>Rea & Antonio</title>
+    <meta charset="UTF-8">
 
-<style>
-*{box-sizing:border-box}
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
 
-html,body{
-  margin:0;
-  padding:0;
-  background:#d9d2c8;
-  overflow-x:hidden;
-}
+    <title>Rea & Antonio</title>
 
-/* KUVERTA */
+    <style>
 
-#envelopeScreen{
-  position:fixed;
-  inset:0;
-  z-index:1000;
-  background:#d9d2c8;
-  display:flex;
-  justify-content:center;
-  align-items:center;
-  transition:opacity 1.6s ease, transform 1.6s ease;
-}
+        * {
+            box-sizing: border-box;
+        }
 
-#envelopeScreen.opened{
-  opacity:0;
-  transform:scale(1.04);
-  pointer-events:none;
-}
+        html,
+        body {
+            margin: 0;
+            padding: 0;
+            width: 100%;
+            min-height: 100%;
+        }
 
-.envelope{
-  position:relative;
-  width:min(100vw,600px);
-  height:100svh;
-  background:url("kuverta.PNG") center/cover no-repeat;
-}
+        body {
+            background: #d9d2c8;
+            overflow-x: hidden;
+        }
 
-.pearl{
-  position:absolute;
-  left:50%;
-  top:50%;
-  transform:translate(-50%,-50%);
-  width:76px;
-  height:76px;
-  border:0;
-  border-radius:50%;
-  cursor:pointer;
-  background:radial-gradient(circle at 32% 27%,#fff 0%,#fffdf8 18%,#ebe4d8 46%,#c9beb0 72%,#a79b8d 100%);
-  box-shadow:inset 7px 7px 13px rgba(255,255,255,.9), inset -9px -10px 15px rgba(120,105,90,.2), 0 8px 18px rgba(80,70,60,.28);
-  animation:pulse 2.4s infinite ease-in-out;
-}
+        .pozivnica {
+            width: 100%;
+            max-width: 1024px;
+            margin: 0 auto;
+            padding: 0;
+            background: #f3eadb;
+            overflow: hidden;
+        }
 
-@keyframes pulse{
-  0%,100%{transform:translate(-50%,-50%) scale(1)}
-  50%{transform:translate(-50%,-50%) scale(1.07)}
-}
+        .slika {
+            display: block;
+            width: 100%;
+            height: auto;
+            margin: 0;
+            padding: 0;
+            border: 0;
+            vertical-align: bottom;
+        }
 
-.openText{
-  position:absolute;
-  left:0;
-  right:0;
-  bottom:7%;
-  text-align:center;
-  font-size:12px;
-  letter-spacing:4px;
-  text-transform:uppercase;
-  color:#81786e;
-}
+        .sekcija {
+            position: relative;
+            width: 100%;
+            margin: 0;
+            padding: 0;
+            line-height: 0;
+        }
 
-/* POZIVNICA */
+        .telefon {
+            position: absolute;
+            display: block;
+            z-index: 10;
+            cursor: pointer;
+            background: transparent;
+        }
 
-main{
-  opacity:0;
-  transition:opacity 1.6s ease;
-}
+        .telefon-rea {
+            left: 37%;
+            top: 64%;
+            width: 26%;
+            height: 6%;
+        }
 
-main.visible{
-  opacity:1;
-}
+        .telefon-antonio {
+            left: 37%;
+            top: 74%;
+            width: 26%;
+            height: 6%;
+        }
 
-.page{
-  width:min(100%,600px);
-  margin:0 auto;
-  padding:0;
-  line-height:0;
-  font-size:0;
-  background:#efe6d8;
-}
+        @media (max-width: 600px) {
 
-.page img{
-  width:100%;
-  height:auto;
-  display:block;
-  margin:0;
-  padding:0;
-  border:0;
-}
-</style>
+            .pozivnica {
+                width: 100%;
+                max-width: none;
+            }
+
+        }
+
+    </style>
+
 </head>
 
 <body>
 
-<div id="envelopeScreen">
-  <div class="envelope">
-    <button class="pearl" id="pearl" aria-label="Otvori pozivnicu"></button>
-    <div class="openText">dodirnite biser da otvorite</div>
-  </div>
-</div>
+    <main class="pozivnica">
 
-<main id="invitation">
+        <!-- NASLOVNA -->
 
-  <section class="page">
-    <img src="naslovna2.PNG" alt="Rea i Antonio">
-  </section>
+        <section class="sekcija">
+            <img
+                class="slika"
+                src="naslovna2.png"
+                alt="Rea i Antonio"
+            >
+        </section>
 
-  <section class="page">
-    <img src="okupljanje2.PNG" alt="Okupljanje">
-  </section>
 
-  <section class="page">
-    <img src="misa2.PNG" alt="Crkveni obred">
-  </section>
+        <!-- OKUPLJANJE -->
 
-  <section class="page">
-    <img src="omorika2.PNG" alt="Svadbena proslava">
-  </section>
+        <section class="sekcija">
+            <img
+                class="slika"
+                src="okupljanje2.PNG"
+                alt="Okupljanje"
+            >
+        </section>
 
-  <section class="page">
-    <img src="potvrda2.PNG" alt="Potvrda dolaska">
-  </section>
 
-</main>
+        <!-- CRKVENI OBRED -->
 
-<script>
-const pearl = document.getElementById("pearl");
-const envelopeScreen = document.getElementById("envelopeScreen");
-const invitation = document.getElementById("invitation");
+        <section class="sekcija">
+            <img
+                class="slika"
+                src="misa2.PNG"
+                alt="Crkveni obred"
+            >
+        </section>
 
-pearl.addEventListener("click", function(){
-  envelopeScreen.classList.add("opened");
 
-  setTimeout(function(){
-    envelopeScreen.style.display = "none";
-    invitation.classList.add("visible");
-    window.scrollTo(0,0);
-  },1600);
-});
-</script>
+        <!-- SVADBENA PROSLAVA -->
+
+        <section class="sekcija">
+            <img
+                class="slika"
+                src="omorika2.PNG"
+                alt="Svadbena proslava"
+            >
+        </section>
+
+
+        <!-- POTVRDA DOLASKA -->
+
+        <section class="sekcija">
+
+            <img
+                class="slika"
+                src="potvrda2.PNG"
+                alt="Potvrda dolaska"
+            >
+
+            <a
+                class="telefon telefon-rea"
+                href="tel:0919513980"
+                aria-label="Nazovi Reu"
+            ></a>
+
+            <a
+                class="telefon telefon-antonio"
+                href="tel:0921200512"
+                aria-label="Nazovi Antonija"
+            ></a>
+
+        </section>
+
+    </main>
 
 </body>
+
 </html>
