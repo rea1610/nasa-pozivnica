@@ -9,955 +9,428 @@
 
 <title>Rea & Antonio</title>
 
-<link rel="preconnect" href="https://fonts.googleapis.com">
-
-<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
-
-<link href="https://fonts.googleapis.com/css2?family=Italiana&family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Parisienne&display=swap" rel="stylesheet">
-
-
 <style>
 
-
-*{
-    box-sizing:border-box;
+* {
+    box-sizing: border-box;
 }
-
-
-html{
-    scroll-behavior:smooth;
-}
-
 
 html,
-body{
-    margin:0;
-    padding:0;
-    width:100%;
-    min-height:100%;
+body {
+    margin: 0;
+    padding: 0;
+    width: 100%;
+}
+
+body {
+    background: #d9d2c8;
+    overflow-x: hidden;
 }
 
 
-body{
-    background:#d9d2c8;
-    overflow-x:hidden;
-    color:#565a66;
-    font-family:"Cormorant Garamond",serif;
-}
-
-
-
-/* =========================================
+/* =========================
    KUVERTA
-========================================= */
+========================= */
 
+#envelopeScreen {
+    position: fixed;
+    inset: 0;
+    z-index: 1000;
 
-#envelopeScreen{
+    display: flex;
+    align-items: center;
+    justify-content: center;
 
-    position:fixed;
+    background: #d9d2c8;
 
-    inset:0;
-
-    z-index:1000;
-
-    display:flex;
-
-    align-items:center;
-
-    justify-content:center;
-
-    background:#d9d2c8;
+    opacity: 1;
 
     transition:
         opacity 1.6s ease,
         transform 1.6s ease;
+}
 
+#envelopeScreen.opened {
+    opacity: 0;
+    transform: scale(1.04);
+    pointer-events: none;
+}
+
+.envelope {
+    position: relative;
+
+    width: min(100vw, 600px);
+    height: 100svh;
+
+    background-image: url("kuverta.PNG");
+    background-size: cover;
+    background-position: center;
+    background-repeat: no-repeat;
 }
 
 
-#envelopeScreen.opened{
-
-    opacity:0;
-
-    transform:scale(1.05);
-
-    pointer-events:none;
-
-}
-
-
-.envelope{
-
-    position:relative;
-
-    width:min(100vw,600px);
-
-    height:100svh;
-
-    background-image:url("kuverta.PNG");
-
-    background-size:cover;
-
-    background-position:center;
-
-    background-repeat:no-repeat;
-
-    box-shadow:
-        0 20px 60px rgba(70,60,50,.18);
-
-}
-
-
-
-/* =========================================
+/* =========================
    BISER
-========================================= */
+========================= */
 
+.pearl {
+    position: absolute;
 
-.pearl{
+    left: 50%;
+    top: 50%;
 
-    position:absolute;
+    transform: translate(-50%, -50%);
 
-    left:50%;
+    width: 76px;
+    height: 76px;
 
-    top:50%;
+    padding: 0;
 
-    transform:translate(-50%,-50%);
+    border: 0;
+    border-radius: 50%;
 
-    width:76px;
-
-    height:76px;
-
-    padding:0;
-
-    border:0;
-
-    border-radius:50%;
-
-    cursor:pointer;
-
-    z-index:10;
+    cursor: pointer;
 
     background:
-
         radial-gradient(
-
             circle at 32% 27%,
-
             #ffffff 0%,
-
             #fffdf8 18%,
-
             #ebe4d8 46%,
-
             #c9beb0 72%,
-
             #a79b8d 100%
-
         );
 
     box-shadow:
-
         inset 7px 7px 13px rgba(255,255,255,.9),
-
         inset -9px -10px 15px rgba(120,105,90,.2),
-
         0 8px 18px rgba(80,70,60,.28);
 
-    animation:
-
-        pearlPulse 2.4s infinite ease-in-out;
-
+    animation: pearlPulse 2.4s infinite ease-in-out;
 }
 
+.pearl::after {
+    content: "";
 
-.pearl::after{
+    position: absolute;
 
-    content:"";
+    width: 18px;
+    height: 11px;
 
-    position:absolute;
+    top: 17px;
+    left: 18px;
 
-    width:18px;
+    border-radius: 50%;
 
-    height:11px;
+    background: rgba(255,255,255,.85);
 
-    top:17px;
-
-    left:18px;
-
-    border-radius:50%;
-
-    background:rgba(255,255,255,.85);
-
-    filter:blur(2px);
-
+    filter: blur(2px);
 }
 
-
-@keyframes pearlPulse{
-
+@keyframes pearlPulse {
 
     0%,
-    100%{
-
+    100% {
         transform:
-            translate(-50%,-50%)
+            translate(-50%, -50%)
             scale(1);
-
     }
 
-
-    50%{
-
+    50% {
         transform:
-            translate(-50%,-50%)
+            translate(-50%, -50%)
             scale(1.07);
-
     }
 
-
 }
 
 
+/* =========================
+   TEKST NA KUVERTI
+========================= */
 
-.openText{
+.openText {
+    position: absolute;
 
-    position:absolute;
+    left: 0;
+    right: 0;
+    bottom: 7%;
 
-    left:0;
+    text-align: center;
 
-    right:0;
+    font-family: Georgia, serif;
 
-    bottom:7%;
+    font-size: 12px;
 
-    text-align:center;
+    letter-spacing: 4px;
 
-    font-size:12px;
+    text-transform: uppercase;
 
-    letter-spacing:4px;
-
-    text-transform:uppercase;
-
-    color:#81786e;
-
+    color: #81786e;
 }
 
 
+/* =========================
+   POZIVNICA
+========================= */
 
-/* =========================================
-   CIJELA POZIVNICA
-========================================= */
+#invitation {
+    width: 100%;
 
+    opacity: 0;
 
-#invitation{
+    transition: opacity 1.6s ease;
+}
 
-    width:100%;
+#invitation.visible {
+    opacity: 1;
+}
 
-    opacity:0;
+.invitationWrapper {
+    width: 100%;
+    max-width: 600px;
 
-    transition:opacity 1.8s ease;
+    margin: 0 auto;
 
+    padding: 0;
+
+    background: #f3eadb;
+
+    overflow: hidden;
 }
 
 
-#invitation.visible{
+/* =========================
+   SLIKE
+========================= */
 
-    opacity:1;
+.page {
+    position: relative;
 
+    width: 100%;
+
+    margin: 0;
+    padding: 0;
+
+    line-height: 0;
+
+    font-size: 0;
+}
+
+.page img {
+    display: block;
+
+    width: 100%;
+    height: auto;
+
+    margin: 0;
+    padding: 0;
+
+    border: 0;
 }
 
 
-.pozivnica{
+/* =========================
+   TELEFONI
+========================= */
 
-    width:100%;
+.phoneLink {
+    position: absolute;
 
-    max-width:1024px;
+    display: block;
 
-    margin:0 auto;
+    z-index: 10;
 
-    padding:0;
+    background: transparent;
 
-    background:#f3eadb;
+    cursor: pointer;
+}
 
-    overflow:hidden;
+.reaPhone {
+    left: 30%;
+    top: 57%;
 
+    width: 40%;
+    height: 8%;
+}
+
+.antonioPhone {
+    left: 30%;
+    top: 68%;
+
+    width: 40%;
+    height: 8%;
 }
 
 
-
-/* =========================================
-   NASLOVNA
-========================================= */
-
-
-.naslovna{
-
-    position:relative;
-
-    width:100%;
-
-    margin:0;
-
-    padding:0;
-
-    line-height:0;
-
-}
-
-
-.naslovnaSlika{
-
-    display:block;
-
-    width:100%;
-
-    height:auto;
-
-    margin:0;
-
-    padding:0;
-
-    border:0;
-
-}
-
-
-.naslovnaTekst{
-
-    position:absolute;
-
-    inset:0;
-
-    z-index:5;
-
-    display:flex;
-
-    flex-direction:column;
-
-    align-items:center;
-
-    justify-content:center;
-
-    text-align:center;
-
-    line-height:1.2;
-
-    padding:12% 8% 14%;
-
-}
-
-
-.smallTitle{
-
-    font-family:"Italiana",serif;
-
-    font-size:clamp(11px,2.4vw,23px);
-
-    letter-spacing:.28em;
-
-    text-transform:uppercase;
-
-    color:#5d5962;
-
-    margin-bottom:4%;
-
-}
-
-
-.names{
-
-    font-family:"Cormorant Garamond",serif;
-
-    font-size:clamp(54px,12vw,122px);
-
-    font-style:italic;
-
-    font-weight:500;
-
-    line-height:.82;
-
-    color:#565a66;
-
-    margin:0;
-
-}
-
-
-.ampersand{
-
-    display:inline-block;
-
-    font-size:.52em;
-
-    font-style:normal;
-
-    margin:2% 0;
-
-}
-
-
-.titleLine{
-
-    width:13%;
-
-    min-width:65px;
-
-    height:1px;
-
-    background:rgba(86,90,102,.38);
-
-    margin:5% auto 3%;
-
-}
-
-
-.weddingDate{
-
-    font-family:"Italiana",serif;
-
-    font-size:clamp(17px,3.4vw,34px);
-
-    color:#565a66;
-
-}
-
-
-.scrollText{
-
-    position:absolute;
-
-    left:0;
-
-    right:0;
-
-    bottom:10%;
-
-    z-index:6;
-
-    text-align:center;
-
-    line-height:1.5;
-
-    font-family:"Italiana",serif;
-
-    font-size:clamp(9px,1.8vw,17px);
-
-    letter-spacing:.3em;
-
-    text-transform:uppercase;
-
-    color:#65616a;
-
-}
-
-
-.arrow{
-
-    display:block;
-
-    font-family:Arial,sans-serif;
-
-    font-size:clamp(20px,3vw,32px);
-
-    margin-top:8px;
-
-    animation:arrowMove 2s infinite ease-in-out;
-
-}
-
-
-@keyframes arrowMove{
-
-
-    0%,
-    100%{
-
-        transform:translateY(0);
-
-    }
-
-
-    50%{
-
-        transform:translateY(9px);
-
-    }
-
-
-}
-
-
-
-/* =========================================
-   GOTOVE SLIKE
-========================================= */
-
-
-.sekcija{
-
-    position:relative;
-
-    width:100%;
-
-    margin:0;
-
-    padding:0;
-
-    line-height:0;
-
-    font-size:0;
-
-}
-
-
-.slika{
-
-    display:block;
-
-    width:100%;
-
-    height:auto;
-
-    margin:0;
-
-    padding:0;
-
-    border:0;
-
-    vertical-align:bottom;
-
-}
-
-
-
-/* =========================================
-   KLIKABILNI TELEFONI
-========================================= */
-
-
-.telefon{
-
-    position:absolute;
-
-    display:block;
-
-    z-index:10;
-
-    cursor:pointer;
-
-    background:transparent;
-
-}
-
-
-.telefon-rea{
-
-    left:34%;
-
-    top:60%;
-
-    width:32%;
-
-    height:8%;
-
-}
-
-
-.telefon-antonio{
-
-    left:34%;
-
-    top:70%;
-
-    width:32%;
-
-    height:8%;
-
-}
-
-
-
-/* =========================================
+/* =========================
    MOBITEL
-========================================= */
+========================= */
 
+@media (max-width: 600px) {
 
-@media(max-width:600px){
-
-
-    .pozivnica{
-
-        width:100%;
-
-        max-width:none;
-
+    .envelope {
+        width: 100vw;
+        height: 100svh;
     }
 
-
-    .envelope{
-
-        width:100vw;
-
-        height:100svh;
-
+    .invitationWrapper {
+        width: 100%;
+        max-width: none;
     }
-
-
-    .naslovnaTekst{
-
-        padding-top:10%;
-
-    }
-
-
-    .scrollText{
-
-        bottom:12%;
-
-    }
-
 
 }
-
 
 </style>
 
-
 </head>
-
 
 
 <body>
 
 
-
-<!-- =========================================
-     KUVERTA
-========================================= -->
-
+<!-- KUVERTA -->
 
 <div id="envelopeScreen">
 
-
     <div class="envelope">
 
-
         <button
-
             class="pearl"
-
             id="pearl"
-
             aria-label="Otvori pozivnicu">
-
         </button>
 
-
         <div class="openText">
-
             dodirnite biser da otvorite
-
         </div>
 
-
     </div>
-
 
 </div>
 
 
-
-
-<!-- =========================================
-     POZIVNICA
-========================================= -->
-
+<!-- POZIVNICA -->
 
 <main id="invitation">
 
-
-<div class="pozivnica">
-
+    <div class="invitationWrapper">
 
 
-<!-- =========================================
-     NASLOVNA
-========================================= -->
+        <!-- NASLOVNA -->
+
+        <section class="page">
+
+            <img
+                src="naslovna2.png"
+                alt="Rea i Antonio">
+
+        </section>
 
 
-<section class="naslovna">
+        <!-- OKUPLJANJE -->
+
+        <section class="page">
+
+            <img
+                src="okupljanje2.PNG"
+                alt="Okupljanje">
+
+        </section>
 
 
-    <img
+        <!-- CRKVENI OBRED -->
 
-        class="naslovnaSlika"
+        <section class="page">
 
-        src="naslovna2.png"
+            <img
+                src="misa2.PNG"
+                alt="Crkveni obred">
 
-        alt="Pozivnica Rea i Antonio"
-
-    >
-
-
-
-    <div class="naslovnaTekst">
+        </section>
 
 
-        <div class="smallTitle">
+        <!-- SVADBENA PROSLAVA -->
 
-            Pozivamo vas na naše vjenčanje
+        <section class="page">
 
-        </div>
+            <img
+                src="omorika2.PNG"
+                alt="Svadbena proslava">
 
-
-
-        <h1 class="names">
-
-            Rea
-
-            <br>
-
-            <span class="ampersand">
-
-                &amp;
-
-            </span>
-
-            <br>
-
-            Antonio
-
-        </h1>
+        </section>
 
 
+        <!-- POTVRDA DOLASKA -->
 
-        <div class="titleLine"></div>
+        <section class="page">
+
+            <img
+                src="potvrda2.PNG"
+                alt="Potvrda dolaska">
 
 
+            <a
+                class="phoneLink reaPhone"
+                href="tel:0919513980"
+                aria-label="Nazovi Reu">
+            </a>
 
-        <div class="weddingDate">
 
-            16. listopada 2026.
+            <a
+                class="phoneLink antonioPhone"
+                href="tel:0921200512"
+                aria-label="Nazovi Antonija">
+            </a>
 
-        </div>
+        </section>
 
 
     </div>
-
-
-
-    <div class="scrollText">
-
-        zakoračite u našu priču
-
-        <span class="arrow">
-
-            ↓
-
-        </span>
-
-    </div>
-
-
-</section>
-
-
-
-
-<!-- =========================================
-     OKUPLJANJE
-========================================= -->
-
-
-<section class="sekcija">
-
-
-    <img
-
-        class="slika"
-
-        src="okupljanje2.PNG"
-
-        alt="Okupljanje"
-
-    >
-
-
-</section>
-
-
-
-
-<!-- =========================================
-     CRKVENI OBRED
-========================================= -->
-
-
-<section class="sekcija">
-
-
-    <img
-
-        class="slika"
-
-        src="misa2.PNG"
-
-        alt="Crkveni obred"
-
-    >
-
-
-</section>
-
-
-
-
-<!-- =========================================
-     SVADBENA PROSLAVA
-========================================= -->
-
-
-<section class="sekcija">
-
-
-    <img
-
-        class="slika"
-
-        src="omorika2.PNG"
-
-        alt="Svadbena proslava"
-
-    >
-
-
-</section>
-
-
-
-
-<!-- =========================================
-     POTVRDA DOLASKA
-========================================= -->
-
-
-<section class="sekcija">
-
-
-    <img
-
-        class="slika"
-
-        src="potvrda2.PNG"
-
-        alt="Potvrda dolaska"
-
-    >
-
-
-
-    <a
-
-        class="telefon telefon-rea"
-
-        href="tel:0919513980"
-
-        aria-label="Nazovi Reu">
-
-    </a>
-
-
-
-    <a
-
-        class="telefon telefon-antonio"
-
-        href="tel:0921200512"
-
-        aria-label="Nazovi Antonija">
-
-    </a>
-
-
-</section>
-
-
-
-</div>
-
 
 </main>
 
 
-
-
 <script>
 
-
 const pearl =
-
-document.getElementById("pearl");
-
+    document.getElementById("pearl");
 
 const envelopeScreen =
-
-document.getElementById("envelopeScreen");
-
+    document.getElementById("envelopeScreen");
 
 const invitation =
-
-document.getElementById("invitation");
-
-
+    document.getElementById("invitation");
 
 let opened = false;
 
 
+pearl.addEventListener("click", function () {
 
-pearl.addEventListener(
-
-"click",
-
-function(){
-
-
-    if(opened){
-
+    if (opened) {
         return;
-
     }
 
-
     opened = true;
-
 
     envelopeScreen.classList.add("opened");
 
 
-
-    setTimeout(function(){
-
+    setTimeout(function () {
 
         envelopeScreen.style.display = "none";
 
-
         invitation.classList.add("visible");
 
+        window.scrollTo(0, 0);
 
-        window.scrollTo(0,0);
-
-
-    },1600);
-
+    }, 1600);
 
 });
-
 
 </script>
 
 
-
 </body>
-
 
 </html>
