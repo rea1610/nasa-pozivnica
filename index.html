@@ -1,8 +1,12 @@
 <!DOCTYPE html>
 <html lang="hr">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1.0"
+  />
 
   <title>Rea & Antonio</title>
 
@@ -10,109 +14,131 @@
   <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 
   <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Italiana&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Italiana&family=Parisienne&display=swap"
     rel="stylesheet"
-  >
+  />
 
   <style>
     * {
+      margin: 0;
+      padding: 0;
       box-sizing: border-box;
     }
 
     html {
       scroll-behavior: smooth;
+      background: #eee9e1;
     }
 
     body {
       margin: 0;
-      padding: 0;
-      background: #d8d2c8;
+      min-height: 100vh;
       overflow-x: hidden;
+      background: #eee9e1;
       font-family: "Cormorant Garamond", serif;
     }
 
     /* =========================
        KUVERTA
-    ========================= */
+       ========================= */
 
-    #envelope-screen {
+    #intro {
       position: fixed;
       inset: 0;
       z-index: 9999;
 
       display: flex;
-      justify-content: center;
       align-items: center;
+      justify-content: center;
+
+      min-height: 100svh;
+      padding: 24px;
 
       background:
         radial-gradient(
           circle at center,
-          #eee7dc 0%,
-          #d8cfc2 55%,
-          #bdb2a3 100%
+          #f8f4ed 0%,
+          #eee9e1 58%,
+          #ddd6cc 100%
         );
 
       transition:
-        opacity 1.2s ease,
-        visibility 1.2s ease;
+        opacity 1.1s ease,
+        visibility 1.1s ease;
     }
 
-    #envelope-screen.opened {
+    #intro.hide {
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
     }
 
+    .envelope-wrap {
+      width: min(78vw, 620px);
+      perspective: 1400px;
+      cursor: pointer;
+      text-align: center;
+    }
+
     .envelope {
       position: relative;
+      width: 100%;
+      aspect-ratio: 1.65 / 1;
 
-      width: min(82vw, 430px);
-      aspect-ratio: 1.48 / 1;
+      background:
+        linear-gradient(
+          145deg,
+          #fffdf9 0%,
+          #f5efe5 50%,
+          #ebe1d2 100%
+        );
 
-      background: #eee5d8;
-
+      border: 1px solid rgba(151, 126, 91, 0.24);
       border-radius: 3px;
 
       box-shadow:
-        0 22px 55px rgba(69, 55, 39, 0.25),
-        0 4px 12px rgba(69, 55, 39, 0.16);
+        0 28px 60px rgba(79, 63, 45, 0.18),
+        0 8px 18px rgba(79, 63, 45, 0.10);
 
-      overflow: hidden;
+      overflow: visible;
     }
 
     .envelope::before {
       content: "";
-
       position: absolute;
       inset: 0;
 
       background:
         linear-gradient(
-          32deg,
-          transparent 49.5%,
-          rgba(172, 151, 124, 0.42) 50%,
-          transparent 50.5%
+          33deg,
+          transparent 49.6%,
+          rgba(175, 151, 116, 0.24) 50%,
+          transparent 50.4%
         ),
         linear-gradient(
-          -32deg,
-          transparent 49.5%,
-          rgba(172, 151, 124, 0.42) 50%,
-          transparent 50.5%
+          -33deg,
+          transparent 49.6%,
+          rgba(175, 151, 116, 0.24) 50%,
+          transparent 50.4%
         );
 
-      z-index: 1;
+      pointer-events: none;
     }
 
-    .envelope-flap {
+    .flap {
       position: absolute;
-
       top: 0;
       left: 0;
 
       width: 100%;
-      height: 61%;
+      height: 58%;
 
-      background: #f4ecdf;
+      background:
+        linear-gradient(
+          160deg,
+          #fffdf9,
+          #eee5d8
+        );
 
       clip-path: polygon(
         0 0,
@@ -120,123 +146,110 @@
         50% 100%
       );
 
-      filter:
-        drop-shadow(
-          0 5px 4px rgba(110, 89, 63, 0.15)
-        );
+      transform-origin: top center;
+      transition: transform 0.9s ease;
 
-      z-index: 2;
+      z-index: 3;
+
+      border-top: 1px solid rgba(151, 126, 91, 0.16);
     }
 
     .seal {
       position: absolute;
-
       left: 50%;
-      top: 53%;
+      top: 50%;
+
+      width: clamp(64px, 10vw, 92px);
+      height: clamp(64px, 10vw, 92px);
 
       transform: translate(-50%, -50%);
-
-      width: 76px;
-      height: 76px;
-
-      border-radius: 50%;
-
-      border: none;
-
-      cursor: pointer;
-
-      z-index: 5;
-
-      background:
-        radial-gradient(
-          circle at 35% 30%,
-          #fffdf7 0%,
-          #f8f1df 22%,
-          #d9c49b 55%,
-          #aa8a59 78%,
-          #80623e 100%
-        );
-
-      box-shadow:
-        0 7px 16px rgba(78, 57, 32, 0.28),
-        inset 0 2px 5px rgba(255, 255, 255, 0.8);
-
-      transition:
-        transform 0.35s ease,
-        box-shadow 0.35s ease;
-    }
-
-    .seal::before {
-      content: "R & A";
-
-      position: absolute;
-      inset: 7px;
 
       display: flex;
       align-items: center;
       justify-content: center;
 
-      border: 1px solid rgba(112, 84, 49, 0.55);
       border-radius: 50%;
 
-      color: #765b39;
+      color: #8f7044;
 
       font-family: "Cormorant Garamond", serif;
-      font-size: 17px;
-      letter-spacing: 1px;
-    }
+      font-size: clamp(20px, 3vw, 31px);
+      font-weight: 500;
 
-    .seal:hover {
-      transform:
-        translate(-50%, -50%)
-        scale(1.07);
+      background:
+        radial-gradient(
+          circle at 35% 30%,
+          #f7e5b5,
+          #d7b574 48%,
+          #aa8247 100%
+        );
+
+      border: 3px double rgba(118, 85, 43, 0.45);
 
       box-shadow:
-        0 10px 22px rgba(78, 57, 32, 0.34),
-        inset 0 2px 5px rgba(255, 255, 255, 0.8);
+        0 6px 15px rgba(83, 58, 31, 0.24),
+        inset 0 1px 4px rgba(255,255,255,0.7);
+
+      z-index: 5;
     }
 
     .open-text {
       position: absolute;
+      left: 0;
+      right: 0;
+      bottom: 8%;
 
-      top: calc(53% + 58px);
-      left: 50%;
+      z-index: 6;
 
-      transform: translateX(-50%);
+      color: #75634f;
 
-      z-index: 5;
+      font-size: clamp(12px, 1.8vw, 17px);
+      letter-spacing: 0.24em;
+      text-transform: uppercase;
+    }
 
-      color: #766b5d;
+    .envelope-wrap:hover .envelope {
+      transform: translateY(-4px);
+    }
 
-      font-size: 16px;
-      letter-spacing: 2px;
+    .envelope {
+      transition:
+        transform 0.4s ease,
+        opacity 0.7s ease;
+    }
 
-      white-space: nowrap;
+    .envelope.opening .flap {
+      transform: rotateX(180deg);
+    }
+
+    .envelope.opening {
+      transform: translateY(25px) scale(1.03);
     }
 
     /* =========================
-       CIJELA POZIVNICA
-    ========================= */
+       POZIVNICA
+       ========================= */
 
     #invitation {
-      position: relative;
-
-      width: min(100%, 1024px);
-
+      width: min(100%, 710px);
       margin: 0 auto;
 
-      opacity: 0;
-
-      transition: opacity 1.5s ease;
+      position: relative;
 
       background: #f4ede2;
+
+      opacity: 0;
+      visibility: hidden;
+
+      transition: opacity 1.2s ease;
     }
 
-    #invitation.visible {
+    #invitation.show {
       opacity: 1;
+      visibility: visible;
     }
 
-    .full-invitation {
+    .invitation-image {
       display: block;
 
       width: 100%;
@@ -244,12 +257,13 @@
 
       margin: 0;
       padding: 0;
+
+      vertical-align: top;
     }
 
     /* =========================
-       NASLOV PREKO PRAZNOG
-       GORNJEG DIJELA SLIKE
-    ========================= */
+       POČETNA STRANICA
+       ========================= */
 
     .hero-overlay {
       position: absolute;
@@ -259,117 +273,116 @@
 
       width: 100%;
 
-      height: 16.5%;
+      height: 19.5%;
 
       z-index: 10;
 
       display: flex;
       flex-direction: column;
       align-items: center;
-      justify-content: center;
 
       text-align: center;
 
-      padding: 4% 12% 0;
-
-      color: #4f4a45;
-
       pointer-events: none;
+
+      color: #514c48;
     }
 
-    .intro {
-      margin: 0 0 18px;
+    .hero-content {
+      width: 84%;
 
-      font-size: clamp(
-        10px,
-        1.5vw,
-        17px
-      );
+      margin-top: 9.5%;
 
-      letter-spacing: 0.34em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+    }
+
+    .hero-small {
+      font-size: clamp(10px, 2.15vw, 17px);
+
+      font-weight: 500;
+
+      letter-spacing: 0.30em;
 
       text-transform: uppercase;
+
+      margin-bottom: 4.5%;
     }
 
-    .names {
-      margin: 0;
-
+    .name {
       font-family: "Italiana", serif;
 
-      font-size: clamp(
-        48px,
-        9vw,
-        102px
-      );
+      font-size: clamp(55px, 13vw, 102px);
 
       font-weight: 400;
 
-      line-height: 0.93;
+      line-height: 0.88;
+
+      letter-spacing: 0.01em;
     }
 
     .ampersand {
-      display: block;
-
-      margin: 8px 0;
-
       font-family: "Cormorant Garamond", serif;
 
-      font-size: 0.48em;
-    }
+      font-size: clamp(30px, 6vw, 48px);
 
-    .divider {
-      width: 76px;
-      height: 1px;
+      line-height: 1;
 
-      margin: 24px auto 20px;
-
-      background: rgba(93, 81, 67, 0.45);
+      margin: 2.5% 0;
     }
 
     .date {
-      margin: 0;
+      margin-top: 5%;
 
-      font-size: clamp(
-        20px,
-        3.2vw,
-        35px
-      );
+      font-size: clamp(21px, 4.4vw, 34px);
 
-      letter-spacing: 0.04em;
+      font-weight: 500;
+
+      letter-spacing: 0.05em;
     }
 
-    .story {
+    .scroll-area {
       position: absolute;
 
-      bottom: 7%;
+      top: 13.6%;
+      left: 50%;
 
-      margin: 0;
+      transform: translateX(-50%);
 
-      font-size: clamp(
-        10px,
-        1.5vw,
-        16px
-      );
+      z-index: 12;
 
-      letter-spacing: 0.31em;
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+
+      color: #6f655b;
+
+      text-decoration: none;
+
+      cursor: pointer;
+
+      pointer-events: auto;
+    }
+
+    .scroll-text {
+      font-size: clamp(10px, 1.9vw, 15px);
+
+      letter-spacing: 0.25em;
 
       text-transform: uppercase;
+
+      white-space: nowrap;
     }
 
     .arrow {
-      position: absolute;
+      margin-top: 13px;
 
-      bottom: 2.2%;
+      font-size: clamp(25px, 5vw, 40px);
 
-      font-size: clamp(
-        25px,
-        4vw,
-        42px
-      );
+      font-weight: 300;
 
-      font-family: serif;
-
-      animation: arrowMove 1.8s ease-in-out infinite;
+      animation: arrowMove 1.7s ease-in-out infinite;
     }
 
     @keyframes arrowMove {
@@ -380,46 +393,67 @@
       }
 
       50% {
-        transform: translateY(10px);
+        transform: translateY(13px);
         opacity: 1;
       }
     }
 
     /* =========================
        MOBITEL
-    ========================= */
+       ========================= */
 
     @media (max-width: 600px) {
+      #intro {
+        padding: 18px;
+      }
+
+      .envelope-wrap {
+        width: 88vw;
+      }
+
+      #invitation {
+        width: 100%;
+      }
+
+      .hero-content {
+        width: 88%;
+        margin-top: 10%;
+      }
+
+      .hero-small {
+        letter-spacing: 0.22em;
+        margin-bottom: 5%;
+      }
+
+      .name {
+        font-size: clamp(53px, 15vw, 82px);
+      }
+
+      .ampersand {
+        font-size: clamp(28px, 7vw, 42px);
+      }
+
+      .date {
+        font-size: clamp(20px, 5vw, 29px);
+      }
+
+      .scroll-area {
+        top: 14.2%;
+      }
+    }
+
+    /* =========================
+       ŠIRI EKRANI
+       ========================= */
+
+    @media (min-width: 900px) {
       body {
-        background: #f4ede2;
+        padding: 0;
       }
 
-      .envelope {
-        width: 84vw;
-      }
-
-      .seal {
-        width: 68px;
-        height: 68px;
-      }
-
-      .seal::before {
-        font-size: 15px;
-      }
-
-      .hero-overlay {
-        height: 16.5%;
-        padding-left: 8%;
-        padding-right: 8%;
-      }
-
-      .intro {
-        margin-bottom: 11px;
-      }
-
-      .divider {
-        margin-top: 15px;
-        margin-bottom: 13px;
+      #invitation {
+        box-shadow:
+          0 0 40px rgba(67, 54, 40, 0.12);
       }
     }
   </style>
@@ -427,106 +461,202 @@
 
 <body>
 
-  <!-- =========================
-       KUVERTA
-  ========================== -->
+  <!-- KUVERTA -->
 
-  <div id="envelope-screen">
+  <section id="intro">
 
-    <div class="envelope">
+    <div
+      class="envelope-wrap"
+      id="envelopeWrap"
+      role="button"
+      tabindex="0"
+      aria-label="Otvori pozivnicu"
+    >
 
-      <div class="envelope-flap"></div>
+      <div class="envelope" id="envelope">
 
-      <button
-        class="seal"
-        id="openInvitation"
-        aria-label="Otvori pozivnicu"
-      ></button>
+        <div class="flap"></div>
 
-      <div class="open-text">
-        OTVORI POZIVNICU
+        <div class="seal">
+          R & A
+        </div>
+
+        <div class="open-text">
+          Otvori pozivnicu
+        </div>
+
       </div>
 
     </div>
 
-  </div>
+  </section>
 
 
-  <!-- =========================
-       POZIVNICA
-  ========================== -->
+  <!-- POZIVNICA -->
 
   <main id="invitation">
 
     <img
       src="cijela.png"
       alt="Pozivnica za vjenčanje Ree i Antonija"
-      class="full-invitation"
-    >
+      class="invitation-image"
+      id="fullInvitation"
+    />
 
 
-    <!-- NASLOV NA PRAZNOM DIJELU SLIKE -->
+    <!-- NASLOVNA -->
 
     <section class="hero-overlay">
 
-      <p class="intro">
-        POZIVAMO VAS NA NAŠE VJENČANJE
-      </p>
+      <div class="hero-content">
 
-      <h1 class="names">
+        <div class="hero-small">
+          Pozivamo vas na naše vjenčanje
+        </div>
 
-        Rea
+        <div class="name">
+          Rea
+        </div>
 
-        <span class="ampersand">
-          &
-        </span>
+        <div class="ampersand">
+          &amp;
+        </div>
 
-        Antonio
+        <div class="name">
+          Antonio
+        </div>
 
-      </h1>
+        <div class="date">
+          16. listopada 2026.
+        </div>
 
-      <div class="divider"></div>
-
-      <p class="date">
-        16. listopada 2026.
-      </p>
-
-      <p class="story">
-        ZAKORAČITE U NAŠU PRIČU
-      </p>
-
-      <div class="arrow">
-        ↓
       </div>
 
     </section>
+
+
+    <!-- STRELICA -->
+
+    <a
+      href="#details"
+      class="scroll-area"
+      id="scrollButton"
+      aria-label="Zakoračite u našu priču"
+    >
+
+      <span class="scroll-text">
+        Zakoračite u našu priču
+      </span>
+
+      <span class="arrow">
+        ↓
+      </span>
+
+    </a>
+
+
+    <div
+      id="details"
+      style="
+        position: absolute;
+        top: 18.5%;
+        left: 0;
+        width: 1px;
+        height: 1px;
+      "
+    ></div>
 
   </main>
 
 
   <script>
-    const envelopeScreen =
-      document.getElementById("envelope-screen");
+    const intro = document.getElementById("intro");
+    const envelopeWrap = document.getElementById("envelopeWrap");
+    const envelope = document.getElementById("envelope");
+    const invitation = document.getElementById("invitation");
+    const scrollButton = document.getElementById("scrollButton");
+    const details = document.getElementById("details");
 
-    const invitation =
-      document.getElementById("invitation");
-
-    const openInvitation =
-      document.getElementById("openInvitation");
+    let opened = false;
 
 
-    openInvitation.addEventListener(
-      "click",
-      function () {
+    function openInvitation() {
 
-        envelopeScreen.classList.add("opened");
+      if (opened) return;
 
-        invitation.classList.add("visible");
+      opened = true;
+
+      envelope.classList.add("opening");
+
+
+      setTimeout(() => {
+
+        invitation.classList.add("show");
+
+        intro.classList.add("hide");
 
         window.scrollTo({
           top: 0,
           behavior: "instant"
         });
+
+      }, 850);
+
+
+      setTimeout(() => {
+
+        intro.style.display = "none";
+
+      }, 2000);
+
+    }
+
+
+    envelopeWrap.addEventListener(
+      "click",
+      openInvitation
+    );
+
+
+    envelopeWrap.addEventListener(
+      "keydown",
+      function(event) {
+
+        if (
+          event.key === "Enter" ||
+          event.key === " "
+        ) {
+
+          event.preventDefault();
+
+          openInvitation();
+
+        }
+
+      }
+    );
+
+
+    scrollButton.addEventListener(
+      "click",
+      function(event) {
+
+        event.preventDefault();
+
+        details.scrollIntoView({
+          behavior: "smooth",
+          block: "start"
+        });
+
+      }
+    );
+
+
+    window.addEventListener(
+      "load",
+      function() {
+
+        window.scrollTo(0, 0);
 
       }
     );
