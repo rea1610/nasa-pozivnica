@@ -1,436 +1,189 @@
 <!DOCTYPE html>
 <html lang="hr">
-
 <head>
-
 <meta charset="UTF-8">
-
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
-
 <title>Rea & Antonio</title>
 
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,500&family=Italiana&display=swap" rel="stylesheet">
+
 <style>
+*{box-sizing:border-box}
+html,body{margin:0;padding:0;width:100%;background:#d9d2c8;overflow-x:hidden}
+body{font-family:"Cormorant Garamond",serif;color:#565a66}
 
-* {
-    box-sizing: border-box;
+/* KUVERTA */
+#envelopeScreen{
+  position:fixed;inset:0;z-index:1000;
+  display:flex;align-items:center;justify-content:center;
+  background:#d9d2c8;
+  transition:opacity 1.5s ease,transform 1.5s ease;
+}
+#envelopeScreen.opened{opacity:0;transform:scale(1.04);pointer-events:none}
+.envelope{
+  position:relative;width:min(100vw,600px);height:100svh;
+  background:url("kuverta.PNG") center/cover no-repeat;
+}
+.pearl{
+  position:absolute;left:50%;top:50%;transform:translate(-50%,-50%);
+  width:76px;height:76px;border:0;border-radius:50%;cursor:pointer;
+  background:radial-gradient(circle at 32% 27%,#fff 0%,#fffdf8 18%,#ebe4d8 46%,#c9beb0 72%,#a79b8d 100%);
+  box-shadow:inset 7px 7px 13px rgba(255,255,255,.9),inset -9px -10px 15px rgba(120,105,90,.2),0 8px 18px rgba(80,70,60,.28);
+  animation:pulse 2.4s infinite ease-in-out;
+}
+@keyframes pulse{50%{transform:translate(-50%,-50%) scale(1.07)}}
+.openText{
+  position:absolute;left:0;right:0;bottom:7%;
+  text-align:center;font-size:12px;letter-spacing:4px;text-transform:uppercase;color:#81786e;
 }
 
-html,
-body {
-    margin: 0;
-    padding: 0;
-    width: 100%;
+/* POZIVNICA */
+#invitation{opacity:0;transition:opacity 1.5s ease}
+#invitation.visible{opacity:1}
+.wrapper{width:100%;max-width:600px;margin:0 auto;background:#f3eadb;overflow:hidden}
+
+/* SLIKE I SPOJEVI */
+.page{
+  position:relative;
+  margin:0;
+  padding:0;
+  line-height:0;
+  font-size:0;
+}
+.page + .page{
+  margin-top:-8px; /* skriva prijelaz između slika */
+}
+.page img{
+  display:block;
+  width:100%;
+  height:auto;
+  margin:0;
+  padding:0;
+  border:0;
 }
 
-body {
-    background: #d9d2c8;
-    overflow-x: hidden;
+/* NASLOVNA TEKST */
+.coverText{
+  position:absolute;
+  inset:0;
+  display:flex;
+  flex-direction:column;
+  align-items:center;
+  text-align:center;
+  line-height:1.15;
+  padding-top:13%;
+  color:#555965;
 }
-
-
-/* =========================
-   KUVERTA
-========================= */
-
-#envelopeScreen {
-    position: fixed;
-    inset: 0;
-    z-index: 1000;
-
-    display: flex;
-    align-items: center;
-    justify-content: center;
-
-    background: #d9d2c8;
-
-    opacity: 1;
-
-    transition:
-        opacity 1.6s ease,
-        transform 1.6s ease;
+.small{
+  font-family:"Italiana",serif;
+  font-size:clamp(11px,2.4vw,22px);
+  letter-spacing:.26em;
+  text-transform:uppercase;
+  margin-bottom:4%;
 }
-
-#envelopeScreen.opened {
-    opacity: 0;
-    transform: scale(1.04);
-    pointer-events: none;
+.names{
+  font-size:clamp(58px,13vw,122px);
+  font-style:italic;
+  font-weight:500;
+  line-height:.82;
+  margin:0;
 }
-
-.envelope {
-    position: relative;
-
-    width: min(100vw, 600px);
-    height: 100svh;
-
-    background-image: url("kuverta.PNG");
-    background-size: cover;
-    background-position: center;
-    background-repeat: no-repeat;
+.amp{font-size:.5em;font-style:normal}
+.line{width:80px;height:1px;background:rgba(85,89,101,.35);margin:5% 0 3%}
+.date{
+  font-family:"Italiana",serif;
+  font-size:clamp(18px,3.5vw,34px);
 }
-
-
-/* =========================
-   BISER
-========================= */
-
-.pearl {
-    position: absolute;
-
-    left: 50%;
-    top: 50%;
-
-    transform: translate(-50%, -50%);
-
-    width: 76px;
-    height: 76px;
-
-    padding: 0;
-
-    border: 0;
-    border-radius: 50%;
-
-    cursor: pointer;
-
-    background:
-        radial-gradient(
-            circle at 32% 27%,
-            #ffffff 0%,
-            #fffdf8 18%,
-            #ebe4d8 46%,
-            #c9beb0 72%,
-            #a79b8d 100%
-        );
-
-    box-shadow:
-        inset 7px 7px 13px rgba(255,255,255,.9),
-        inset -9px -10px 15px rgba(120,105,90,.2),
-        0 8px 18px rgba(80,70,60,.28);
-
-    animation: pearlPulse 2.4s infinite ease-in-out;
+.scrollText{
+  position:absolute;
+  left:0;right:0;bottom:10%;
+  text-align:center;
+  font-family:"Italiana",serif;
+  font-size:clamp(9px,1.8vw,17px);
+  letter-spacing:.3em;
+  text-transform:uppercase;
+  line-height:1.5;
+  color:#65616a;
 }
-
-.pearl::after {
-    content: "";
-
-    position: absolute;
-
-    width: 18px;
-    height: 11px;
-
-    top: 17px;
-    left: 18px;
-
-    border-radius: 50%;
-
-    background: rgba(255,255,255,.85);
-
-    filter: blur(2px);
+.arrow{
+  display:block;
+  font-family:Arial,sans-serif;
+  font-size:28px;
+  margin-top:8px;
+  animation:arrow 2s infinite ease-in-out;
 }
+@keyframes arrow{50%{transform:translateY(8px)}}
 
-@keyframes pearlPulse {
-
-    0%,
-    100% {
-        transform:
-            translate(-50%, -50%)
-            scale(1);
-    }
-
-    50% {
-        transform:
-            translate(-50%, -50%)
-            scale(1.07);
-    }
-
+/* TELEFONI */
+.phone{
+  position:absolute;
+  display:block;
+  z-index:10;
+  background:transparent;
 }
-
-
-/* =========================
-   TEKST NA KUVERTI
-========================= */
-
-.openText {
-    position: absolute;
-
-    left: 0;
-    right: 0;
-    bottom: 7%;
-
-    text-align: center;
-
-    font-family: Georgia, serif;
-
-    font-size: 12px;
-
-    letter-spacing: 4px;
-
-    text-transform: uppercase;
-
-    color: #81786e;
-}
-
-
-/* =========================
-   POZIVNICA
-========================= */
-
-#invitation {
-    width: 100%;
-
-    opacity: 0;
-
-    transition: opacity 1.6s ease;
-}
-
-#invitation.visible {
-    opacity: 1;
-}
-
-.invitationWrapper {
-    width: 100%;
-    max-width: 600px;
-
-    margin: 0 auto;
-
-    padding: 0;
-
-    background: #f3eadb;
-
-    overflow: hidden;
-}
-
-
-/* =========================
-   SLIKE
-========================= */
-
-.page {
-    position: relative;
-
-    width: 100%;
-
-    margin: 0;
-    padding: 0;
-
-    line-height: 0;
-
-    font-size: 0;
-}
-
-.page img {
-    display: block;
-
-    width: 100%;
-    height: auto;
-
-    margin: 0;
-    padding: 0;
-
-    border: 0;
-}
-
-
-/* =========================
-   TELEFONI
-========================= */
-
-.phoneLink {
-    position: absolute;
-
-    display: block;
-
-    z-index: 10;
-
-    background: transparent;
-
-    cursor: pointer;
-}
-
-.reaPhone {
-    left: 30%;
-    top: 57%;
-
-    width: 40%;
-    height: 8%;
-}
-
-.antonioPhone {
-    left: 30%;
-    top: 68%;
-
-    width: 40%;
-    height: 8%;
-}
-
-
-/* =========================
-   MOBITEL
-========================= */
-
-@media (max-width: 600px) {
-
-    .envelope {
-        width: 100vw;
-        height: 100svh;
-    }
-
-    .invitationWrapper {
-        width: 100%;
-        max-width: none;
-    }
-
-}
-
+.rea{left:30%;top:57%;width:40%;height:8%}
+.antonio{left:30%;top:68%;width:40%;height:8%}
 </style>
-
 </head>
-
 
 <body>
 
-
-<!-- KUVERTA -->
-
 <div id="envelopeScreen">
-
-    <div class="envelope">
-
-        <button
-            class="pearl"
-            id="pearl"
-            aria-label="Otvori pozivnicu">
-        </button>
-
-        <div class="openText">
-            dodirnite biser da otvorite
-        </div>
-
-    </div>
-
+  <div class="envelope">
+    <button class="pearl" id="pearl" aria-label="Otvori pozivnicu"></button>
+    <div class="openText">dodirnite biser da otvorite</div>
+  </div>
 </div>
 
-
-<!-- POZIVNICA -->
-
 <main id="invitation">
+  <div class="wrapper">
 
-    <div class="invitationWrapper">
+    <section class="page">
+      <img src="naslovna2.png" alt="Rea i Antonio">
+      <div class="coverText">
+        <div class="small">Pozivamo vas na naše vjenčanje</div>
+        <h1 class="names">Rea<br><span class="amp">&amp;</span><br>Antonio</h1>
+        <div class="line"></div>
+        <div class="date">16. listopada 2026.</div>
+      </div>
+      <div class="scrollText">zakoračite u našu priču<span class="arrow">↓</span></div>
+    </section>
 
+    <section class="page">
+      <img src="okupljanje4.PNG" alt="Okupljanje">
+    </section>
 
-        <!-- NASLOVNA -->
+    <section class="page">
+      <img src="misa2.PNG" alt="Crkveni obred">
+    </section>
 
-        <section class="page">
+    <section class="page">
+      <img src="omorika2.PNG" alt="Svadbena proslava">
+    </section>
 
-            <img
-                src="naslovna2.png"
-                alt="Rea i Antonio">
+    <section class="page">
+      <img src="potvrda2.PNG" alt="Potvrda dolaska">
+      <a class="phone rea" href="tel:0919513980"></a>
+      <a class="phone antonio" href="tel:0921200512"></a>
+    </section>
 
-        </section>
-
-
-        <!-- OKUPLJANJE -->
-
-        <section class="page">
-
-            <img
-                src="okupljanje3.PNG"
-                alt="Okupljanje">
-
-        </section>
-
-
-        <!-- CRKVENI OBRED -->
-
-        <section class="page">
-
-            <img
-                src="misa2.PNG"
-                alt="Crkveni obred">
-
-        </section>
-
-
-        <!-- SVADBENA PROSLAVA -->
-
-        <section class="page">
-
-            <img
-                src="omorika2.PNG"
-                alt="Svadbena proslava">
-
-        </section>
-
-
-        <!-- POTVRDA DOLASKA -->
-
-        <section class="page">
-
-            <img
-                src="potvrda2.PNG"
-                alt="Potvrda dolaska">
-
-
-            <a
-                class="phoneLink reaPhone"
-                href="tel:0919513980"
-                aria-label="Nazovi Reu">
-            </a>
-
-
-            <a
-                class="phoneLink antonioPhone"
-                href="tel:0921200512"
-                aria-label="Nazovi Antonija">
-            </a>
-
-        </section>
-
-
-    </div>
-
+  </div>
 </main>
 
-
 <script>
+const pearl=document.getElementById("pearl");
+const envelope=document.getElementById("envelopeScreen");
+const invitation=document.getElementById("invitation");
 
-const pearl =
-    document.getElementById("pearl");
-
-const envelopeScreen =
-    document.getElementById("envelopeScreen");
-
-const invitation =
-    document.getElementById("invitation");
-
-let opened = false;
-
-
-pearl.addEventListener("click", function () {
-
-    if (opened) {
-        return;
-    }
-
-    opened = true;
-
-    envelopeScreen.classList.add("opened");
-
-
-    setTimeout(function () {
-
-        envelopeScreen.style.display = "none";
-
-        invitation.classList.add("visible");
-
-        window.scrollTo(0, 0);
-
-    }, 1600);
-
+pearl.addEventListener("click",()=>{
+  envelope.classList.add("opened");
+  setTimeout(()=>{
+    envelope.style.display="none";
+    invitation.classList.add("visible");
+    window.scrollTo(0,0);
+  },1500);
 });
-
 </script>
 
-
 </body>
-
 </html>
