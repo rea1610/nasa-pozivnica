@@ -1,666 +1,1200 @@
 <!DOCTYPE html>
 <html lang="hr">
+
 <head>
-  <meta charset="UTF-8" />
+
+  <meta charset="UTF-8">
 
   <meta
     name="viewport"
     content="width=device-width, initial-scale=1.0"
-  />
+  >
 
   <title>Rea & Antonio</title>
 
   <link rel="preconnect" href="https://fonts.googleapis.com">
-  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+
+  <link rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin>
 
   <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500;600&family=Italiana&family=Parisienne&display=swap"
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:wght@400;500&family=Italiana&family=Parisienne&display=swap"
     rel="stylesheet"
-  />
+  >
+
 
   <style>
+
     * {
       margin: 0;
       padding: 0;
       box-sizing: border-box;
     }
 
+
     html {
       scroll-behavior: smooth;
       background: #eee9e1;
     }
 
+
     body {
       margin: 0;
+
       min-height: 100vh;
+
       overflow-x: hidden;
+
       background: #eee9e1;
-      font-family: "Cormorant Garamond", serif;
+
+      font-family:
+        "Cormorant Garamond",
+        serif;
     }
 
-    /* =========================
+
+
+    /* ================================
        KUVERTA
-       ========================= */
+       ================================ */
+
 
     #intro {
+
       position: fixed;
+
       inset: 0;
+
       z-index: 9999;
 
+
       display: flex;
+
       align-items: center;
+
       justify-content: center;
+
 
       min-height: 100svh;
-      padding: 24px;
+
 
       background:
+
         radial-gradient(
+
           circle at center,
+
           #f8f4ed 0%,
-          #eee9e1 58%,
-          #ddd6cc 100%
+
+          #eee9e1 60%,
+
+          #ded7cd 100%
+
         );
+
 
       transition:
-        opacity 1.1s ease,
-        visibility 1.1s ease;
+
+        opacity 1.2s ease,
+
+        visibility 1.2s ease;
+
     }
+
+
 
     #intro.hide {
+
       opacity: 0;
+
       visibility: hidden;
+
       pointer-events: none;
+
     }
 
-    .envelope-wrap {
-      width: min(78vw, 620px);
-      perspective: 1400px;
-      cursor: pointer;
-      text-align: center;
-    }
+
 
     .envelope {
+
       position: relative;
-      width: 100%;
-      aspect-ratio: 1.65 / 1;
 
-      background:
-        linear-gradient(
-          145deg,
-          #fffdf9 0%,
-          #f5efe5 50%,
-          #ebe1d2 100%
+
+      height: min(88svh, 820px);
+
+      aspect-ratio: 1024 / 1536;
+
+
+      background-image:
+        url("kuverta.PNG");
+
+
+      background-size: contain;
+
+      background-repeat: no-repeat;
+
+      background-position: center;
+
+
+      cursor: pointer;
+
+
+      filter:
+
+        drop-shadow(
+          0 22px 30px
+          rgba(69, 53, 38, 0.20)
         );
 
-      border: 1px solid rgba(151, 126, 91, 0.24);
-      border-radius: 3px;
 
-      box-shadow:
-        0 28px 60px rgba(79, 63, 45, 0.18),
-        0 8px 18px rgba(79, 63, 45, 0.10);
+      transition:
 
-      overflow: visible;
+        transform 0.5s ease,
+
+        opacity 0.8s ease;
+
     }
 
-    .envelope::before {
-      content: "";
-      position: absolute;
-      inset: 0;
 
-      background:
-        linear-gradient(
-          33deg,
-          transparent 49.6%,
-          rgba(175, 151, 116, 0.24) 50%,
-          transparent 50.4%
-        ),
-        linear-gradient(
-          -33deg,
-          transparent 49.6%,
-          rgba(175, 151, 116, 0.24) 50%,
-          transparent 50.4%
-        );
 
-      pointer-events: none;
+    .envelope:hover {
+
+      transform: scale(1.015);
+
     }
 
-    .flap {
-      position: absolute;
-      top: 0;
-      left: 0;
 
-      width: 100%;
-      height: 58%;
 
-      background:
-        linear-gradient(
-          160deg,
-          #fffdf9,
-          #eee5d8
-        );
+    .envelope.opening {
 
-      clip-path: polygon(
-        0 0,
-        100% 0,
-        50% 100%
-      );
+      transform:
 
-      transform-origin: top center;
-      transition: transform 0.9s ease;
+        scale(1.06)
 
-      z-index: 3;
+        translateY(-8px);
 
-      border-top: 1px solid rgba(151, 126, 91, 0.16);
+
+      opacity: 0;
+
     }
 
-    .seal {
+
+
+    .pearl-button {
+
       position: absolute;
+
+
       left: 50%;
-      top: 50%;
 
-      width: clamp(64px, 10vw, 92px);
-      height: clamp(64px, 10vw, 92px);
+      top: 53%;
 
-      transform: translate(-50%, -50%);
 
-      display: flex;
-      align-items: center;
-      justify-content: center;
+      transform:
+
+        translate(-50%, -50%);
+
+
+      width: 15%;
+
+      aspect-ratio: 1 / 1;
+
+
+      border: none;
 
       border-radius: 50%;
 
-      color: #8f7044;
 
-      font-family: "Cormorant Garamond", serif;
-      font-size: clamp(20px, 3vw, 31px);
-      font-weight: 500;
+      background: transparent;
 
-      background:
-        radial-gradient(
-          circle at 35% 30%,
-          #f7e5b5,
-          #d7b574 48%,
-          #aa8247 100%
-        );
-
-      border: 3px double rgba(118, 85, 43, 0.45);
-
-      box-shadow:
-        0 6px 15px rgba(83, 58, 31, 0.24),
-        inset 0 1px 4px rgba(255,255,255,0.7);
-
-      z-index: 5;
-    }
-
-    .open-text {
-      position: absolute;
-      left: 0;
-      right: 0;
-      bottom: 8%;
-
-      z-index: 6;
-
-      color: #75634f;
-
-      font-size: clamp(12px, 1.8vw, 17px);
-      letter-spacing: 0.24em;
-      text-transform: uppercase;
-    }
-
-    .envelope-wrap:hover .envelope {
-      transform: translateY(-4px);
-    }
-
-    .envelope {
-      transition:
-        transform 0.4s ease,
-        opacity 0.7s ease;
-    }
-
-    .envelope.opening .flap {
-      transform: rotateX(180deg);
-    }
-
-    .envelope.opening {
-      transform: translateY(25px) scale(1.03);
-    }
-
-    /* =========================
-       POZIVNICA
-       ========================= */
-
-    #invitation {
-      width: min(100%, 710px);
-      margin: 0 auto;
-
-      position: relative;
-
-      background: #f4ede2;
-
-      opacity: 0;
-      visibility: hidden;
-
-      transition: opacity 1.2s ease;
-    }
-
-    #invitation.show {
-      opacity: 1;
-      visibility: visible;
-    }
-
-    .invitation-image {
-      display: block;
-
-      width: 100%;
-      height: auto;
-
-      margin: 0;
-      padding: 0;
-
-      vertical-align: top;
-    }
-
-    /* =========================
-       POČETNA STRANICA
-       ========================= */
-
-    .hero-overlay {
-      position: absolute;
-
-      top: 0;
-      left: 0;
-
-      width: 100%;
-
-      height: 19.5%;
-
-      z-index: 10;
-
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      text-align: center;
-
-      pointer-events: none;
-
-      color: #514c48;
-    }
-
-    .hero-content {
-      width: 84%;
-
-      margin-top: 9.5%;
-
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-    }
-
-    .hero-small {
-      font-size: clamp(10px, 2.15vw, 17px);
-
-      font-weight: 500;
-
-      letter-spacing: 0.30em;
-
-      text-transform: uppercase;
-
-      margin-bottom: 4.5%;
-    }
-
-    .name {
-      font-family: "Italiana", serif;
-
-      font-size: clamp(55px, 13vw, 102px);
-
-      font-weight: 400;
-
-      line-height: 0.88;
-
-      letter-spacing: 0.01em;
-    }
-
-    .ampersand {
-      font-family: "Cormorant Garamond", serif;
-
-      font-size: clamp(30px, 6vw, 48px);
-
-      line-height: 1;
-
-      margin: 2.5% 0;
-    }
-
-    .date {
-      margin-top: 5%;
-
-      font-size: clamp(21px, 4.4vw, 34px);
-
-      font-weight: 500;
-
-      letter-spacing: 0.05em;
-    }
-
-    .scroll-area {
-      position: absolute;
-
-      top: 13.6%;
-      left: 50%;
-
-      transform: translateX(-50%);
-
-      z-index: 12;
-
-      display: flex;
-      flex-direction: column;
-      align-items: center;
-
-      color: #6f655b;
-
-      text-decoration: none;
 
       cursor: pointer;
 
-      pointer-events: auto;
+
+      z-index: 10;
+
     }
 
-    .scroll-text {
-      font-size: clamp(10px, 1.9vw, 15px);
+
+
+    .open-text {
+
+      position: absolute;
+
+
+      left: 0;
+
+      right: 0;
+
+
+      top: 60%;
+
+
+      text-align: center;
+
+
+      color: #766858;
+
+
+      font-size:
+
+        clamp(
+          11px,
+          1.5vw,
+          15px
+        );
+
 
       letter-spacing: 0.25em;
 
+
       text-transform: uppercase;
 
-      white-space: nowrap;
+
+      pointer-events: none;
+
     }
 
-    .arrow {
-      margin-top: 13px;
 
-      font-size: clamp(25px, 5vw, 40px);
+
+    /* ================================
+       POZIVNICA
+       ================================ */
+
+
+    #invitation {
+
+      position: relative;
+
+
+      width:
+
+        min(
+          100%,
+          710px
+        );
+
+
+      margin:
+
+        0 auto;
+
+
+      background:
+
+        #f4ede2;
+
+
+      opacity: 0;
+
+      visibility: hidden;
+
+
+      transition:
+
+        opacity 1.3s ease;
+
+    }
+
+
+
+    #invitation.show {
+
+      opacity: 1;
+
+      visibility: visible;
+
+    }
+
+
+
+    .invitation-image {
+
+      display: block;
+
+
+      width: 100%;
+
+      height: auto;
+
+
+      margin: 0;
+
+      padding: 0;
+
+
+      vertical-align: top;
+
+    }
+
+
+
+    /* ================================
+       NASLOVNA
+       ================================ */
+
+
+    .hero-main {
+
+      position: absolute;
+
+
+      top: 0;
+
+
+      left: 0;
+
+      right: 0;
+
+
+      height: 13%;
+
+
+      z-index: 20;
+
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+
+      text-align: center;
+
+
+      color: #4f4a46;
+
+
+      pointer-events: none;
+
+    }
+
+
+
+    .hero-content {
+
+      width: 88%;
+
+
+      margin-top: 5.5%;
+
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+    }
+
+
+
+    .invite-text {
+
+      font-size:
+
+        clamp(
+          12px,
+          2.2vw,
+          18px
+        );
+
+
+      font-weight: 500;
+
+
+      letter-spacing: 0.30em;
+
+
+      text-transform: uppercase;
+
+
+      margin-bottom: 5%;
+
+    }
+
+
+
+    .names {
+
+      font-family:
+
+        "Italiana",
+
+        serif;
+
+
+      font-size:
+
+        clamp(
+          66px,
+          13vw,
+          108px
+        );
+
+
+      font-weight: 400;
+
+
+      line-height: 0.88;
+
+
+      letter-spacing: 0.01em;
+
+    }
+
+
+
+    .ampersand {
+
+      display: block;
+
+
+      font-family:
+
+        "Cormorant Garamond",
+
+        serif;
+
+
+      font-size:
+
+        clamp(
+          31px,
+          6vw,
+          48px
+        );
+
+
+      line-height: 1;
+
+
+      margin:
+
+        16px 0;
+
+    }
+
+
+
+    .wedding-date {
+
+      margin-top: 6%;
+
+
+      font-size:
+
+        clamp(
+          22px,
+          4.3vw,
+          34px
+        );
+
+
+      font-weight: 500;
+
+
+      letter-spacing: 0.05em;
+
+    }
+
+
+
+    /* ================================
+       STRELICA
+       ================================ */
+
+
+    .story-block {
+
+      position: absolute;
+
+
+      top: 13.1%;
+
+
+      left: 5%;
+
+      right: 5%;
+
+
+      z-index: 25;
+
+
+      display: flex;
+
+      flex-direction: column;
+
+      align-items: center;
+
+
+      text-align: center;
+
+
+      color: #6f655b;
+
+
+      text-decoration: none;
+
+
+      cursor: pointer;
+
+    }
+
+
+
+    .story-text {
+
+      font-size:
+
+        clamp(
+          11px,
+          2vw,
+          16px
+        );
+
+
+      letter-spacing: 0.28em;
+
+
+      text-transform: uppercase;
+
+    }
+
+
+
+    .story-arrow {
+
+      margin-top: 15px;
+
+
+      font-size:
+
+        clamp(
+          27px,
+          5vw,
+          42px
+        );
+
 
       font-weight: 300;
 
-      animation: arrowMove 1.7s ease-in-out infinite;
+
+      animation:
+
+        arrowMove
+
+        1.7s
+
+        ease-in-out
+
+        infinite;
+
     }
+
+
 
     @keyframes arrowMove {
+
       0%,
       100% {
-        transform: translateY(0);
+
+        transform:
+          translateY(0);
+
         opacity: 0.55;
+
       }
+
 
       50% {
-        transform: translateY(13px);
+
+        transform:
+          translateY(13px);
+
         opacity: 1;
+
       }
+
     }
 
-    /* =========================
+
+
+    /* ================================
        MOBITEL
-       ========================= */
+       ================================ */
 
-    @media (max-width: 600px) {
-      #intro {
-        padding: 18px;
+
+    @media (
+      max-width: 600px
+    ) {
+
+
+      .envelope {
+
+        height: auto;
+
+        width: 92vw;
+
+        aspect-ratio:
+          1024 / 1536;
+
       }
 
-      .envelope-wrap {
-        width: 88vw;
-      }
 
       #invitation {
+
         width: 100%;
+
       }
+
 
       .hero-content {
-        width: 88%;
-        margin-top: 10%;
+
+        width: 90%;
+
+        margin-top: 6%;
+
       }
 
-      .hero-small {
+
+      .invite-text {
+
+        font-size: 11px;
+
         letter-spacing: 0.22em;
+
         margin-bottom: 5%;
+
       }
 
-      .name {
-        font-size: clamp(53px, 15vw, 82px);
+
+      .names {
+
+        font-size:
+
+          clamp(
+            57px,
+            16vw,
+            82px
+          );
+
       }
+
 
       .ampersand {
-        font-size: clamp(28px, 7vw, 42px);
+
+        font-size:
+
+          clamp(
+            28px,
+            7vw,
+            40px
+          );
+
+
+        margin:
+
+          10px 0;
+
       }
 
-      .date {
-        font-size: clamp(20px, 5vw, 29px);
+
+      .wedding-date {
+
+        margin-top: 5%;
+
+
+        font-size:
+
+          clamp(
+            20px,
+            5.3vw,
+            29px
+          );
+
       }
 
-      .scroll-area {
-        top: 14.2%;
+
+      .story-block {
+
+        top: 13.2%;
+
       }
+
+
+      .story-text {
+
+        font-size: 10px;
+
+        letter-spacing: 0.22em;
+
+      }
+
+
+      .story-arrow {
+
+        margin-top: 10px;
+
+      }
+
     }
 
-    /* =========================
-       ŠIRI EKRANI
-       ========================= */
 
-    @media (min-width: 900px) {
-      body {
-        padding: 0;
-      }
+
+    /* ================================
+       RAČUNALO
+       ================================ */
+
+
+    @media (
+      min-width: 900px
+    ) {
+
 
       #invitation {
+
         box-shadow:
-          0 0 40px rgba(67, 54, 40, 0.12);
+
+          0 0 45px
+
+          rgba(
+            67,
+            54,
+            40,
+            0.13
+          );
+
       }
+
+
+      .envelope {
+
+        height:
+
+          min(
+            90vh,
+            860px
+          );
+
+      }
+
     }
+
+
   </style>
+
 </head>
+
+
 
 <body>
 
-  <!-- KUVERTA -->
+
+
+  <!-- ================================
+       KUVERTA
+       ================================ -->
+
 
   <section id="intro">
 
+
     <div
-      class="envelope-wrap"
-      id="envelopeWrap"
+      class="envelope"
+      id="envelope"
       role="button"
       tabindex="0"
       aria-label="Otvori pozivnicu"
     >
 
-      <div class="envelope" id="envelope">
 
-        <div class="flap"></div>
+      <button
+        class="pearl-button"
+        id="pearlButton"
+        aria-label="Otvori pozivnicu"
+      ></button>
 
-        <div class="seal">
-          R & A
-        </div>
 
-        <div class="open-text">
-          Otvori pozivnicu
-        </div>
+      <div class="open-text">
+
+        Otvori pozivnicu
 
       </div>
 
+
     </div>
+
 
   </section>
 
 
-  <!-- POZIVNICA -->
+
+  <!-- ================================
+       POZIVNICA
+       ================================ -->
+
 
   <main id="invitation">
 
+
     <img
+
       src="cijela.png"
+
       alt="Pozivnica za vjenčanje Ree i Antonija"
+
       class="invitation-image"
-      id="fullInvitation"
-    />
+
+    >
 
 
-    <!-- NASLOVNA -->
 
-    <section class="hero-overlay">
+    <!-- ================================
+         NASLOVNA
+         ================================ -->
+
+
+    <section class="hero-main">
+
 
       <div class="hero-content">
 
-        <div class="hero-small">
+
+        <div class="invite-text">
+
           Pozivamo vas na naše vjenčanje
+
         </div>
 
-        <div class="name">
+
+
+        <div class="names">
+
           Rea
+
         </div>
+
+
 
         <div class="ampersand">
+
           &amp;
+
         </div>
 
-        <div class="name">
+
+
+        <div class="names">
+
           Antonio
+
         </div>
 
-        <div class="date">
+
+
+        <div class="wedding-date">
+
           16. listopada 2026.
+
         </div>
+
 
       </div>
+
 
     </section>
 
 
-    <!-- STRELICA -->
+
+    <!-- ================================
+         STRELICA
+         ================================ -->
+
 
     <a
+
       href="#details"
-      class="scroll-area"
-      id="scrollButton"
-      aria-label="Zakoračite u našu priču"
+
+      class="story-block"
+
+      id="storyButton"
+
     >
 
-      <span class="scroll-text">
+
+      <span class="story-text">
+
         Zakoračite u našu priču
+
       </span>
 
-      <span class="arrow">
+
+      <span class="story-arrow">
+
         ↓
+
       </span>
+
 
     </a>
 
 
+
     <div
+
       id="details"
+
       style="
         position: absolute;
-        top: 18.5%;
+        top: 17%;
         left: 0;
         width: 1px;
         height: 1px;
       "
+
     ></div>
+
 
   </main>
 
 
+
+  <!-- ================================
+       JAVASCRIPT
+       ================================ -->
+
+
   <script>
-    const intro = document.getElementById("intro");
-    const envelopeWrap = document.getElementById("envelopeWrap");
-    const envelope = document.getElementById("envelope");
-    const invitation = document.getElementById("invitation");
-    const scrollButton = document.getElementById("scrollButton");
-    const details = document.getElementById("details");
+
+
+    const intro =
+      document.getElementById(
+        "intro"
+      );
+
+
+    const envelope =
+      document.getElementById(
+        "envelope"
+      );
+
+
+    const pearlButton =
+      document.getElementById(
+        "pearlButton"
+      );
+
+
+    const invitation =
+      document.getElementById(
+        "invitation"
+      );
+
+
+    const storyButton =
+      document.getElementById(
+        "storyButton"
+      );
+
+
+    const details =
+      document.getElementById(
+        "details"
+      );
+
 
     let opened = false;
 
 
+
     function openInvitation() {
 
-      if (opened) return;
+
+      if (opened) {
+
+        return;
+
+      }
+
 
       opened = true;
 
-      envelope.classList.add("opening");
+
+      envelope.classList.add(
+        "opening"
+      );
 
 
-      setTimeout(() => {
 
-        invitation.classList.add("show");
+      setTimeout(
 
-        intro.classList.add("hide");
-
-        window.scrollTo({
-          top: 0,
-          behavior: "instant"
-        });
-
-      }, 850);
+        function() {
 
 
-      setTimeout(() => {
+          invitation.classList.add(
+            "show"
+          );
 
-        intro.style.display = "none";
 
-      }, 2000);
+          intro.classList.add(
+            "hide"
+          );
+
+
+          window.scrollTo({
+
+            top: 0,
+
+            left: 0,
+
+            behavior: "instant"
+
+          });
+
+
+        },
+
+        700
+
+      );
+
+
+
+      setTimeout(
+
+        function() {
+
+
+          intro.style.display =
+            "none";
+
+
+        },
+
+        1900
+
+      );
+
 
     }
 
 
-    envelopeWrap.addEventListener(
+
+    pearlButton.addEventListener(
+
       "click",
-      openInvitation
+
+      function(event) {
+
+
+        event.stopPropagation();
+
+
+        openInvitation();
+
+
+      }
+
     );
 
 
-    envelopeWrap.addEventListener(
+
+    envelope.addEventListener(
+
+      "click",
+
+      openInvitation
+
+    );
+
+
+
+    envelope.addEventListener(
+
       "keydown",
+
       function(event) {
 
+
         if (
-          event.key === "Enter" ||
+
+          event.key === "Enter"
+
+          ||
+
           event.key === " "
+
         ) {
+
 
           event.preventDefault();
 
+
           openInvitation();
+
 
         }
 
+
       }
+
     );
 
 
-    scrollButton.addEventListener(
+
+    storyButton.addEventListener(
+
       "click",
+
       function(event) {
+
 
         event.preventDefault();
 
+
         details.scrollIntoView({
+
           behavior: "smooth",
+
           block: "start"
+
         });
 
+
       }
+
     );
+
 
 
     window.addEventListener(
+
       "load",
+
       function() {
 
-        window.scrollTo(0, 0);
+
+        window.scrollTo(
+
+          0,
+
+          0
+
+        );
+
 
       }
+
     );
+
+
   </script>
 
+
+
 </body>
+
 </html>
