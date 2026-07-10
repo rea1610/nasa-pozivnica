@@ -1,34 +1,15 @@
 <!DOCTYPE html>
 <html lang="hr">
-
 <head>
   <meta charset="UTF-8">
-
-  <meta
-    name="viewport"
-    content="width=device-width, initial-scale=1.0"
-  >
-
+  <meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
   <title>Rea & Antonio</title>
 
-  <link
-    rel="preconnect"
-    href="https://fonts.googleapis.com"
-  >
-
-  <link
-    rel="preconnect"
-    href="https://fonts.gstatic.com"
-    crossorigin
-  >
-
-  <link
-    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Italiana&display=swap"
-    rel="stylesheet"
-  >
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;1,400;1,500&family=Italiana&display=swap" rel="stylesheet">
 
   <style>
-
     * {
       box-sizing: border-box;
     }
@@ -37,937 +18,438 @@
       margin: 0;
       padding: 0;
       scroll-behavior: smooth;
-      background: #eeeae3;
+      background: #e7e1d8;
     }
 
     body {
       margin: 0;
       padding: 0;
-
       min-height: 100vh;
-
-      background:
-        radial-gradient(
-          circle at center,
-          #f7f4ee 0%,
-          #eeeae3 55%,
-          #ddd8d0 100%
-        );
-
-      color: #57515a;
-
       overflow-x: hidden;
+      background: #e7e1d8;
+      color: #55515a;
+      font-family: "Cormorant Garamond", serif;
     }
 
+    body.locked {
+      height: 100vh;
+      overflow: hidden;
+    }
 
-    /* ============================= */
-    /* KUVERTA                       */
-    /* ============================= */
+    /* KUVERTA */
 
-    #envelope-screen {
+    #envelopeScreen {
       position: fixed;
-
       inset: 0;
-
       z-index: 9999;
-
       display: flex;
-      justify-content: center;
       align-items: center;
-
-      background:
-        radial-gradient(
-          circle at center,
-          #f8f5ef 0%,
-          #ebe7df 58%,
-          #d8d3ca 100%
-        );
-
+      justify-content: center;
+      background: radial-gradient(
+        circle at center,
+        #f8f4ed 0%,
+        #eae4da 62%,
+        #d5cec3 100%
+      );
       transition:
-        opacity 1.1s ease,
-        visibility 1.1s ease;
+        opacity 1.25s ease,
+        visibility 1.25s ease,
+        transform 1.25s ease;
     }
 
-
-    #envelope-screen.hidden {
+    #envelopeScreen.opened {
       opacity: 0;
       visibility: hidden;
       pointer-events: none;
+      transform: scale(1.025);
     }
 
-
-    .envelope {
+    .envelopeImage {
       position: relative;
-
-      width: min(72vw, 430px);
-      aspect-ratio: 0.68 / 1;
-
-      background:
-        linear-gradient(
-          145deg,
-          #fffdf8 0%,
-          #f7f1e7 48%,
-          #eee5d7 100%
-        );
-
-      box-shadow:
-        0 25px 60px rgba(75, 63, 49, 0.18),
-        0 5px 15px rgba(75, 63, 49, 0.12);
-
-      cursor: pointer;
-
-      overflow: hidden;
-
-      transform: translateZ(0);
-
-      transition: transform 0.4s ease;
+      width: min(100vw, calc(92svh * 2 / 3), 600px);
+      aspect-ratio: 2 / 3;
+      background-image: url("kuverta.PNG");
+      background-repeat: no-repeat;
+      background-position: center;
+      background-size: contain;
+      filter: drop-shadow(
+        0 20px 30px rgba(75, 60, 44, 0.20)
+      );
     }
 
-
-    .envelope:hover {
-      transform: scale(1.015);
-    }
-
-
-    /* donji lijevi pregib */
-
-    .envelope::before {
-      content: "";
-
+    .pearlButton {
       position: absolute;
-
-      left: -3%;
-      bottom: -2%;
-
-      width: 75%;
-      height: 58%;
-
-      background:
-        linear-gradient(
-          145deg,
-          transparent 49.4%,
-          rgba(190, 174, 150, 0.25) 49.8%,
-          rgba(255, 253, 247, 0.96) 50.3%
-        );
-
-      z-index: 2;
-    }
-
-
-    /* donji desni pregib */
-
-    .envelope::after {
-      content: "";
-
-      position: absolute;
-
-      right: -3%;
-      bottom: -2%;
-
-      width: 75%;
-      height: 58%;
-
-      background:
-        linear-gradient(
-          215deg,
-          transparent 49.4%,
-          rgba(190, 174, 150, 0.25) 49.8%,
-          rgba(250, 246, 238, 0.96) 50.3%
-        );
-
-      z-index: 2;
-    }
-
-
-    .envelope-flap {
-      position: absolute;
-
-      top: 0;
-      left: 0;
-
-      width: 100%;
-      height: 57%;
-
-      background:
-        linear-gradient(
-          160deg,
-          #fffdf8 0%,
-          #f9f3e9 70%,
-          #eee5d7 100%
-        );
-
-      clip-path:
-        polygon(
-          0 0,
-          100% 0,
-          50% 100%
-        );
-
-      z-index: 4;
-
-      filter:
-        drop-shadow(
-          0 5px 4px rgba(100, 82, 59, 0.08)
-        );
-    }
-
-
-    .lace-left,
-    .lace-right {
-      position: absolute;
-
-      top: 19%;
-
-      width: 53%;
-      height: 35%;
-
-      z-index: 5;
-
-      opacity: 0.9;
-
-      border-bottom:
-        12px double rgba(255, 255, 255, 0.88);
-    }
-
-
-    .lace-left {
-      left: -5%;
-
-      transform: rotate(42deg);
-    }
-
-
-    .lace-right {
-      right: -5%;
-
-      transform: rotate(-42deg);
-    }
-
-
-    .lace-left::after,
-    .lace-right::after {
-      content: "❀  ❁  ❀  ❁  ❀  ❁";
-
-      position: absolute;
-
-      bottom: -8px;
-
-      width: 100%;
-
-      text-align: center;
-
-      color: rgba(255, 255, 255, 0.96);
-
-      font-size: 18px;
-
-      letter-spacing: 3px;
-    }
-
-
-    .pearl {
-      position: absolute;
-
       left: 50%;
-      top: 52%;
-
+      top: 53%;
       transform: translate(-50%, -50%);
-
-      width: 58px;
-      height: 58px;
-
+      width: 18%;
+      aspect-ratio: 1 / 1;
+      padding: 0;
+      border: 0;
       border-radius: 50%;
-
-      z-index: 10;
-
-      background:
-        radial-gradient(
-          circle at 34% 28%,
-          #ffffff 0%,
-          #fffdf8 16%,
-          #eee6d6 43%,
-          #cfc0a7 70%,
-          #a9977c 100%
-        );
-
-      border:
-        2px solid rgba(181, 159, 124, 0.55);
-
-      box-shadow:
-        0 5px 10px rgba(75, 61, 44, 0.22),
-        inset 0 0 10px rgba(255, 255, 255, 0.85);
-
-      display: flex;
-      justify-content: center;
-      align-items: center;
-
-      font-family: "Cormorant Garamond", serif;
-
-      font-size: 13px;
-
-      color: #9b825e;
-
-      letter-spacing: 1px;
+      background: transparent;
+      cursor: pointer;
+      animation: pearlPulse 2.2s ease-in-out infinite;
     }
 
+    @keyframes pearlPulse {
+      0%,
+      100% {
+        transform: translate(-50%, -50%) scale(1);
+      }
 
-    .open-text {
+      50% {
+        transform: translate(-50%, -50%) scale(1.06);
+      }
+    }
+
+    .openText {
       position: absolute;
-
       left: 0;
       right: 0;
-
-      top: 60%;
-
-      z-index: 11;
-
+      bottom: 6%;
       text-align: center;
-
-      font-family: "Cormorant Garamond", serif;
-
-      font-size: 16px;
-
+      font-size: clamp(11px, 1.5vw, 15px);
       font-weight: 500;
-
-      letter-spacing: 0.22em;
-
+      letter-spacing: 0.24em;
       text-transform: uppercase;
-
-      color: #87745f;
+      color: #756b60;
+      pointer-events: none;
     }
 
-
-    /* ============================= */
-    /* POZIVNICA                     */
-    /* ============================= */
+    /* POZIVNICA */
 
     #invitation {
-      width: 100%;
-
+      position: relative;
+      width: min(100%, 710px);
+      margin: 0 auto;
+      background: #f5eee4;
       opacity: 0;
-
-      transition: opacity 1.2s ease;
+      transition: opacity 1.3s ease;
     }
-
 
     #invitation.visible {
       opacity: 1;
     }
 
-
-    .invitation-wrapper {
-      position: relative;
-
-      width: min(100%, 720px);
-
-      margin: 0 auto;
-
-      line-height: 0;
-
-      background: #f5eee3;
-    }
-
-
-    .main-image {
+    .fullImage {
       display: block;
-
       width: 100%;
       height: auto;
-
       margin: 0;
       padding: 0;
-
       border: 0;
-
       vertical-align: top;
     }
 
+    /* PRVA STRANICA */
 
-    /* ============================= */
-    /* PRVA STRANICA                 */
-    /* ============================= */
-
-    .hero-main {
+    .heroPage {
       position: absolute;
-
       top: 0;
       left: 0;
-
       width: 100%;
-
-      /*
-        Prva stranica slike je u omjeru 2:3.
-        OVAJ BLOK SE VIŠE NE RAČUNA
-        PREMA CIJELOJ DUGOJ SLICI.
-      */
-
       aspect-ratio: 2 / 3;
-
-      z-index: 20;
-
+      z-index: 10;
+      color: #504d56;
       text-align: center;
-
-      color: #514d55;
-
       pointer-events: none;
-
-      line-height: normal;
     }
 
-
-    .hero-content {
+    .heroContent {
       position: absolute;
-
-      top: 14.5%;
-
-      left: 7%;
-      right: 7%;
-
+      top: 16%;
+      left: 8%;
+      right: 8%;
       display: flex;
-
       flex-direction: column;
-
       align-items: center;
-
-      justify-content: flex-start;
     }
 
-
-    .invite-text {
-      margin: 0 0 22px;
-
-      font-family:
-        "Cormorant Garamond",
-        serif;
-
-      font-size:
-        clamp(
-          11px,
-          1.75vw,
-          17px
-        );
-
-      font-weight: 500;
-
-      letter-spacing: 0.25em;
-
-      text-transform: uppercase;
-
-      color: #665f62;
-    }
-
-
-    .names {
-      margin: 0;
-
-      font-family:
-        "Italiana",
-        "Cormorant Garamond",
-        serif;
-
-      font-size:
-        clamp(
-          65px,
-          10.5vw,
-          104px
-        );
-
+    .introText {
+      margin: 0 0 20px;
+      font-family: "Italiana", serif;
+      font-size: clamp(10px, 1.7vw, 16px);
       font-weight: 400;
-
-      line-height: 0.82;
-
-      letter-spacing: -0.025em;
-
-      color: #4f4b54;
+      letter-spacing: 0.23em;
+      line-height: 1.45;
+      text-transform: uppercase;
+      color: #605a60;
     }
 
+    .namesBlock {
+      margin: 0;
+      font-family: "Cormorant Garamond", serif;
+      font-style: italic;
+      font-weight: 500;
+      color: #504d56;
+    }
 
-    .name {
+    .firstName,
+    .secondName {
       display: block;
+      font-size: clamp(68px, 11.5vw, 112px);
+      line-height: 0.82;
+      letter-spacing: -0.025em;
     }
-
 
     .ampersand {
       display: block;
-
-      margin: 17px 0 14px;
-
-      font-family:
-        "Cormorant Garamond",
-        serif;
-
-      font-size:
-        clamp(
-          29px,
-          4.6vw,
-          44px
-        );
-
-      font-style: italic;
-
-      font-weight: 400;
-
+      margin: 5px 0 4px;
+      font-size: clamp(29px, 4.6vw, 44px);
       line-height: 1;
-
-      color: #5c565d;
+      font-style: normal;
+      font-weight: 500;
     }
 
+    .divider {
+      width: 82px;
+      height: 1px;
+      margin: 24px auto 17px;
+      background: rgba(91, 82, 84, 0.38);
+    }
 
-    .wedding-date {
-      margin-top: 31px;
-
-      font-family:
-        "Cormorant Garamond",
-        serif;
-
-      font-size:
-        clamp(
-          23px,
-          3.7vw,
-          35px
-        );
-
+    .weddingDate {
+      margin: 0;
+      font-size: clamp(23px, 3.7vw, 36px);
       font-weight: 500;
-
-      letter-spacing: 0.035em;
-
+      line-height: 1.2;
+      letter-spacing: 0.025em;
       color: #57515a;
     }
 
+    /* DONJI TEKST I STRELICA */
 
-    /* ============================= */
-    /* STRELICA                      */
-    /* ============================= */
-
-    .story-block {
+    .storyButton {
       position: absolute;
-
       left: 5%;
       right: 5%;
-
-      bottom: 12.5%;
-
+      bottom: 11%;
       display: flex;
-
       flex-direction: column;
-
       align-items: center;
-
-      color: #71685f;
-
+      color: #696169;
       text-decoration: none;
-
       pointer-events: auto;
+      cursor: pointer;
     }
 
-
-    .story-text {
-      font-family:
-        "Cormorant Garamond",
-        serif;
-
-      font-size:
-        clamp(
-          11px,
-          1.7vw,
-          16px
-        );
-
-      font-weight: 500;
-
+    .storyText {
+      font-family: "Italiana", serif;
+      font-size: clamp(9px, 1.55vw, 15px);
+      font-weight: 400;
       letter-spacing: 0.25em;
-
+      line-height: 1.5;
       text-transform: uppercase;
     }
 
-
-    .story-arrow {
-      margin-top: 10px;
-
-      font-family:
-        "Cormorant Garamond",
-        serif;
-
-      font-size:
-        clamp(
-          28px,
-          4.5vw,
-          42px
-        );
-
+    .storyArrow {
+      margin-top: 9px;
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(28px, 4.4vw, 42px);
       line-height: 1;
-
-      animation:
-        arrowMove
-        1.7s
-        ease-in-out
-        infinite;
+      animation: arrowMove 1.7s ease-in-out infinite;
     }
 
-
     @keyframes arrowMove {
-
       0%,
       100% {
-        transform:
-          translateY(0);
-
+        transform: translateY(0);
         opacity: 0.55;
       }
 
       50% {
-        transform:
-          translateY(11px);
-
+        transform: translateY(11px);
         opacity: 1;
       }
-
     }
 
-
-    /* ============================= */
-    /* MOBITEL                       */
-    /* ============================= */
+    /* MOBITEL */
 
     @media (max-width: 600px) {
-
-      .envelope {
-        width: min(76vw, 360px);
+      body {
+        background: #f5eee4;
       }
 
-
-      .pearl {
-        width: 50px;
-        height: 50px;
-
-        font-size: 11px;
+      #invitation {
+        width: 100%;
+        max-width: none;
       }
 
+      .heroContent {
+        top: 15.5%;
+        left: 6%;
+        right: 6%;
+      }
 
-      .open-text {
-        font-size: 13px;
-
+      .introText {
+        margin-bottom: 14px;
+        font-size: clamp(9px, 2.65vw, 13px);
         letter-spacing: 0.18em;
       }
 
-
-      .hero-content {
-        top: 14.5%;
-
-        left: 5%;
-        right: 5%;
-      }
-
-
-      .invite-text {
-        margin-bottom: 16px;
-
-        font-size:
-          clamp(
-            10px,
-            2.7vw,
-            14px
-          );
-
-        letter-spacing: 0.18em;
-      }
-
-
-      .names {
-        font-size:
-          clamp(
-            55px,
-            15vw,
-            82px
-          );
-
+      .firstName,
+      .secondName {
+        font-size: clamp(59px, 15.5vw, 84px);
         line-height: 0.84;
       }
 
-
       .ampersand {
-        margin:
-          10px
-          0
-          9px;
-
-        font-size:
-          clamp(
-            25px,
-            7vw,
-            37px
-          );
+        margin: 4px 0 3px;
+        font-size: clamp(25px, 6.5vw, 37px);
       }
 
-
-      .wedding-date {
-        margin-top: 21px;
-
-        font-size:
-          clamp(
-            20px,
-            5.7vw,
-            31px
-          );
+      .divider {
+        width: 66px;
+        margin-top: 18px;
+        margin-bottom: 13px;
       }
 
-
-      .story-block {
-        bottom: 11.5%;
+      .weddingDate {
+        font-size: clamp(19px, 5.4vw, 29px);
       }
 
-
-      .story-text {
-        font-size:
-          clamp(
-            9px,
-            2.5vw,
-            13px
-          );
-
-        letter-spacing: 0.2em;
+      .storyButton {
+        bottom: 10.5%;
       }
 
-
-      .story-arrow {
-        font-size:
-          clamp(
-            25px,
-            7vw,
-            36px
-          );
+      .storyText {
+        font-size: clamp(8px, 2.3vw, 12px);
+        letter-spacing: 0.19em;
       }
 
+      .storyArrow {
+        margin-top: 7px;
+        font-size: clamp(25px, 7vw, 35px);
+      }
     }
-
-
   </style>
-
 </head>
 
+<body class="locked">
 
-<body>
+  <div id="envelopeScreen">
+    <div class="envelopeImage">
+      <button
+        class="pearlButton"
+        id="openInvitation"
+        type="button"
+        aria-label="Otvori pozivnicu"
+      ></button>
 
-
-  <!-- ============================= -->
-  <!-- KUVERTA                       -->
-  <!-- ============================= -->
-
-  <div id="envelope-screen">
-
-    <div
-      class="envelope"
-      id="envelope"
-      role="button"
-      tabindex="0"
-      aria-label="Otvori pozivnicu"
-    >
-
-      <div class="envelope-flap"></div>
-
-      <div class="lace-left"></div>
-
-      <div class="lace-right"></div>
-
-      <div class="pearl">
-        R&A
+      <div class="openText">
+        Dodirnite biser da otvorite
       </div>
-
-      <div class="open-text">
-        Otvori pozivnicu
-      </div>
-
     </div>
-
   </div>
 
-
-
-  <!-- ============================= -->
-  <!-- POZIVNICA                     -->
-  <!-- ============================= -->
-
   <main id="invitation">
+    <img
+      src="cijela.png"
+      alt="Pozivnica za vjenčanje Ree i Antonija"
+      class="fullImage"
+    >
 
-    <div class="invitation-wrapper">
+    <section class="heroPage">
+      <div class="heroContent">
 
+        <p class="introText">
+          Pozivamo vas na naše vjenčanje
+        </p>
 
-      <!-- JEDNA VELIKA SLIKA -->
+        <h1 class="namesBlock">
+          <span class="firstName">Rea</span>
+          <span class="ampersand">&amp;</span>
+          <span class="secondName">Antonio</span>
+        </h1>
 
-      <img
-        src="cijela.png"
-        alt="Pozivnica za vjenčanje Ree i Antonija"
-        class="main-image"
-        id="main-image"
+        <div class="divider"></div>
+
+        <p class="weddingDate">
+          16. listopada 2026.
+        </p>
+      </div>
+
+      <a
+        href="#"
+        class="storyButton"
+        id="storyButton"
+        aria-label="Zakoračite u našu priču"
       >
+        <span class="storyText">
+          Zakoračite u našu priču
+        </span>
 
-
-
-      <!-- ========================= -->
-      <!-- TEKST NA PRVOJ STRANICI   -->
-      <!-- ========================= -->
-
-      <section class="hero-main">
-
-
-        <div class="hero-content">
-
-
-          <div class="invite-text">
-
-            Pozivamo vas na naše vjenčanje
-
-          </div>
-
-
-          <h1 class="names">
-
-            <span class="name">
-              Rea
-            </span>
-
-            <span class="ampersand">
-              &
-            </span>
-
-            <span class="name">
-              Antonio
-            </span>
-
-          </h1>
-
-
-          <div class="wedding-date">
-
-            16. listopada 2026.
-
-          </div>
-
-
-        </div>
-
-
-
-        <a
-          href="#story"
-          class="story-block"
-        >
-
-          <span class="story-text">
-
-            Zakoračite u našu priču
-
-          </span>
-
-
-          <span class="story-arrow">
-
-            ↓
-
-          </span>
-
-        </a>
-
-
-      </section>
-
-
-
-      <!-- TOČKA NA KOJU IDE STRELICA -->
-
-      <div
-        id="story"
-        style="
-          position: absolute;
-          top: 19.5%;
-          left: 0;
-          width: 1px;
-          height: 1px;
-        "
-      ></div>
-
-
-    </div>
-
+        <span class="storyArrow">
+          ↓
+        </span>
+      </a>
+    </section>
   </main>
 
-
-
   <script>
-
     const envelopeScreen =
-      document.getElementById(
-        "envelope-screen"
-      );
+      document.getElementById("envelopeScreen");
 
-
-    const envelope =
-      document.getElementById(
-        "envelope"
-      );
-
+    const openInvitation =
+      document.getElementById("openInvitation");
 
     const invitation =
-      document.getElementById(
-        "invitation"
-      );
+      document.getElementById("invitation");
 
+    const storyButton =
+      document.getElementById("storyButton");
 
-    function openInvitation() {
+    let opened = false;
 
-      envelope.style.transform =
-        "scale(1.06)";
+    function showInvitation() {
+      if (opened) {
+        return;
+      }
 
+      opened = true;
 
-      setTimeout(() => {
+      envelopeScreen.classList.add("opened");
+      invitation.classList.add("visible");
 
-        envelopeScreen.classList.add(
-          "hidden"
-        );
-
-
-        invitation.classList.add(
-          "visible"
-        );
-
-
-        window.scrollTo({
-          top: 0,
-          behavior: "instant"
-        });
-
-      }, 350);
-
+      setTimeout(function () {
+        envelopeScreen.style.display = "none";
+        document.body.classList.remove("locked");
+        window.scrollTo(0, 0);
+      }, 1250);
     }
 
-
-    envelope.addEventListener(
+    openInvitation.addEventListener(
       "click",
-      openInvitation
+      showInvitation
     );
 
+    storyButton.addEventListener(
+      "click",
+      function (event) {
+        event.preventDefault();
 
-    envelope.addEventListener(
-      "keydown",
-      function(event) {
+        const invitationTop =
+          invitation.getBoundingClientRect().top +
+          window.scrollY;
 
-        if (
-          event.key === "Enter" ||
-          event.key === " "
-        ) {
+        const firstPageHeight =
+          invitation.clientWidth * 1.5;
 
-          event.preventDefault();
-
-          openInvitation();
-
-        }
-
+        window.scrollTo({
+          top: invitationTop + firstPageHeight,
+          behavior: "smooth"
+        });
       }
     );
 
-
+    window.addEventListener(
+      "load",
+      function () {
+        window.scrollTo(0, 0);
+      }
+    );
   </script>
 
-
 </body>
-
 </html>
