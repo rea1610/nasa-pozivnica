@@ -191,6 +191,158 @@
       vertical-align: top;
     }
 
+    main#invitation{
+    position:relative;
+}
+
+.rsvpForm{
+    position:absolute;
+
+    left:50%;
+    transform:translateX(-50%);
+
+    width:78%;
+    max-width:520px;
+
+    top:78%;
+
+    display:flex;
+    flex-direction:column;
+    gap:14px;
+
+    z-index:100;
+}
+
+    .rsvpField,
+.attendanceField,
+.guestNumbers {
+  margin: 0;
+  padding: 0;
+  border: 0;
+}
+
+.rsvpField label,
+.attendanceField legend,
+.numberField label {
+  display: block;
+  margin-bottom: 7px;
+  color: #5f554e;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(15px, 2.2vw, 20px);
+  font-weight: 600;
+}
+
+.rsvpField input[type="text"],
+.numberField input[type="number"] {
+  width: 100%;
+  padding: 11px 13px;
+  border: 1px solid rgba(167, 132, 73, 0.5);
+  border-radius: 8px;
+  background: rgba(255, 250, 242, 0.72);
+  color: #514942;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(15px, 2vw, 19px);
+  outline: none;
+}
+
+.attendanceField {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+}
+
+.attendanceField legend {
+  grid-column: 1 / -1;
+}
+
+.rsvpChoice {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 7px;
+  min-height: 46px;
+  padding: 8px;
+  border: 1px solid rgba(167, 132, 73, 0.5);
+  border-radius: 8px;
+  background: rgba(255, 250, 242, 0.68);
+  color: #5b514a;
+  text-align: center;
+  cursor: pointer;
+}
+
+.rsvpChoice input {
+  accent-color: #b58b48;
+}
+
+.guestNumbers {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+  gap: 9px;
+}
+
+.numberField input {
+  text-align: center;
+}
+
+.rsvpSubmit {
+  width: 100%;
+  padding: 12px 16px;
+  border: 0;
+  border-radius: 8px;
+  background: linear-gradient(135deg, #b98c45, #d5b473);
+  color: #fffaf1;
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(17px, 2.5vw, 22px);
+  font-weight: 600;
+  letter-spacing: 0.04em;
+  cursor: pointer;
+}
+
+.rsvpMessage {
+  min-height: 1.2em;
+  margin: 0;
+  color: #5f554e;
+  text-align: center;
+  font-family: "Cormorant Garamond", serif;
+}
+
+@media (max-width: 600px) {
+  .rsvpForm {
+    width: 80%;
+    top: 78%;
+    gap: 8px;
+  }
+
+  .attendanceField {
+    grid-template-columns: 1fr;
+  }
+
+  .rsvpField label,
+  .attendanceField legend,
+  .numberField label {
+    margin-bottom: 4px;
+    font-size: 14px;
+  }
+
+  .rsvpField input[type="text"],
+  .numberField input[type="number"] {
+    padding: 8px 10px;
+    font-size: 14px;
+  }
+
+  .rsvpChoice {
+    min-height: 38px;
+    padding: 6px;
+    font-size: 13px;
+  }
+
+  .rsvpSubmit {
+    padding: 9px 12px;
+    font-size: 16px;
+  }
+}
+
+
     /* =========================
        POČETNI PRAZNI DIO
     ========================= */
@@ -555,6 +707,80 @@
     </section>
 
     <div id="okupljanjeTarget"></div>
+
+    <!-- OBRAZAC ZA POTVRDU DOLASKA -->
+<form class="rsvpForm" id="rsvpForm">
+
+  <div class="rsvpField">
+    <label for="guestName">Ime i prezime</label>
+    <input
+      type="text"
+      id="guestName"
+      name="guestName"
+      placeholder="Upišite ime i prezime"
+      required
+    >
+  </div>
+
+  <fieldset class="rsvpField attendanceField">
+    <legend>Hoćete li prisustvovati?</legend>
+
+    <label class="rsvpChoice">
+      <input
+        type="radio"
+        name="attendance"
+        value="Dolazim"
+        required
+      >
+      <span>Da, dolazim</span>
+    </label>
+
+    <label class="rsvpChoice">
+      <input
+        type="radio"
+        name="attendance"
+        value="Ne dolazim"
+      >
+      <span>Nažalost, ne mogu doći</span>
+    </label>
+  </fieldset>
+
+  <div class="guestNumbers">
+
+    <div class="numberField">
+      <label for="adults">Odraslih</label>
+      <input
+        type="number"
+        id="adults"
+        name="adults"
+        min="0"
+        max="20"
+        value="1"
+      >
+    </div>
+
+    <div class="numberField">
+      <label for="children">Djece</label>
+      <input
+        type="number"
+        id="children"
+        name="children"
+        min="0"
+        max="20"
+        value="0"
+      >
+    </div>
+
+  </div>
+
+  <button class="rsvpSubmit" type="submit">
+    Potvrdi dolazak
+  </button>
+
+  <p class="rsvpMessage" id="rsvpMessage"></p>
+
+</form>
+
 
   </main>
 
