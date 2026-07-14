@@ -630,6 +630,67 @@
     bottom: 2.5% !important;
   }
 }
+
+    /* Titirajući gumb za Google Form */
+.rsvpTrigger {
+  position: absolute;
+  left: 50%;
+  bottom: 4.5%;
+  transform: translateX(-50%);
+
+  width: min(72%, 420px);
+  padding: 13px 20px;
+
+  z-index: 100;
+
+  border: 1px solid rgba(168, 128, 65, 0.65);
+  border-radius: 999px;
+
+  background: linear-gradient(135deg, #b98c45, #d8b979);
+  box-shadow:
+    0 8px 22px rgba(119, 86, 42, 0.22),
+    0 0 0 0 rgba(185, 140, 69, 0.35);
+
+  color: #fffaf1;
+  text-align: center;
+  text-decoration: none;
+
+  font-family: "Cormorant Garamond", serif;
+  font-size: clamp(17px, 2.6vw, 23px);
+  font-weight: 600;
+  letter-spacing: 0.06em;
+
+  animation: rsvpPulse 2s ease-in-out infinite;
+}
+
+.rsvpTrigger:hover,
+.rsvpTrigger:focus-visible {
+  transform: translateX(-50%) scale(1.03);
+}
+
+@keyframes rsvpPulse {
+  0%,
+  100% {
+    box-shadow:
+      0 8px 22px rgba(119, 86, 42, 0.22),
+      0 0 0 0 rgba(185, 140, 69, 0.30);
+  }
+
+  50% {
+    box-shadow:
+      0 10px 26px rgba(119, 86, 42, 0.28),
+      0 0 0 11px rgba(185, 140, 69, 0);
+  }
+}
+
+@media (max-width: 600px) {
+  .rsvpTrigger {
+    bottom: 4%;
+    width: 72%;
+    padding: 11px 16px;
+    font-size: 17px;
+  }
+}
   </style>
 </head>
 
@@ -723,78 +784,15 @@
 
     <div id="okupljanjeTarget"></div>
 
-    <!-- OBRAZAC ZA POTVRDU DOLASKA -->
-<form class="rsvpForm" id="rsvpForm">
-
-  <div class="rsvpField">
-    <label for="guestName">Ime i prezime</label>
-    <input
-      type="text"
-      id="guestName"
-      name="guestName"
-      placeholder="Upišite ime i prezime"
-      required
-    >
-  </div>
-
-  <fieldset class="rsvpField attendanceField">
-    <legend>Hoćete li prisustvovati?</legend>
-
-    <label class="rsvpChoice">
-      <input
-        type="radio"
-        name="attendance"
-        value="Dolazim"
-        required
-      >
-      <span>Da, dolazim</span>
-    </label>
-
-    <label class="rsvpChoice">
-      <input
-        type="radio"
-        name="attendance"
-        value="Ne dolazim"
-      >
-      <span>Nažalost, ne mogu doći</span>
-    </label>
-  </fieldset>
-
-  <div class="guestNumbers">
-
-    <div class="numberField">
-      <label for="adults">Odraslih</label>
-      <input
-        type="number"
-        id="adults"
-        name="adults"
-        min="0"
-        max="20"
-        value="1"
-      >
-    </div>
-
-    <div class="numberField">
-      <label for="children">Djece</label>
-      <input
-        type="number"
-        id="children"
-        name="children"
-        min="0"
-        max="20"
-        value="0"
-      >
-    </div>
-
-  </div>
-
-  <button class="rsvpSubmit" type="submit">
-    Potvrdi dolazak
-  </button>
-
-  <p class="rsvpMessage" id="rsvpMessage"></p>
-
-</form>
+    <!-- GUMB ZA POTVRDU DOLASKA -->
+<a
+  href="OVDJE_ĆE_DOĆI_LINK_GOOGLE_FORMA"
+  class="rsvpTrigger"
+  target="_blank"
+  rel="noopener noreferrer"
+>
+  Potvrdi dolazak
+</a>
 
     </div>
 
