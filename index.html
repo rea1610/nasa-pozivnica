@@ -922,6 +922,29 @@
       }
     );
 
+    const RSVP_STORAGE = "reaAntonioRSVP";
+
+function refreshRSVPButton() {
+  const button = document.querySelector(".rsvpTrigger");
+  if (!button) return;
+
+  const saved = localStorage.getItem(RSVP_STORAGE);
+
+  if (!saved) return;
+
+  const data = JSON.parse(saved);
+
+  button.innerHTML = `
+    ✓ Dolazak potvrđen<br>
+    <small>${data.adults} odraslih • ${data.children} djece</small>
+    <br><br>
+    <span style="text-decoration:underline;">Uredi potvrdu</span>
+  `;
+
+  button.href = "potvrda.html?edit=1";
+}
+
+refreshRSVPButton();
     window.addEventListener(
       "load",
       function () {
