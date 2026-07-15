@@ -1,0 +1,478 @@
+<!DOCTYPE html>
+<html lang="hr">
+<head>
+  <meta charset="UTF-8">
+  <meta
+    name="viewport"
+    content="width=device-width, initial-scale=1, viewport-fit=cover"
+  >
+
+  <title>Potvrda dolaska – Rea & Antonio</title>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link
+    href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;1,400;1,500&family=Italiana&display=swap"
+    rel="stylesheet"
+  >
+
+  <style>
+    :root {
+      --ink: #5f554e;
+      --ink-dark: #4f4a50;
+      --gold: #b98c45;
+      --gold-light: #dfbd72;
+      --paper: #fffaf1;
+      --paper-deep: #f1e4d1;
+    }
+
+    * {
+      box-sizing: border-box;
+    }
+
+    html {
+      min-height: 100%;
+      background: #e8dfd3;
+    }
+
+    body {
+      margin: 0;
+      min-height: 100vh;
+      padding:
+        max(18px, env(safe-area-inset-top))
+        12px
+        max(26px, env(safe-area-inset-bottom));
+
+      display: flex;
+      justify-content: center;
+      align-items: center;
+
+      color: var(--ink);
+      font-family: "Cormorant Garamond", serif;
+
+      background:
+        radial-gradient(circle at 50% 10%, rgba(255,255,255,.9), transparent 42%),
+        linear-gradient(180deg, #f8f1e6 0%, #e7d8c2 100%);
+    }
+
+    .page {
+      position: relative;
+      overflow: hidden;
+      width: min(100%, 660px);
+      padding: clamp(28px, 7vw, 58px) clamp(18px, 6vw, 52px) clamp(30px, 7vw, 56px);
+
+      border: 1px solid rgba(165, 126, 67, 0.42);
+      border-radius: 26px;
+
+      background:
+        linear-gradient(rgba(255, 251, 243, .95), rgba(249, 239, 223, .95));
+
+      box-shadow:
+        0 22px 58px rgba(81, 61, 38, .18),
+        inset 0 0 55px rgba(185, 140, 69, .07);
+    }
+
+    .page::before,
+    .page::after {
+      content: "❦";
+      position: absolute;
+      z-index: 0;
+      color: rgba(173, 132, 67, .45);
+      font-size: clamp(58px, 14vw, 100px);
+      line-height: 1;
+      pointer-events: none;
+    }
+
+    .page::before {
+      top: 12px;
+      left: 18px;
+      transform: rotate(-24deg);
+    }
+
+    .page::after {
+      right: 18px;
+      bottom: 12px;
+      transform: rotate(156deg);
+    }
+
+    .content {
+      position: relative;
+      z-index: 1;
+    }
+
+    .monogram {
+      margin-bottom: 8px;
+      text-align: center;
+      color: var(--gold);
+      font-family: "Italiana", serif;
+      font-size: clamp(13px, 3vw, 17px);
+      letter-spacing: .24em;
+      text-transform: uppercase;
+    }
+
+    h1 {
+      margin: 0;
+      text-align: center;
+      color: var(--ink-dark);
+      font-size: clamp(46px, 11vw, 78px);
+      font-style: italic;
+      font-weight: 500;
+      line-height: .95;
+    }
+
+    .subtitle {
+      max-width: 460px;
+      margin: 18px auto 30px;
+      text-align: center;
+      font-size: clamp(18px, 4.4vw, 23px);
+      line-height: 1.4;
+    }
+
+    .divider {
+      width: 90px;
+      height: 1px;
+      margin: 0 auto 28px;
+      background: linear-gradient(90deg, transparent, rgba(185,140,69,.8), transparent);
+    }
+
+    form {
+      display: flex;
+      flex-direction: column;
+      gap: 18px;
+    }
+
+    .field {
+      display: flex;
+      flex-direction: column;
+      gap: 7px;
+    }
+
+    label {
+      color: #5b5048;
+      font-size: clamp(17px, 4vw, 21px);
+      font-weight: 600;
+    }
+
+    .hint {
+      margin-top: -3px;
+      color: #7a6d63;
+      font-size: 14px;
+      font-style: italic;
+    }
+
+    input,
+    select,
+    textarea {
+      width: 100%;
+      padding: 13px 15px;
+
+      border: 1px solid rgba(167, 132, 73, .52);
+      border-radius: 12px;
+      outline: none;
+
+      background: rgba(255, 252, 246, .9);
+      color: #514942;
+
+      font-family: "Cormorant Garamond", serif;
+      font-size: 18px;
+
+      transition: border-color .2s ease, box-shadow .2s ease, background .2s ease;
+    }
+
+    input:focus,
+    select:focus,
+    textarea:focus {
+      border-color: var(--gold);
+      background: #fffdf8;
+      box-shadow: 0 0 0 3px rgba(185, 140, 69, .13);
+    }
+
+    textarea {
+      min-height: 115px;
+      resize: vertical;
+    }
+
+    .number-grid {
+      display: grid;
+      grid-template-columns: 1fr 1fr;
+      gap: 14px;
+    }
+
+    .submit-button {
+      width: 100%;
+      margin-top: 5px;
+      padding: 15px 18px;
+
+      border: 1px solid rgba(134, 93, 36, .22);
+      border-radius: 999px;
+
+      background: linear-gradient(135deg, var(--gold), var(--gold-light));
+      color: #fffaf1;
+
+      box-shadow:
+        0 12px 26px rgba(117, 81, 33, .23),
+        0 0 0 0 rgba(213, 180, 115, .42);
+
+      font-family: "Cormorant Garamond", serif;
+      font-size: clamp(21px, 5vw, 28px);
+      font-weight: 600;
+      letter-spacing: .05em;
+
+      cursor: pointer;
+      animation: gentlePulse 2.4s ease-in-out infinite;
+
+      transition: transform .2s ease, box-shadow .2s ease, opacity .2s ease;
+    }
+
+    .submit-button:hover {
+      transform: translateY(-2px);
+      box-shadow: 0 15px 31px rgba(117, 81, 33, .3);
+    }
+
+    .submit-button:disabled {
+      cursor: wait;
+      opacity: .66;
+      animation: none;
+      transform: none;
+    }
+
+    @keyframes gentlePulse {
+      0%, 100% {
+        box-shadow:
+          0 12px 26px rgba(117, 81, 33, .23),
+          0 0 0 0 rgba(213, 180, 115, .34);
+      }
+      50% {
+        box-shadow:
+          0 14px 30px rgba(117, 81, 33, .28),
+          0 0 0 10px rgba(213, 180, 115, 0);
+      }
+    }
+
+    .status {
+      min-height: 25px;
+      margin: 0;
+      text-align: center;
+      font-size: 17px;
+      font-weight: 500;
+    }
+
+    .status.error {
+      color: #984f49;
+    }
+
+    .back-link {
+      display: block;
+      width: max-content;
+      margin: 18px auto 0;
+      color: #776650;
+      text-decoration: none;
+      font-size: 16px;
+      font-style: italic;
+    }
+
+    .thank-you {
+      display: none;
+      padding: 48px 0 36px;
+      text-align: center;
+    }
+
+    .thank-you.visible {
+      display: block;
+    }
+
+    .thank-you h2 {
+      margin: 0 0 14px;
+      color: var(--ink-dark);
+      font-size: clamp(56px, 14vw, 90px);
+      font-style: italic;
+      font-weight: 500;
+      line-height: 1;
+    }
+
+    .thank-you p {
+      max-width: 450px;
+      margin: 0 auto;
+      font-size: clamp(19px, 4.6vw, 25px);
+      line-height: 1.45;
+    }
+
+    @media (max-width: 520px) {
+      body {
+        align-items: flex-start;
+        padding-left: 10px;
+        padding-right: 10px;
+      }
+
+      .page {
+        margin-top: 6px;
+        border-radius: 19px;
+      }
+
+      .number-grid {
+        gap: 10px;
+      }
+
+      input,
+      select,
+      textarea {
+        font-size: 16px;
+      }
+    }
+  </style>
+</head>
+
+<body>
+  <main class="page">
+    <div class="content" id="formContent">
+      <div class="monogram">Rea &amp; Antonio</div>
+
+      <h1>Potvrda dolaska</h1>
+
+      <p class="subtitle">
+        Molimo vas da ispunite podatke u nastavku.
+      </p>
+
+      <div class="divider"></div>
+
+      <form id="rsvpForm">
+        <div class="field">
+          <label for="guestName">Ime i prezime</label>
+          <input
+            id="guestName"
+            name="name"
+            type="text"
+            autocomplete="name"
+            placeholder="Upišite ime i prezime"
+            required
+          >
+        </div>
+
+        <div class="number-grid">
+          <div class="field">
+            <label for="adults">Broj odraslih</label>
+            <select id="adults" name="adults" required>
+              <option value="" selected disabled>Odaberite</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+              <option value="6">6</option>
+              <option value="7">7</option>
+              <option value="8">8</option>
+              <option value="9">9</option>
+              <option value="10">10</option>
+            </select>
+          </div>
+
+          <div class="field">
+            <label for="children">Broj djece</label>
+            <select id="children" name="children" required>
+              <option value="" selected disabled>Odaberite</option>
+              <option value="0">0</option>
+              <option value="1">1</option>
+              <option value="2">2</option>
+              <option value="3">3</option>
+              <option value="4">4</option>
+              <option value="5">5</option>
+            </select>
+          </div>
+        </div>
+
+        <div class="field">
+          <label for="requirements">Posebni zahtjevi</label>
+          <div class="hint">
+            Alergije, vegetarijanski meni, bezglutenski meni itd.
+          </div>
+          <textarea
+            id="requirements"
+            name="requirements"
+            placeholder="Ostavite prazno ako nemate posebnih zahtjeva"
+          ></textarea>
+        </div>
+
+        <button
+          class="submit-button"
+          id="submitButton"
+          type="submit"
+        >
+          Potvrdi dolazak
+        </button>
+
+        <p class="status" id="statusMessage" aria-live="polite"></p>
+      </form>
+
+      <a class="back-link" href="index.html">
+        ← Povratak na pozivnicu
+      </a>
+    </div>
+
+    <section class="thank-you" id="thankYou">
+      <div class="monogram">Rea &amp; Antonio</div>
+
+      <h2>Hvala!</h2>
+
+      <p>
+        Vaša potvrda dolaska uspješno je zaprimljena.
+        Veselimo se zajedničkom slavlju!
+      </p>
+
+      <a class="back-link" href="index.html">
+        ← Povratak na pozivnicu
+      </a>
+    </section>
+  </main>
+
+  <script>
+    const SCRIPT_URL =
+      "https://script.google.com/macros/s/AKfycby3p14E89a0kWY0jixTrmNifB94PaqMvSbyPnsNfunB2aNZliy2G2jS78ARCObCe-li/exec";
+
+    const form = document.getElementById("rsvpForm");
+    const submitButton = document.getElementById("submitButton");
+    const statusMessage = document.getElementById("statusMessage");
+    const formContent = document.getElementById("formContent");
+    const thankYou = document.getElementById("thankYou");
+
+    form.addEventListener("submit", async function (event) {
+      event.preventDefault();
+
+      if (!form.checkValidity()) {
+        form.reportValidity();
+        return;
+      }
+
+      submitButton.disabled = true;
+      submitButton.textContent = "Šalje se…";
+      statusMessage.className = "status";
+      statusMessage.textContent = "Molimo pričekajte…";
+
+      const formData = new FormData(form);
+
+      try {
+        await fetch(SCRIPT_URL, {
+          method: "POST",
+          mode: "no-cors",
+          body: formData
+        });
+
+        form.reset();
+        formContent.style.display = "none";
+        thankYou.classList.add("visible");
+
+        window.scrollTo({
+          top: 0,
+          behavior: "smooth"
+        });
+      } catch (error) {
+        statusMessage.className = "status error";
+        statusMessage.textContent =
+          "Slanje trenutno nije uspjelo. Molimo pokušajte ponovno.";
+
+        submitButton.disabled = false;
+        submitButton.textContent = "Potvrdi dolazak";
+      }
+    });
+  </script>
+</body>
+</html>
