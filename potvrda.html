@@ -456,6 +456,22 @@
           body: formData
         });
 
+        
+simunovicrea@gmail.com
+13:48 (prije 0 minuta)
+prima ja
+
+const rsvpData = {
+  name: formData.get("name"),
+  adults: formData.get("adults"),
+  children: formData.get("children"),
+  requirements: formData.get("requirements")
+};
+
+localStorage.setItem(
+  "reaAntonioRSVP",
+  JSON.stringify(rsvpData)
+);
         form.reset();
         formContent.style.display = "none";
         thankYou.classList.add("visible");
